@@ -23,6 +23,9 @@ from flask import Flask, request, render_template, g, redirect, Response
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
+uid=""
+hid=""
+
 
 #
 # The following uses the sqlite3 database test.db -- you can use this for debugging purposes
@@ -177,27 +180,114 @@ def index():
 # notice that the functio name is another() rather than index()
 # the functions for each app.route needs to have different names
 #
-@app.route('/another')
-def another():
-  return render_template("anotherfile.html")
+@app.route('/userregister')
+def uregister():
+  return render_template("userregister.html")
+
+@app.route('/uri', methods=['POST'])
+def uri():
+	error=None
+	uid=request.form['uid']
+	name=request.form['name']
+	password=request.form['password']
+	loc=request.form['loc']
+	try:
+		uid=int(uid)
+	except:
+		error="UID must be an integer"
+		return render_template("userregister.html", error=error)
+	stmt="INSERT INTO Reg_User VALUES (?, ?, ?, ?)"
+	g.conn.execute(stmt, (uid, name, password, loc))
+	cursor=g.conn.execute("SELECT * from Reg_User")
+	names=[]
+	for result in cursor:
+		names.append(result)
+	print names
+	return render_template("yes.html")
+
+@app.route('/hri', methods=['POST'])
+def hri():
+	error=None
+	hid=request.form['uid']
+	name=request.form['name']
+	password=request.form['password']
+	hname=request.form['hname']
+	try:
+		hid=int(hid)
+	except:
+		error="UID must be an integer"
+		return render_template("userregister.html", error=error)
+	stmt="INSERT INTO Host VALUES (?, ?, ?, ?)"
+	g.conn.execute(stmt, (hid, name, password, hname))
+	cursor=g.conn.execute("SELECT * from Host")
+	names=[]
+	for result in cursor:
+		names.append(result)
+	print names
+	return render_template("yes.html")
 
 
-# Example of adding new data to the database
-@app.route('/add', methods=['POST'])
-def add():
-  uid = request.form['uid']
-  name = request.form['name']
-  password = request.form['password']
-  
-  g.conn.execute('INSERT INTO test VALUES (NULL, ?)', uid, name, password)
-  return redirect('/')
+@app.route('/hostregister')
+def hregister():
+  return render_template("hostregister.html")
+
+@app.route('/userlogin')
+def ulogin():
+  return render_template("userlogin.html")
+
+@app.route('/uli', methods=['POST'])
+def uli():
+	error=None
+	uid=request.form['uid']
+	try:
+		uid=int(uid)
+	except:
+		error= "UID must be an integer"
+		return render_template("userlogin.html", error=error)
+
+	password=request.form['password']
+	stmt="SELECT password FROM Reg_User WHERE uid = ?"
+	cursor=g.conn.execute(stmt, (uid,))
+	pw=[]
+  	for result in cursor:
+    		pw.append(result)
+	if pw[0]==(password,):
+		return redirect('/uhome')
+	error= "Invalid username/password"
+	return render_template("userlogin.html", error=error)
 
 
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
+@app.route('/hostlogin')
+def hlogin():
+  return render_template("hostlogin.html")
 
+@app.route('/hli', methods=['POST'])
+def hli():
+	error=None
+	hid=request.form['uid']
+	try:
+		hid=int(hid)
+	except:
+		error= "UID must be an integer"
+		return render_template("hostlogin.html", error=error)
+
+	password=request.form['password']
+	stmt="SELECT password FROM Host WHERE uid = ?"
+	cursor=g.conn.execute(stmt, (hid,))
+	pw=[]
+  	for result in cursor:
+    		pw.append(result)
+	if pw[0]==(password,):
+		return render_template("yes.html")
+	else:
+		error= "Invalid username/password"
+		return render_template("hostlogin.html", error=error)
+
+@app.route('/uhome')
+def uhome():
+	print uid
+	return render_template("userhome.html")
+	
 
 if __name__ == "__main__":
   import click
@@ -222,7 +312,7 @@ if __name__ == "__main__":
 
     HOST, PORT = host, port
     print "running on %s:%d" % (HOST, PORT)
-    app.run(host=HOST, port=PORT, debug=debug, threaded=threaded)
+    app.run(host=HOST, port=PORT, debug=True, threaded=threaded)
 
 
   run()
