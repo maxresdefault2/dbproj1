@@ -19,6 +19,7 @@ import os
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
+import operator
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -186,6 +187,8 @@ def index():
 def uregister():
   if uid:
 	return redirect('/uhome')
+  if hid:
+	return redirect('/hhome')
   return render_template("userregister.html")
 
 @app.route('/uri', methods=['POST'])
@@ -194,6 +197,8 @@ def uri():
 	global uid
 	if uid:
 		return redirect('/uhome')
+	if hid:
+		return redirect('/hhome')
 	uid=request.form['uid']
 	name=request.form['name']
 	password=request.form['password']
@@ -219,6 +224,8 @@ def hri():
 	global hid
 	if uid:
 		return redirect('/uhome')
+	if hid:
+		return redirect('/hhome')
 	hid=request.form['uid']
 	name=request.form['name']
 	password=request.form['password']
@@ -235,19 +242,23 @@ def hri():
 	for result in cursor:
 		names.append(result)
 	print names
-	return render_template("yes.html")
+	return redirect('/hhome')
 
 
 @app.route('/hostregister')
 def hregister():
   if uid:
 	return redirect('/uhome')
+  if hid:
+	return redirect('/hhome')
   return render_template("hostregister.html")
 
 @app.route('/userlogin')
 def ulogin():
   if uid:
 	return redirect('/uhome')
+  if hid:
+	return redirect('/hhome')
   return render_template("userlogin.html")
 
 @app.route('/uli', methods=['POST'])
@@ -256,6 +267,8 @@ def uli():
 	global uid
         if uid:
 		return redirect('/uhome')
+	if hid:
+		return redirect('/hhome')
 	uid=request.form['uid']
 	try:
 		uid=int(uid)
@@ -279,6 +292,8 @@ def uli():
 def hlogin():
   if uid:
 	return redirect('/uhome')
+  if hid:
+	return redirect('/hhome')
   return render_template("hostlogin.html")
 
 @app.route('/hli', methods=['POST'])
@@ -287,6 +302,8 @@ def hli():
 	global hid
         if uid:
 		return redirect('/uhome')
+	if hid:
+		return redirect('/hhome')
 	hid=request.form['uid']
 	try:
 		hid=int(hid)
@@ -301,7 +318,7 @@ def hli():
   	for result in cursor:
     		pw.append(result)
 	if pw[0]==(password,):
-		return render_template("yes.html")
+		return redirect('/hhome')
 	else:
 		error= "Invalid username/password"
 		return render_template("hostlogin.html", error=error)
@@ -314,6 +331,7 @@ def uhome():
 	pw=[]
 	for result in cursor:
 		pw.append(result)
+	pw=sorted(pw, key=operator.itemgetter(2,3))
 	for thing in pw:
 		print thing
 	return render_template("userhome.html", lis=pw)
@@ -334,7 +352,31 @@ def usettings():
 @app.route('/friends')
 def friends():
 	return render_template("friends.html")
-	
+
+@app.route('/uesearch')
+def uesearch():
+	return render_template("usereventsearch.html")
+
+@app.route('/hhome')
+def hhome():
+	print hid
+	stmt = "SELECT ename, edate, time, photo FROM Event_Create_Where WHERE uid = ?"
+	cursor = g.conn.execute(stmt, (hid,))
+	pw=[]
+	for result in cursor:
+		pw.append(result)
+	pw=sorted(pw, key=operator.itemgetter(2,3))
+	for thing in pw:
+		print thing
+	return render_template("hosthome.html", lis=pw)
+
+@app.route('/hsettings')
+def hsettings():
+	return render_template("hostsettings.html")
+
+@app.route('/ecreate')
+def ecreate():
+	return render_template("eventcreate.html")
 
 if __name__ == "__main__":
   import click
