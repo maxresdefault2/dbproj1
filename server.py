@@ -346,7 +346,19 @@ def logout():
 
 @app.route('/usettings')
 def usettings():
-	return render_template("usersettings.html")
+	if hid:
+		return redirect('/hsettings')
+	stmt = "SELECT name, password, loc from Reg_User where uid = ?"
+	cursor=g.conn.execute(stmt, (uid,))
+	pw=[]
+	for result in cursor:
+		pw.append(result)
+	name = pw[0][0]
+	password = pw[0][1]
+	plen=len(password)
+	password='x'*plen
+	loc = pw[0][2]
+	return render_template("usersettings.html", name=name, pw=password, loc=loc)
 
 
 @app.route('/friends')
@@ -377,6 +389,31 @@ def hsettings():
 @app.route('/ecreate')
 def ecreate():
 	return render_template("eventcreate.html")
+
+@app.route('/usc', methods=['POST'])
+def usc():
+	error=""
+	global uid
+	if hid:
+		return redirect('/hsettings')
+	name=request.form['name']
+	password=request.form['password']
+	loc=request.form['loc']
+	if name=="" and password=="" and loc=="":
+		error= "No data entered"
+		return render_template("usersettings.html", error=error)
+
+	if name:
+		stmt="UPDATE Reg_User SET name = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (name, uid,))
+	if password:
+		stmt="UPDATE Reg_User SET password = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (password, uid,))
+	if loc:
+		stmt="UPDATE Reg_User SET loc = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (loc, uid,))
+	return redirect("/usettings")
+
 
 if __name__ == "__main__":
   import click

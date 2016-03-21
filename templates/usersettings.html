@@ -20,6 +20,32 @@
 	
 	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
 
+	<br><br>
+	
+	<h2> Change account settings </h2> <br>
+
+	<h3> Current settings: </h3>
+	<h5> Name: {{name}} </h5>
+	<h5> Password: {{pw}} </h5>
+	<h5> Location: {{loc}} </h5>
+	
+	<form action="/usc" method="post" id="main_form">
+		{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}
+		{% endif %}
+		<br>
+		<input type = "text" name= "name" value="" maxlength="100" size="50" class="inputbox" placeholder = "Name" />
+		<br><br>
+		<input type = "password" name= "password" value="" maxlength="100" size="50" class="inputbox" placeholder = "Password" />
+		<br><br>
+		<input type = "text" name= "loc" value="" maxlength="100" size="50" class="inputbox" placeholder = "City" />
+		<br><br>
+		<input type="submit" value="Enter" class = "input_button">
+
+
+	</form>
+	
+
   </div>
 
 </body>
