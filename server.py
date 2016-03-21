@@ -26,6 +26,7 @@ app = Flask(__name__, template_folder=tmpl_dir)
 
 uid=""
 hid=""
+er=""
 
 
 #
@@ -346,8 +347,13 @@ def logout():
 
 @app.route('/usettings')
 def usettings():
+	error=None
+	global er
 	if hid:
 		return redirect('/hsettings')
+	if er:
+		error=er
+		er=""
 	stmt = "SELECT name, password, loc from Reg_User where uid = ?"
 	cursor=g.conn.execute(stmt, (uid,))
 	pw=[]
@@ -358,7 +364,14 @@ def usettings():
 	plen=len(password)
 	password='x'*plen
 	loc = pw[0][2]
-	return render_template("usersettings.html", name=name, pw=password, loc=loc)
+	stmt = "SELECT tname from Tags EXCEPT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	cursor=g.conn.execute(stmt, (uid,))
+	xw=[]
+	for result in cursor:
+		for thing in result:
+			xw.append(thing)
+	print xw
+	return render_template("usersettings.html", name=name, pw=password, loc=loc, tags=xw, error=error)
 
 
 @app.route('/friends')
@@ -400,8 +413,9 @@ def usc():
 	password=request.form['password']
 	loc=request.form['loc']
 	if name=="" and password=="" and loc=="":
-		error= "No data entered"
-		return render_template("usersettings.html", error=error)
+		global er
+		er= "No data entered"
+		return redirect("/usettings")
 
 	if name:
 		stmt="UPDATE Reg_User SET name = ? WHERE uid = ?"
