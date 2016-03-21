@@ -170,6 +170,8 @@ def index():
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
   #
+  if uid:
+	return redirect('/uhome')
   return render_template("index.html", **context)
 
 #
@@ -182,11 +184,16 @@ def index():
 #
 @app.route('/userregister')
 def uregister():
+  if uid:
+	return redirect('/uhome')
   return render_template("userregister.html")
 
 @app.route('/uri', methods=['POST'])
 def uri():
 	error=None
+	global uid
+	if uid:
+		return redirect('/uhome')
 	uid=request.form['uid']
 	name=request.form['name']
 	password=request.form['password']
@@ -203,11 +210,15 @@ def uri():
 	for result in cursor:
 		names.append(result)
 	print names
-	return render_template("yes.html")
+	return redirect('/uhome')
+
 
 @app.route('/hri', methods=['POST'])
 def hri():
 	error=None
+	global hid
+	if uid:
+		return redirect('/uhome')
 	hid=request.form['uid']
 	name=request.form['name']
 	password=request.form['password']
@@ -229,15 +240,22 @@ def hri():
 
 @app.route('/hostregister')
 def hregister():
+  if uid:
+	return redirect('/uhome')
   return render_template("hostregister.html")
 
 @app.route('/userlogin')
 def ulogin():
+  if uid:
+	return redirect('/uhome')
   return render_template("userlogin.html")
 
 @app.route('/uli', methods=['POST'])
 def uli():
 	error=None
+	global uid
+        if uid:
+		return redirect('/uhome')
 	uid=request.form['uid']
 	try:
 		uid=int(uid)
@@ -259,11 +277,16 @@ def uli():
 
 @app.route('/hostlogin')
 def hlogin():
+  if uid:
+	return redirect('/uhome')
   return render_template("hostlogin.html")
 
 @app.route('/hli', methods=['POST'])
 def hli():
 	error=None
+	global hid
+        if uid:
+		return redirect('/uhome')
 	hid=request.form['uid']
 	try:
 		hid=int(hid)
@@ -286,7 +309,31 @@ def hli():
 @app.route('/uhome')
 def uhome():
 	print uid
-	return render_template("userhome.html")
+	stmt = "SELECT e.ename, e.edate, e.time, e.photo FROM Going g, Event_Create_Where e WHERE e.eid = g.eid and g.uid = ?"
+	cursor = g.conn.execute(stmt, (uid,))
+	pw=[]
+	for result in cursor:
+		pw.append(result)
+	for thing in pw:
+		print thing
+	return render_template("userhome.html", lis=pw)
+
+@app.route('/logout')
+def logout():
+	global uid
+	global hid
+	uid=""
+	hid=""
+	return redirect('/')
+
+@app.route('/usettings')
+def usettings():
+	return render_template("usersettings.html")
+
+
+@app.route('/friends')
+def friends():
+	return render_template("friends.html")
 	
 
 if __name__ == "__main__":
