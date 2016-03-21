@@ -404,7 +404,25 @@ def hhome():
 
 @app.route('/hsettings')
 def hsettings():
-	return render_template("hostsettings.html")
+	error=None
+	global er
+	if uid:
+		return redirect('/usettings')
+	if er:
+		error=er
+		er=""
+	stmt = "SELECT name, password, hname from Host where uid = ?"
+	cursor=g.conn.execute(stmt, (hid,))
+	pw=[]
+	for result in cursor:
+		pw.append(result)
+	name = pw[0][0]
+	password = pw[0][1]
+	plen=len(password)
+	password='x'*plen
+	hname = pw[0][2]
+	return render_template("hostsettings.html", name=name, pw=password, hname=hname, error=error)
+
 
 @app.route('/ecreate')
 def ecreate():
@@ -413,6 +431,7 @@ def ecreate():
 @app.route('/usc', methods=['POST'])
 def usc():
 	error=""
+	global er
 	global uid
 	if hid:
 		return redirect('/hsettings')
@@ -466,7 +485,6 @@ def usc():
 			return redirect("/usettings")
 				 
 	if name=="" and password=="" and loc=="" and change==False:
-		global er
 		er= "No new data entered"
 		return redirect("/usettings")
 
@@ -480,6 +498,32 @@ def usc():
 		stmt="UPDATE Reg_User SET loc = ? WHERE uid = ?"
 		cursor=g.conn.execute(stmt, (loc, uid,))
 	return redirect("/usettings")
+
+@app.route('/hsc', methods=['POST'])
+def hsc():
+	error=""
+	global er
+	global hid
+	if uid:
+		return redirect('/usettings')
+	name=request.form['name']
+	password=request.form['password']
+	hname=request.form['hname']
+				 
+	if name=="" and password=="" and hname=="":
+		er= "No new data entered"
+		return redirect("/hsettings")
+
+	if name:
+		stmt="UPDATE Host SET name = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (name, hid,))
+	if password:
+		stmt="UPDATE Host SET password = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (password, hid,))
+	if hname:
+		stmt="UPDATE Host SET hname = ? WHERE uid = ?"
+		cursor=g.conn.execute(stmt, (hname, hid,))
+	return redirect("/hsettings")
 
 
 if __name__ == "__main__":

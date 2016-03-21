@@ -1,7 +1,7 @@
 <!DOCTYPE html>
   <head>
     	<title>Welcome to EnVENT</title>
-	<link rel=stylesheet type="text/css" href="static/styleindex.css?version=17" media="screen" >
+	<link rel=stylesheet type="text/css" href="static/styleindex.css?version=16" media="screen" >
   </head>
 
 
@@ -9,15 +9,43 @@
   <div id="holder">
 
 	<div id="header">
-		<a href="/hhome"> Home </a> |
-		<a href="/hsettings"> Account </a> |
-	        <a href="/ecreate"> Create New Event </a> |
+		<a href="/uhome"> Home </a> |
+		<a href="/usettings"> Account </a> |
+		<a href="/friends"> Friends </a> |
+	        <a href="/uesearch"> Find Events </a> |
 		<a href="/logout"> Logout </a>
 	</div>
 	<div id="main"><br><br>
- 	
 
-	<a href="/hhome"><img class='img-reg' src='static/logo.png'></a>
+	
+	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
+
+	<br><br>
+	
+	<h2> Change account settings </h2> <br>
+
+	<h3> Current settings: </h3>
+	<h5> Name: {{name}} </h5>
+	<h5> Password: {{pw}} </h5>
+	<h5> Host Name: {{hname}} </h5>
+	
+	<form action="/hsc" method="post" id="main_form">
+		{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}
+		{% endif %}
+		<br>
+		<input type = "text" name= "name" value="" maxlength="100" size="50" class="inputbox" placeholder = "Name" />
+		<br><br>
+		<input type = "password" name= "password" value="" maxlength="100" size="50" class="inputbox" placeholder = "Password" />
+		<br><br>
+		<input type = "text" name= "hname" value="" maxlength="100" size="50" class="inputbox" placeholder = "Host Name" />
+		<br><br>
+				
+		<input type="submit" value="Enter" class = "input_button">
+
+
+	</form>
+	
 
   </div>
 
