@@ -40,11 +40,15 @@
 		<br><br>
 		<input type = "text" name= "loc" value="" maxlength="100" size="50" class="inputbox" placeholder = "City" />
 		<br><br>
-		<select name="option" width=300px">
-			{% for t in tags %}
-				<option value ={{t}} SELECTED>{{t}} </option>
+		<h5> Interests: </h5>
+			<div class="checkbox">
+			{% for t in seltags %}
+				<label><input type="checkbox" id={{t}} name={{t}} checked="checked" value="yes"}>{{t}}</label><br>
 			{% endfor %}
-		</select>
+			{% for t in tags %}
+				<label><input type="checkbox" id={{t}} name={{t}} value="no">{{t}}</label><br>
+			{% endfor %}
+			</div>
 		<br><br>
 				
 		<input type="submit" value="Enter" class = "input_button">

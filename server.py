@@ -371,7 +371,14 @@ def usettings():
 		for thing in result:
 			xw.append(thing)
 	print xw
-	return render_template("usersettings.html", name=name, pw=password, loc=loc, tags=xw, error=error)
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	cursor=g.conn.execute(stmt, (uid,))
+	yw=[]
+	for result in cursor:
+		for thing in result:
+			yw.append(thing)
+	print yw
+	return render_template("usersettings.html", name=name, pw=password, loc=loc, seltags=yw, tags=xw, error=error)
 
 
 @app.route('/friends')
@@ -412,9 +419,55 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	if name=="" and password=="" and loc=="":
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	cursor=g.conn.execute(stmt, (uid,))
+	yw=[]
+	for result in cursor:
+		for thing in result:
+			yw.append(thing)
+	stmt = "SELECT tname from Tags"
+	cursor=g.conn.execute(stmt)
+	xw=[]
+	for result in cursor:
+		for thing in result:
+			xw.append(thing)
+	print xw
+	change=False
+	for thing in xw:
+		x=thing in request.form
+		if x and thing in yw:
+			continue
+		elif x and thing not in yw:
+			var=0
+			stmt= "SELECT * from Tags"
+			cursor=g.conn.execute(stmt)
+			alltags=[]
+			for result in cursor:
+				if result[1]==thing:
+					var= int(result[0])
+			stmt="INSERT INTO Interested VALUES (?, ?)"
+			cursor=g.conn.execute(stmt, (var, uid))
+			change=True
+		elif x==False and thing in yw:
+			var=0
+			stmt= "SELECT * from Tags"
+			cursor=g.conn.execute(stmt)
+			alltags=[]
+			for result in cursor:
+				if result[1]==thing:
+					var= int(result[0])
+			stmt="DELETE FROM Interested WHERE tag_id=? and uid=?"
+			cursor=g.conn.execute(stmt, (var, uid))
+			change=True
+		elif x==False and thing not in yw:
+			continue
+		else:
+			er= "Something went wrong"
+			return redirect("/usettings")
+				 
+	if name=="" and password=="" and loc=="" and change==False:
 		global er
-		er= "No data entered"
+		er= "No new data entered"
 		return redirect("/usettings")
 
 	if name:
