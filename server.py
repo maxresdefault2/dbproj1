@@ -42,8 +42,8 @@ er=""
 #
 #     DATABASEURI = "postgresql://ewu2493:foobar@w4111db.eastus.cloudapp.azure.com/ewu2493"
 #
-DATABASEURI = "sqlite:///Reg_User.db"
-
+#DATABASEURI = "sqlite:///Reg_User.db"
+DATABASEURI= "postgresql://cep2141:PPDZNL@w4111db.eastus.cloudapp.azure.com/cep2141"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -121,7 +121,7 @@ def index():
 
   request.method:   "GET" or "POST"
   request.form:     if the browser submitted a form, this contains the data in the form
-  request.args:     dictionary of URL arguments e.g., {a:1, b:2} for http://localhost?a=1&b=2
+  request.args:     dictionary of URL arguments e.g., {a:1, b:2} for http://localhost%sa=1&b=2
 
   See its API: http://flask.pocoo.org/docs/0.10/api/#incoming-request-data
   """
@@ -209,7 +209,7 @@ def uri():
 	except:
 		error="UID must be an integer"
 		return render_template("userregister.html", error=error)
-	stmt="INSERT INTO Reg_User VALUES (?, ?, ?, ?)"
+	stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (uid, name, password, loc))
 	cursor=g.conn.execute("SELECT * from Reg_User")
 	names=[]
@@ -236,7 +236,7 @@ def hri():
 	except:
 		error="UID must be an integer"
 		return render_template("userregister.html", error=error)
-	stmt="INSERT INTO Host VALUES (?, ?, ?, ?)"
+	stmt="INSERT INTO Host VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (hid, name, password, hname))
 	cursor=g.conn.execute("SELECT * from Host")
 	names=[]
@@ -278,7 +278,7 @@ def uli():
 		return render_template("userlogin.html", error=error)
 
 	password=request.form['password']
-	stmt="SELECT password FROM Reg_User WHERE uid = ?"
+	stmt="SELECT password FROM Reg_User WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	pw=[]
   	for result in cursor:
@@ -313,7 +313,7 @@ def hli():
 		return render_template("hostlogin.html", error=error)
 
 	password=request.form['password']
-	stmt="SELECT password FROM Host WHERE uid = ?"
+	stmt="SELECT password FROM Host WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (hid,))
 	pw=[]
   	for result in cursor:
@@ -327,7 +327,7 @@ def hli():
 @app.route('/uhome')
 def uhome():
 	print uid
-	stmt = "SELECT e.ename, e.edate, e.time, e.photo FROM Going g, Event_Create_Where e WHERE e.eid = g.eid and g.uid = ?"
+	stmt = "SELECT e.ename, e.edate, e.time, e.photo FROM Going g, Event_Create_Where e WHERE e.eid = g.eid and g.uid = %s"
 	cursor = g.conn.execute(stmt, (uid,))
 	pw=[]
 	for result in cursor:
@@ -354,7 +354,7 @@ def usettings():
 	if er:
 		error=er
 		er=""
-	stmt = "SELECT name, password, loc from Reg_User where uid = ?"
+	stmt = "SELECT name, password, loc from Reg_User where uid = %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	pw=[]
 	for result in cursor:
@@ -364,14 +364,14 @@ def usettings():
 	plen=len(password)
 	password='x'*plen
 	loc = pw[0][2]
-	stmt = "SELECT tname from Tags EXCEPT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	stmt = "SELECT tname from Tags EXCEPT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
 	print xw
-	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
@@ -392,7 +392,7 @@ def uesearch():
 @app.route('/hhome')
 def hhome():
 	print hid
-	stmt = "SELECT ename, edate, time, photo FROM Event_Create_Where WHERE uid = ?"
+	stmt = "SELECT ename, edate, time, photo FROM Event_Create_Where WHERE uid = %s"
 	cursor = g.conn.execute(stmt, (hid,))
 	pw=[]
 	for result in cursor:
@@ -411,7 +411,7 @@ def hsettings():
 	if er:
 		error=er
 		er=""
-	stmt = "SELECT name, password, hname from Host where uid = ?"
+	stmt = "SELECT name, password, hname from Host where uid = %s"
 	cursor=g.conn.execute(stmt, (hid,))
 	pw=[]
 	for result in cursor:
@@ -438,7 +438,7 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= ?"
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
@@ -464,7 +464,7 @@ def usc():
 			for result in cursor:
 				if result[1]==thing:
 					var= int(result[0])
-			stmt="INSERT INTO Interested VALUES (?, ?)"
+			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (var, uid))
 			change=True
 		elif x==False and thing in yw:
@@ -475,7 +475,7 @@ def usc():
 			for result in cursor:
 				if result[1]==thing:
 					var= int(result[0])
-			stmt="DELETE FROM Interested WHERE tag_id=? and uid=?"
+			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (var, uid))
 			change=True
 		elif x==False and thing not in yw:
@@ -489,13 +489,13 @@ def usc():
 		return redirect("/usettings")
 
 	if name:
-		stmt="UPDATE Reg_User SET name = ? WHERE uid = ?"
+		stmt="UPDATE Reg_User SET name = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (name, uid,))
 	if password:
-		stmt="UPDATE Reg_User SET password = ? WHERE uid = ?"
+		stmt="UPDATE Reg_User SET password = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (password, uid,))
 	if loc:
-		stmt="UPDATE Reg_User SET loc = ? WHERE uid = ?"
+		stmt="UPDATE Reg_User SET loc = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (loc, uid,))
 	return redirect("/usettings")
 
@@ -515,13 +515,13 @@ def hsc():
 		return redirect("/hsettings")
 
 	if name:
-		stmt="UPDATE Host SET name = ? WHERE uid = ?"
+		stmt="UPDATE Host SET name = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (name, hid,))
 	if password:
-		stmt="UPDATE Host SET password = ? WHERE uid = ?"
+		stmt="UPDATE Host SET password = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (password, hid,))
 	if hname:
-		stmt="UPDATE Host SET hname = ? WHERE uid = ?"
+		stmt="UPDATE Host SET hname = %s WHERE uid = %s"
 		cursor=g.conn.execute(stmt, (hname, hid,))
 	return redirect("/hsettings")
 
