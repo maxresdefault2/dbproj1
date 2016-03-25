@@ -42,8 +42,8 @@ er=""
 #
 #     DATABASEURI = "postgresql://ewu2493:foobar@w4111db.eastus.cloudapp.azure.com/ewu2493"
 #
-DATABASEURI = "sqlite:///Reg_User.db"
-#DATABASEURI= "postgresql://cep2141:PPDZNL@w4111db.eastus.cloudapp.azure.com/cep2141"
+#DATABASEURI = "sqlite:///Reg_User.db"
+DATABASEURI= "postgresql://cep2141:PPDZNL@w4111db.eastus.cloudapp.azure.com/cep2141"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -357,7 +357,7 @@ def uhome():
 		p.extend([tags])
 		fin.append(p)
 
-	pw=sorted(fin, key=operator.itemgetter(2,3))
+	pw=sorted(fin, key=operator.itemgetter(8,9))
 	return render_template("userhome.html", lis=pw)
 
 @app.route('/logout')
@@ -481,6 +481,7 @@ def es():
 			tags=tagdict[thing[0]]
 		p.extend([tags])
 		fin.append(p)
+	fin=sorted(fin, key=operator.itemgetter(8,9))
 	if hid:
 		return render_template("heventsearch.html", lis=fin)
 	else:
