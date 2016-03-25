@@ -42,8 +42,8 @@ er=""
 #
 #     DATABASEURI = "postgresql://ewu2493:foobar@w4111db.eastus.cloudapp.azure.com/ewu2493"
 #
-#DATABASEURI = "sqlite:///Reg_User.db"
-DATABASEURI= "postgresql://cep2141:PPDZNL@w4111db.eastus.cloudapp.azure.com/cep2141"
+DATABASEURI = "sqlite:///Reg_User.db"
+#DATABASEURI= "postgresql://cep2141:PPDZNL@w4111db.eastus.cloudapp.azure.com/cep2141"
 
 #
 # This line creates a database engine that knows how to connect to the URI above
@@ -286,6 +286,7 @@ def uli():
 	if pw[0]==(password,):
 		return redirect('/uhome')
 	error= "Invalid username/password"
+	uid=""
 	return render_template("userlogin.html", error=error)
 
 
@@ -322,19 +323,41 @@ def hli():
 		return redirect('/hhome')
 	else:
 		error= "Invalid username/password"
+		hid=""
 		return render_template("hostlogin.html", error=error)
 
 @app.route('/uhome')
 def uhome():
+	if hid:
+		return redirect('/hhome')
 	print uid
-	stmt = "SELECT e.ename, e.edate, e.time, e.photo FROM Going g, Event_Create_Where e WHERE e.eid = g.eid and g.uid = %s"
+	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = %s"
 	cursor = g.conn.execute(stmt, (uid,))
 	pw=[]
+	enames=[]
+	tagdict={}
 	for result in cursor:
-		pw.append(result)
-	pw=sorted(pw, key=operator.itemgetter(2,3))
+		if result[0] in enames:
+			l=len(pw)
+			for i in range(0,l):
+				if str(pw[i][0])==str(result[0]):
+					dictval= tagdict[result[0]]
+					newdictval = dictval+", "+str(result[2])
+					tagdict[result[0]]=newdictval
+		else:
+			enames.append(result[0])
+			tagdict[result[0]]=result[2]
+			pw.append(result)
+	fin=[]	
 	for thing in pw:
-		print thing
+		p=[]
+		for x in range(0,len(thing)):
+			p.extend([thing[x]])
+			tags=tagdict[thing[0]]
+		p.extend([tags])
+		fin.append(p)
+
+	pw=sorted(fin, key=operator.itemgetter(2,3))
 	return render_template("userhome.html", lis=pw)
 
 @app.route('/logout')
@@ -385,12 +408,88 @@ def usettings():
 def friends():
 	return render_template("friends.html")
 
-@app.route('/uesearch')
-def uesearch():
-	return render_template("usereventsearch.html")
+@app.route('/esearch')
+def esearch():
+	pw=[]
+	if hid:
+		return render_template("heventsearch.html", lis=pw)
+	else:
+		return render_template("eventsearch.html", lis=pw)
+
+@app.route('/es', methods=['POST'])
+def es():
+	error=None
+	dval=request.form['drop']
+	sval=request.form['searched']
+	pw = []
+	stmt=""
+	if not sval:
+		error="No searchable value entered"
+		if hid:
+			return render_template("heventsearch.html", error=error)
+		else:
+			return render_template("eventsearch.html", error=error)
+	sval=str(sval).lower()
+	stmt="SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid"
+	cursor=g.conn.execute(stmt)
+	enames=[]
+	tagdict={}
+	for result in cursor:
+		if result[0] in enames:
+			l=len(pw)
+			for i in range(0,l):
+				if str(pw[i][0])==str(result[0]):
+					dictval= tagdict[result[0]]
+					newdictval = dictval+", "+str(result[2])
+					tagdict[result[0]]=newdictval
+		else:
+			enames.append(result[0])
+			tagdict[result[0]]=result[2]
+			pw.append(result)
+	res=[]
+	for thing in pw:
+		if dval=='ename':
+			if sval in str(thing[0]).lower():
+				res.append(thing)
+		if dval=='hname':
+			if sval in str(thing[1]).lower():
+				res.append(thing)
+		if dval=='city':
+			if sval in str(thing[3]).lower():
+				res.append(thing)
+		if dval=='zip':
+			if sval in str(thing[4]).lower():
+				res.append(thing)
+		if dval=='state':
+			if sval in str(thing[5]).lower():
+				res.append(thing)
+		if dval=='loc_name':
+			if sval in str(thing[6]).lower():
+				res.append(thing)
+	if dval=='tag_name':
+		for en, tg in tagdict.iteritems():
+			if sval in str(tg).lower():
+				for thing in pw:
+					if thing[0]==en:
+						res.append(thing)
+
+	fin=[]	
+	for thing in res:
+		p=[]
+		for x in range(0,len(thing)):
+			p.extend([thing[x]])
+			tags=tagdict[thing[0]]
+		p.extend([tags])
+		fin.append(p)
+	if hid:
+		return render_template("heventsearch.html", lis=fin)
+	else:
+		return render_template("eventsearch.html", lis=fin)
 
 @app.route('/hhome')
 def hhome():
+	if uid:
+		return redirect('/uhome')
 	print hid
 	stmt = "SELECT ename, edate, time, photo FROM Event_Create_Where WHERE uid = %s"
 	cursor = g.conn.execute(stmt, (hid,))
@@ -499,7 +598,7 @@ def usc():
 		cursor=g.conn.execute(stmt, (loc, uid,))
 	return redirect("/usettings")
 
-@app.route('/hsc', methods=['POST'])
+@app.route('/hsc', methods=['GET','POST'])
 def hsc():
 	error=""
 	global er
