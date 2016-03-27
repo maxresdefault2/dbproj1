@@ -464,22 +464,40 @@ def es():
 	res=[]
 	for thing in pw:
 		if dval=='ename':
-			if sval in str(thing[0]).encode('ascii', 'ignore').lower():
+			val=thing[0]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
 				res.append(thing)
 		if dval=='hname':
-			if sval in str(thing[1]).lower():
+			val=thing[1]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
 				res.append(thing)
 		if dval=='city':
-			if sval in str(thing[3]).lower():
+			val=thing[3]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
 				res.append(thing)
 		if dval=='zip':
-			if sval in str(thing[4]).lower():
+			val=thing[4]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
 				res.append(thing)
 		if dval=='state':
-			if sval in str(thing[5]).lower():
-				res.append(thing)
+			val=thing[5]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
+				res.append(thing))
 		if dval=='loc_name':
-			if sval in str(thing[6]).lower():
+			val=thing[6]
+			val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
 				res.append(thing)
 	if dval=='tag_name':
 		for en, tg in tagdict.iteritems():
