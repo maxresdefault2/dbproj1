@@ -464,7 +464,7 @@ def es():
 	res=[]
 	for thing in pw:
 		if dval=='ename':
-			if sval in str(thing[0]).encode('ascii').lower():
+			if sval in str(thing[0]).encode('ascii', 'ignore').lower():
 				res.append(thing)
 		if dval=='hname':
 			if sval in str(thing[1]).lower():
