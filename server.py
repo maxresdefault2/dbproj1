@@ -492,7 +492,7 @@ def es():
 			val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
-				res.append(thing))
+				res.append(thing)
 		if dval=='loc_name':
 			val=thing[6]
 			val=val.encode('ascii','ignore')
