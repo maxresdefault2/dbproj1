@@ -11,7 +11,7 @@
 	<div id="header">
 		<a href="/hhome"> Home </a> |
 		<a href="/hsettings"> Account </a> |
-		<a href="/evcr"> Create Event </a> |
+		<a href="/hhome"> Create Event </a> |
 	        <a href="/esearch"> Find Events </a> |
 		<a href="/logout"> Logout </a>
 	</div>
@@ -22,9 +22,22 @@
 
 	<br><br>
 	
-	<h2> Create Event </h2> <br>
+	<h2> Edit event settings </h2> <br>
 
-	<form action="/create" method="post" id="main_form">
+	<h3> Current settings: </h3>
+	<h5> Name: {{name}} </h5>
+	<h5> Time: {{time}} </h5>
+	<h5> Date: {{date}} </h5>
+	<h5> Ticket Qty: {{qty}} </h5>
+	<h5> Location: {{loc}} </h5>
+	<h5> Tags: {{tags}} </h5>
+	<h5> Tickets Sold: {{at}} </h5>
+	<h5> Going: {{going}} </h5>
+	<h5> Photo:</h5>
+	<div> <a href="/uhome"><img class='img-circle' src= {{photo}} ></a> </div>
+	<br><br>
+
+	<form action="/eec" method="post" id="main_form">
 		{% if error %}
 			<p class=error><strong>Error:</strong> {{ error }}
 		{% endif %}
@@ -40,6 +53,9 @@
 		<input type = "text" name= "photo" value="" maxlength="100" size="50" class="inputbox" placeholder = "Photo URL" />
 		<h5> Tags: </h5>
 			<div class="checkbox">
+			{% for t in seltags %}
+				<label><input type="checkbox" id={{t}} name={{t}} checked="checked" value="yes"}>{{t}}</label><br>
+			{% endfor %}
 			{% for t in useltags %}
 				<label><input type="checkbox" id={{t}} name={{t}} value="no">{{t}}</label><br>
 			{% endfor %}
@@ -82,6 +98,13 @@
 		<input type="submit" value="Enter" class = "input_button">
 
 
+	</form>
+
+	<br><br>
+	<form action="/delev" method="post" id="main_form">
+		<input type="submit" value="Delete Event" class = "input_button">
+	</form>
+	
   </div>
 
 </body>

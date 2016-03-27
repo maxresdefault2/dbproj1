@@ -20,6 +20,36 @@
 
 	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
 
+
+	<h1>My Friends</h1><br>
+
+	<br>
+	<a href="/frevs"><u><h4>View all friend's events</h4></u></a><br>
+	<h4> View full profile for friend by selecting from dropdown menu </h4>
+	<form action="/viewprof" method="post" id="main_form">
+		<select name="drop">
+		{% for n in lis %}
+			<option value={{n[3]}}>{{n[0]}}</option>
+		{% endfor %}
+		</select>
+		<br><br>
+				
+		<input type="submit" value="Enter" class = "input_button">
+
+
+	</form>
+
+	
+
+	<div>
+		{% for n in lis %}
+			<div>{{n[0]}}</div>
+			<div>Location: {{n[1]}}</div>
+			<div>Friends since: {{n[2]}}</div>
+			<br>
+		{% endfor %}
+		</div>
+
   </div>
 
 </body>
