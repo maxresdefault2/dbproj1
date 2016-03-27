@@ -465,42 +465,42 @@ def es():
 	for thing in pw:
 		if dval=='ename':
 			val=thing[0]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='hname':
 			val=thing[1]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
 			val=thing[3]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='zip':
 			val=thing[4]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='state':
 			val=thing[5]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='loc_name':
 			val=thing[6]
-			if isinstance(val, str):
+			if not isinstance(val, str):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
