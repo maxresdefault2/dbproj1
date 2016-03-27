@@ -465,38 +465,44 @@ def es():
 	for thing in pw:
 		if dval=='ename':
 			val=thing[0]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='hname':
 			val=thing[1]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
 			val=thing[3]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='zip':
 			val=thing[4]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='state':
 			val=thing[5]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='loc_name':
 			val=thing[6]
-			val=val.encode('ascii','ignore')
-			val=str(val).lower()
+			if isinstance(val, str):
+				val=val.encode('ascii','ignore')
+				val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 	if dval=='tag_name':

@@ -1,0 +1,30 @@
+home
+user login
+host login
+user registration
+host registration
+u my events (home, going [h=acct, friends, logout])
+h my events (home, created [h=acct, create, logout])
+u edit info (name, pw, loc, interests)
+h edit info (name, pw, hname)
+u look for events (host, tags, city, zip, state, building)
+h look for events (host, tags, city, zip, state, building)
+u my friends (name, location, my friends' events link)
+u pages (name, location, events, add as friend)
+h event page (edit avail(not less than sold), look at users going, add/change tag, add/change loc, delete event)
+add interests to profiles
+h create events (eid, ename, loc, time, date,
+	#ticks, photo url, tag, price/types)
+u friends' events
+
+make pricing table, add option to edit that on h event page  & add to create
+find users
+u my tickets 
+event pages (buy link(for users), info, mark as going(for users))
+images link to event pages (link to edit event if host and your event)
+u buy ticket for events (not over qty, pickup only, types)
+h see who has tickets for my event/how many/price event page
+add * to required fields
+use now() on since on upage and friends page
+can't insert tagname that has name in db
+test everything & things that shouldn't work!
