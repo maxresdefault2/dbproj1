@@ -342,7 +342,8 @@ def hlogin():
 
 @app.route('/hli', methods=['POST'])
 def hli():
-	error=None
+	global er
+	er=None
 	global hid
         if uid:
 		return redirect('/uhome')
@@ -663,12 +664,18 @@ def usc():
 			yw.append(thing)
 	stmt = "SELECT tname from Tags"
 	cursor=g.conn.execute(stmt)
+	print 'yw'
+	print yw
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
 	change=False
+	print 'xw'
+	print xw
 	for thing in xw:
+		print 'thing'
+		print thing
 		x=thing in request.form
 		if x and thing in yw:
 			continue
