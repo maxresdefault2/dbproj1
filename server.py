@@ -1030,7 +1030,8 @@ def eec():
 			for thing in cursor:
 				for pri in thing:
 					pr.append(pri)
-			price=int(pr[0])
+			price=float(pr[0])
+			print 'price'
 			print price
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (price, eev, ad,))
@@ -1041,7 +1042,7 @@ def eec():
 			for thing in cursor:
 				for pri in thing:
 					pr.append(pri)
-			price=int(pr[0])
+			price=float(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (price, eev, ch,))
 		if st:
@@ -1051,7 +1052,7 @@ def eec():
 			for thing in cursor:
 				for pri in thing:
 					pr.append(pri)
-			price=int(pr[0])
+			price=float(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (price, eev, st,))
 		if sr:
@@ -1061,7 +1062,7 @@ def eec():
 			for thing in cursor:
 				for pri in thing:
 					pr.append(pri)
-			price=int(pr[0])
+			price=float(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (price, eev, sr,))
 		if name:
