@@ -191,16 +191,18 @@ def index():
 #
 @app.route('/userregister')
 def uregister():
+  global er
   if uid:
 	return redirect('/uhome')
   if hid:
 	return redirect('/hhome')
-  return render_template("userregister.html")
+  return render_template("userregister.html", error=er)
 
 @app.route('/uri', methods=['POST'])
 def uri():
 	print uid
-	error=None
+	global er
+	er=None
 	global uid
 	if uid:
 		return redirect('/uhome')
@@ -213,19 +215,19 @@ def uri():
 	print 'loc'
 	print loc
 	if not uid and not name and not password:
-		error="All required fields must be filled"
-		return render_template("userregister.html", error=error)
+		er="All required fields must be filled"
+		return redirect('/userregister', error=er)
 	try:
 		uid=int(uid)
 	except:
-		error="UID must be an integer"
-		return render_template("userregister.html", error=error)
+		er="UID must be an integer"
+		return redirect('/userregister', error=er)
 	stmt="SELECT * FROM Reg_User WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (uid,))
 	rc= cursor.rowcount
 	if rc!=0:
-		error="UID taken, please enter a new number"
-		return render_template("userregister.html", error=error)
+		er="UID taken, please enter a new number"
+		return redirect('/userregister', error=er)
 	if loc =="":
 		print 'not loc'
 		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, null)"
@@ -238,7 +240,8 @@ def uri():
 
 @app.route('/hri', methods=['POST'])
 def hri():
-	error=None
+	global er
+	er=None
 	global hid
 	if uid:
 		return redirect('/uhome')
@@ -248,17 +251,20 @@ def hri():
 	name=request.form['name']
 	password=request.form['password']
 	hname=request.form['hname']
+	if not hid and not name and not password and not hname:
+		er="All required fields must be filled"
+		return redirect('/hostregister', error=er)
 	try:
 		hid=int(hid)
 	except:
-		error="UID must be an integer"
-		return render_template("hostregister.html", error=error)
+		er="UID must be an integer"
+		return redirect('/hostregister', error=er)
 	stmt="SELECT * FROM Host WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (hid,))
 	rc= cursor.rowcount
 	if rc!=0:
-		error="UID taken, please enter a new number"
-		return render_template("hostregister.html", error=error)
+		er="UID taken, please enter a new number"
+		return redirect('/hostregister', error=er)
 	stmt="INSERT INTO Host VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (hid, name, password, hname))
 	cursor=g.conn.execute("SELECT * from Host")
