@@ -437,13 +437,13 @@ def usettings():
 	plen=len(password)
 	password='x'*plen
 	loc = pw[0][2]
-	stmt = "SELECT tname from Tags EXCEPT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
+	stmt = "SELECT tname, tag_id from Tags EXCEPT SELECT t.tname, t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
-	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
+	stmt = "SELECT tname, tag_id from Tags INTERSECT SELECT t.tname, t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
@@ -666,14 +666,23 @@ def usc():
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
-	stmt = "SELECT tname from Tags"
+	#stmt = "SELECT tname from Tags"
+	stmt = "SELECT tag_id from Tags"
 	cursor=g.conn.execute(stmt)
-	print 'yw'
-	print yw
+	#print 'yw'
+	#print yw
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
+			
+	for thing in xw:
+		print 'thing'
+		print thing
+		z=request.form.getlist(thing)
+		print 'z'
+		print z
+	j=raw_input('k')
 	change=False
 	print 'xw'
 	print xw

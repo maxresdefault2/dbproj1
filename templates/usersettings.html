@@ -45,10 +45,10 @@
 		<h5> Interests: </h5>
 			<div class="checkbox">
 			{% for t in seltags %}
-				<label><input type="checkbox" id={{t}} name={{t}} checked="checked" value="yes"}>{{t}}</label><br>
+				<label><input type="checkbox" id={{t[1]}} name={{t[1]}} checked="checked" value="yes"}>{{t[0]}}</label><br>
 			{% endfor %}
 			{% for t in tags %}
-				<label><input type="checkbox" id={{t}} name={{t}} value="no">{{t}}</label><br>
+				<label><input type="checkbox" id={{t[1]}} name={{t[1]}} value="no">{{t[0]}}</label><br>
 			{% endfor %}
 			</div>
 		<br><br>
