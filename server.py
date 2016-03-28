@@ -1481,14 +1481,13 @@ def uticks():
 		nev.append(p)
 	print 'nev'
 	print nev
-	pw=[]
 	for thing in nev:
 		eid=int(thing[0])
 		stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid=%s"
 		cursor = g.conn.execute(stmt, (eid,))
 		enames=[]
 		tagdict={}
-
+		pw=[]
 		for result in cursor:
 			if result[0] in enames:
 				l=len(pw)
