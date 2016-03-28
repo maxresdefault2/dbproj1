@@ -1476,9 +1476,9 @@ def uticks():
 				print '1one'
 				print i[1]
 				if i[1] in tdic.keys():
-					tdic[i[1]]=int(i[2])
-				else:
 					tdic[i[1]]+=int(i[2])
+				else:
+					tdic[i[1]]=int(i[2])
 				cost+=i[3]
 		typestr=""
 		typeirt=0
