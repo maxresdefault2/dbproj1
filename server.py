@@ -1341,7 +1341,7 @@ def usearch():
 	return render_template("usersearch.html")
 
 
-@app.route('/us', methods=['POST'])
+'''@app.route('/us', methods=['POST'])
 def us():
 	error=None
 	dval=request.form['drop']
@@ -1427,7 +1427,7 @@ def us():
 		return render_template("heventsearch.html", lis=fin)
 	else:
 		return render_template("eventsearch.html", lis=fin)
-
+'''
 
 
 if __name__ == "__main__":
