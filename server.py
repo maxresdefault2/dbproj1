@@ -1044,6 +1044,7 @@ def eec():
 				for pri in thing:
 					pr.append(pri)
 			price=int(pr[0])
+			print price
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (price, eev, ad,))
 		if ch:
