@@ -1552,6 +1552,15 @@ def uviewev():
 		fin.append(p)
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
+	
+	stmt="SELECT * FROM Going WHERE uid = %s and eid = %s"
+	cursor=g.conn.execute(stmt, (uid, eid,))
+	g=[]
+	for thing in cursor:
+		g.append(thing)
+	going=False
+	if g:
+		going=True
 	if hid:
 		return render_template('usereventpage.html', lis=pw)
 	else:
