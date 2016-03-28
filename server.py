@@ -214,17 +214,20 @@ def uri():
 	print 'loc'
 	print loc
 	if not uid and not name and not password:
+		uid=""
 		er="All required fields must be filled"
 		return redirect('/userregister')
 	try:
 		uid=int(uid)
 	except:
+		uid=""
 		er="UID must be an integer"
 		return redirect('/userregister')
 	stmt="SELECT * FROM Reg_User WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (uid,))
 	rc= cursor.rowcount
 	if rc!=0:
+		uid=""
 		er="UID taken, please enter a new number"
 		return redirect('/userregister')
 	if loc =="":
@@ -251,17 +254,20 @@ def hri():
 	password=request.form['password']
 	hname=request.form['hname']
 	if not hid and not name and not password and not hname:
+		hid=""
 		er="All required fields must be filled"
 		return redirect('/hostregister')
 	try:
 		hid=int(hid)
 	except:
+		hid=""
 		er="UID must be an integer"
 		return redirect('/hostregister')
 	stmt="SELECT * FROM Host WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (hid,))
 	rc= cursor.rowcount
 	if rc!=0:
+		hid=""
 		er="UID taken, please enter a new number"
 		return redirect('/hostregister')
 	stmt="INSERT INTO Host VALUES (%s, %s, %s, %s)"
