@@ -1387,7 +1387,11 @@ def us():
 		print 'res'
 		print res
 		for j in res:
+			print 'j'
+			print j
 			for thing in j:
+				print 'thing'
+				print thing
 				user=thing[2]
 				stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 				cursor=g.conn.execute(stmt, (uid, user, user, uid))
