@@ -1462,7 +1462,7 @@ def uticks():
 	print v
 	for thing in v:
 		p=[]
-		p.extend(thing)
+		p.extend(str(thing))
 		tdic={}
 		cost=0
 		for i in ev:
@@ -1481,7 +1481,7 @@ def uticks():
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
 		p.extend(typestr)
-		p.extend(cost)
+		p.extend(str(cost))
 		print 'p'
 		print p
 		nev.append(p)
