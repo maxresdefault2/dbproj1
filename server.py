@@ -1453,8 +1453,19 @@ def uticks():
 		ev.append(result)
 	print 'ev'
 	print ev
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, tt.type, SUM(o.qty), SUM(price) FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and o.uid=%s and o.eid=ti.eid and e.eid = o.eid and e.eid = ti.eid and ti.typeid=tt.typeid and o.typeid=tt.typeid group by tt.type, e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo"
-	cursor = g.conn.execute(stmt, (uid,))
+	nev=[]
+	vals=[]
+	for thing in ev:
+		vals.append(thing[0])
+	print 'vals'
+	print vals
+	v=list(set(vals))
+	print 'v'
+	print v
+
+		
+	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid"
+	cursor = g.conn.execute(stmt)
 	pw=[]
 	enames=[]
 	tagdict={}
