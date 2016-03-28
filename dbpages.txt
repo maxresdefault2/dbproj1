@@ -24,8 +24,8 @@ u my tickets
 event pages (buy link(for users), info, mark as going(for users))
 u buy ticket for events (not over qty, pickup only, types)
 h see type sold on event page
-
 add * to required fields
+
 tags optional
 remove friend
 make sure quotes work in non-num types

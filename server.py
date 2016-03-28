@@ -209,6 +209,11 @@ def uri():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
+	print 'loc'
+	print loc
+	if not uid and not name and not password:
+		error="All required fields must be filled"
+		return render_template("userregister.html", error=error)
 	try:
 		uid=int(uid)
 	except:
@@ -220,12 +225,13 @@ def uri():
 	if rc!=0:
 		error="UID taken, please enter a new number"
 		return render_template("userregister.html", error=error)
-	stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, %s)"
-	g.conn.execute(stmt, (uid, name, password, loc))
-	cursor=g.conn.execute("SELECT * from Reg_User")
-	names=[]
-	for result in cursor:
-		names.append(result)
+	if not loc:
+		print 'not loc'
+		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, null)"
+		g.conn.execute(stmt, (uid, name, password,))
+	else:
+		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, %s)"
+		g.conn.execute(stmt, (uid, name, password, loc))
 	return redirect('/uhome')
 
 
