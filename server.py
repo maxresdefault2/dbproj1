@@ -1175,6 +1175,19 @@ def create():
 	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
 		newloc=True
 		
+	print name
+	print time
+	print date
+	print qty
+	print photo
+	print ad
+	print ch
+	print st
+	print sr
+	print ntag
+	print change
+	print newloc
+	print l
 	if name=="" or time=="" or date=="" or qty=="" or photo =="" or ad=="" or ch=="" or st=="" or sr=="" or (ntag=="" and change==False) or (newloc==False and l==0):
 		er= "All data not entered"
 		return redirect("/evcr")
