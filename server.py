@@ -821,8 +821,7 @@ def editevent():
 	tpr=[]
 	for result in cursor:
 		tpr.append(result)
-	for thing in tpr:
-		print thing
+	print tpr
 	print 'things'
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
