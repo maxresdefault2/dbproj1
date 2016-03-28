@@ -1336,9 +1336,12 @@ def frevs():
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	return render_template("friendevents.html", lis=pw)
 	
-@app.route('/usearch', methods=['POST'])
+@app.route('/usearch')
 def usearch():
-	return render_template("usersearch.html")
+	if hid:
+		return render_template("husersearch.html")
+	else:
+		return render_template("usersearch.html")
 
 
 '''@app.route('/us', methods=['POST'])
