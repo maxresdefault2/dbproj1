@@ -26,6 +26,7 @@ u buy ticket for events (not over qty, pickup only, types)
 h see type sold on event page
 add * to required fields
 
+login with wrong stuff
 tags optional
 remove friend
 make sure quotes work in non-num types

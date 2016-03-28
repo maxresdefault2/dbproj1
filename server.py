@@ -213,7 +213,7 @@ def uri():
 	loc=request.form['loc']
 	print 'loc'
 	print loc
-	if not uid and not name and not password:
+	if not uid or not name or not password:
 		uid=""
 		er="All required fields must be filled"
 		return redirect('/userregister')
@@ -253,7 +253,7 @@ def hri():
 	name=request.form['name']
 	password=request.form['password']
 	hname=request.form['hname']
-	if not hid and not name and not password and not hname:
+	if not hid or not name or not password or not hname:
 		hid=""
 		er="All required fields must be filled"
 		return redirect('/hostregister')
@@ -289,14 +289,16 @@ def hregister():
 
 @app.route('/userlogin')
 def ulogin():
+  global er
   if uid:
 	return redirect('/uhome')
   if hid:
 	return redirect('/hhome')
-  return render_template("userlogin.html")
+  return render_template("userlogin.html", error=er)
 
 @app.route('/uli', methods=['POST'])
 def uli():
+	global er
 	error=None
 	global uid
         if uid:
@@ -307,29 +309,36 @@ def uli():
 	try:
 		uid=int(uid)
 	except:
-		error= "UID must be an integer"
-		return render_template("userlogin.html", error=error)
+		uid=""
+		er= "UID must be an integer"
+		return redirect('/userlogin")
 
 	password=request.form['password']
 	stmt="SELECT password FROM Reg_User WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (uid,))
+	rc=cursor.rowcount
+	if rc==0:
+		er= "Invalid username/password"
+		uid=""
+		return redirect("/userlogin")
 	pw=[]
   	for result in cursor:
     		pw.append(result)
 	if pw[0]==(password,):
 		return redirect('/uhome')
-	error= "Invalid username/password"
+	er= "Invalid username/password"
 	uid=""
-	return render_template("userlogin.html", error=error)
+	return redirect("/userlogin")
 
 
 @app.route('/hostlogin')
 def hlogin():
+  global er
   if uid:
 	return redirect('/uhome')
   if hid:
 	return redirect('/hhome')
-  return render_template("hostlogin.html")
+  return render_template("hostlogin.html", error=er)
 
 @app.route('/hli', methods=['POST'])
 def hli():
@@ -343,21 +352,27 @@ def hli():
 	try:
 		hid=int(hid)
 	except:
-		error= "UID must be an integer"
-		return render_template("hostlogin.html", error=error)
+		hid=""
+		er= "UID must be an integer"
+		return redirect("/hostlogin")
 
 	password=request.form['password']
 	stmt="SELECT password FROM Host WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (hid,))
+	rc=cursor.rowcount
+	if rc==0:
+		er= "Invalid username/password"
+		hid=""
+		return redirect("/hostlogin")
 	pw=[]
   	for result in cursor:
     		pw.append(result)
 	if pw[0]==(password,):
 		return redirect('/hhome')
 	else:
-		error= "Invalid username/password"
+		er= "Invalid username/password"
 		hid=""
-		return render_template("hostlogin.html", error=error)
+		return redirect("/hostlogin")
 
 @app.route('/uhome')
 def uhome():
