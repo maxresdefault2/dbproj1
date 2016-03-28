@@ -458,9 +458,9 @@ def es():
 				res2=result[2]
 				if not isinstance(res2, int) and not isinstance(res2, float):
 					res2=res2.encode('ascii','ignore')
-				if str(pw[i][0])==str(result[0]):
+				if str(sti0)==str(res0):
 					dictval= tagdict[result[0]]
-					newdictval = dictval+", "+str(result[2])
+					newdictval = dictval+", "+str(res2)
 					tagdict[result[0]]=newdictval
 		else:
 			enames.append(result[0])
