@@ -680,6 +680,9 @@ def usc():
 	for thing in xw:
 		print 'thing'
 		print thing
+		z=request.form.getlist(thing)
+		print 'z'
+		print z
 		x=thing in request.form
 		print 'x'
 		print x
