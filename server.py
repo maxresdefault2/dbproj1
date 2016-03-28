@@ -834,6 +834,26 @@ def editevent():
 			stu=thing[1]
 		if thing[0]=="senior":
 			sr=thing[1]
+	ads=0
+	chs=0
+	sts=0
+	srs=0
+	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='adult' and t.typeid=o.typeid and o.eid=%s"
+	cursor=g.conn.execute(stmt, (eid,))
+	for thing in cursor:
+		ads=int(thing[0])
+	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='child' and t.typeid=o.typeid and o.eid=%s"
+	cursor=g.conn.execute(stmt, (eid,))
+	for thing in cursor:
+		chs=int(thing[0])
+	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='student' and t.typeid=o.typeid and o.eid=%s"
+	cursor=g.conn.execute(stmt, (eid,))
+	for thing in cursor:
+		sts=int(thing[0])
+	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='senior' and t.typeid=o.typeid and o.eid=%s"
+	cursor=g.conn.execute(stmt, (eid,))
+	for thing in cursor:
+		srs=int(thing[0])
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
 	pw=[]
@@ -887,7 +907,7 @@ def editevent():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
-	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=stu, sr=sr, error=er)
+	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=stu, sr=sr, ads=ads, chs=chs, sts=sts, srs=srs, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
 def delev():

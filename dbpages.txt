@@ -22,11 +22,12 @@ for event create, make eid one greater than max for eids and for ec and eed make
 find users
 u my tickets 
 event pages (buy link(for users), info, mark as going(for users))
-
 u buy ticket for events (not over qty, pickup only, types)
-h see who has tickets for my event/how many/price event page
+
+h see type sold on event page
 add * to required fields
 tags optional
+remove friend
 use now() on since on upage and friends page
 can't insert tagname that has name in db
 make sure only accepts right datatypes before submitting anything, check delete order for evdel
