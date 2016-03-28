@@ -14,6 +14,7 @@
 		<a href="/friends"> Friends </a> |
 	    <a href="/esearch"> Find Events </a> |
 		<a href="/usearch"> Find Users </a> |
+		<a href="/uticks"> My Tickets </a> |
 		<a href="/logout"> Logout </a>
 	</div>
 	<div id="main"><br><br>
@@ -21,7 +22,7 @@
 
 	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
 
-	<h1>My Events</h1><br>
+	<h1>My Tickets</h1><br>
 
 	<div>
 
@@ -32,7 +33,9 @@
 	   <div>{{n[3]}}, {{n[5]}} {{n[4]}}</div>
 	   <div> When: {{n[7]}} at {{n[8]}}</div>
 	   <div> Type: {{n[10]}}</div>
-	   <div> <a href="/uhome"><img class='img-circle' src= {{n[9]}} ></a> </div>
+	   <div> Tickets: {{n[11]}} </div>
+	   <div> Total cost: {{n[12]}} </div>
+	   <div><img class='img-circle' src= {{n[9]}} ></a> </div>
 	   <br>
 	   {% endfor %}
 	</div>
