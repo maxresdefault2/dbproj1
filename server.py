@@ -1464,8 +1464,6 @@ def uticks():
 			enames.append(result[0])
 			tagdict[result[0]]=result[2]
 			pw.append(result)
-	print 'pw'
-	print pw
 	fin=[]	
 	for thing in pw:
 		p=[]
@@ -1474,8 +1472,10 @@ def uticks():
 			tags=tagdict[thing[0]]
 		p.extend([tags])
 		fin.append(p)
-
+	
 	pw=sorted(fin, key=operator.itemgetter(8,9))
+	for thing in pw:
+		print thing
 	return render_template("userhome.html", lis=pw)
 
 
