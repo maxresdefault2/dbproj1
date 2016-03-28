@@ -1565,17 +1565,17 @@ def uviewev():
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	
-	stmt="SELECT * FROM Going WHERE uid = %s and eid = %s"
-	cursor=g.conn.execute(stmt, (uid, eid,))
-	d=[]
-	for thing in cursor:
-		d.append(thing)
-	going=False
-	if d:
-		going=True
 	if hid:
-		return render_template('usereventpage.html', lis=pw, going=going)
+		return render_template('hosteventpage.html', lis=pw)
 	else:
+		going=False
+		stmt="SELECT * FROM Going WHERE uid = %s and eid = %s"
+		cursor=g.conn.execute(stmt, (uid, eid,))
+		d=[]
+		for thing in cursor:
+			d.append(thing)
+		if d:
+			going=True
 		return render_template('usereventpage.html', lis=pw, going=going)
 
 @app.route('/going', methods=['POST'])
