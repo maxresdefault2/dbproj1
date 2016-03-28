@@ -821,8 +821,19 @@ def editevent():
 	tpr=[]
 	for result in cursor:
 		tpr.append(result)
+	ap=0.0
+	ch=0.0
+	st=0.0
+	sr=0.0
 	for thing in tpr:
-		print thing
+		if thing[0]=="adult":
+			ap=thing[1]
+		if thing[0]=="child":
+			ch=thing[1]
+		if thing[0]=="student":
+			st=thing[1]
+		if thing[0]=="senior":
+			sr=thing[1]
 	print 'things'
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
@@ -878,7 +889,7 @@ def editevent():
 	for thing in cursor:
 		locs.append(thing)
 	print locs
-	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, error=er)
+	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=st, sr=sr, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
 def delev():
