@@ -1133,7 +1133,7 @@ def create():
 	sr=request.form['srprice']
 	l=request.form['drop']
 	l=int(l)
-	stmt= "SELECT MAX(*) From Event_Create_Where"
+	stmt= "SELECT MAX(eid) From Event_Create_Where"
 	cursor=g.conn.execute(stmt)
 	numevs=[]
 	for thing in cursor:
