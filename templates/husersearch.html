@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+  <head>
+    	<title>Welcome to EnVENT</title>
+	<link rel=stylesheet type="text/css" href="static/styleindex2.css?version=1" media="screen" >
+  </head>
+
+
+<body>
+  <div id="holder">
+
+	<div id="header">
+		<a href="/hhome"> Home </a> |
+		<a href="/hsettings"> Account </a> |
+		<a href="/evcr"> Create Event </a> |
+	    <a href="/esearch"> Find Events </a> |
+		<a href="/usearch"> Find Users </a> |
+		<a href="/logout"> Logout </a>
+	</div>
+	<div id="main"><br><br>
+
+
+	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
+	<br>
+	<h3> Search </h3>
+	<form action="/us" method="post" id="main_form">
+		<select name="drop">
+		<option value="uname">User Name</option>
+		<option value="city">City</option>
+		</select>
+		<br><br>
+		{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}
+		{% endif %}
+		<br>
+		<input type = "text" name= "searched" value="" maxlength="100" size="50" class="inputbox" placeholder = "Search for users" />
+		<br><br>
+		<input type="submit" value="Enter" class = "input_button">
+
+
+	</form>
+	{% if lis %}
+		<form action="/viewprof" method="post" id="main_form">
+			<select name="drop">
+			{% for n in lis %}
+				<option value={{n[3]}}>{{n[0]}}</option>
+			{% endfor %}
+			</select>
+			<br><br>
+					
+			<input type="submit" value="Enter" class = "input_button">
+
+
+		</form>
+	{% endif %}
+	<br><br>
+	<div>
+	{% for n in lis %}
+	   <div>{{n[0]}}</div>
+	   <div> Location: {{n[1]}}</div>
+	   <div> Interests: {{inters}}</div>
+	   <br>
+	{% endfor %}
+	</div>
+
+
+  </div>
+
+</body>
+
+
+</html>

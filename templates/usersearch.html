@@ -24,20 +24,15 @@
 	<h3> Search </h3>
 	<form action="/es" method="post" id="main_form">
 		<select name="drop">
-		<option value="ename">Event Name</option>
-		<option value="hname">Host Name</option>
-		<option value="tag_name">Tags</option>
+		<option value="uname">User Name</option>
 		<option value="city">City</option>
-		<option value="zip">Zip Code</option>
-		<option value="state">State Abbreviation</option>
-		<option value="loc_name">Location Name</option>
 		</select>
 		<br><br>
 		{% if error %}
 			<p class=error><strong>Error:</strong> {{ error }}
 		{% endif %}
 		<br>
-		<input type = "text" name= "searched" value="" maxlength="100" size="50" class="inputbox" placeholder = "Search for events" />
+		<input type = "text" name= "searched" value="" maxlength="100" size="50" class="inputbox" placeholder = "Search for users" />
 		<br><br>
 		<input type="submit" value="Enter" class = "input_button">
 
@@ -46,16 +41,13 @@
 
 	<br><br>
 	<div>
-	   {% for n in lis %}
+	{% for n in lis %}
 	   <div>{{n[0]}}</div>
-	   <div> Host: {{n[1]}}</div>
-	   <div> At: {{n[6]}}</div>
-	   <div>{{n[3]}}, {{n[5]}} {{n[4]}}</div>
-	   <div> When: {{n[7]}} at {{n[8]}}</div>
-	   <div> Type: {{n[10]}}</div>
-	   <div> <a href="/uhome"><img class='img-circle' src= {{n[9]}} ></a> </div>
+	   <div> Location: {{n[1]}}</div>
+	   <div> Friends since: {{fs}}</div>
+	   <div> Interests: {{inters}}</div>
 	   <br>
-	   {% endfor %}
+	{% endfor %}
 	</div>
 
 

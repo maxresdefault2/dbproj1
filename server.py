@@ -994,16 +994,12 @@ def eec():
 		return redirect("/editevent")
 	else:
 		if ad:
-			print 'ad'
-			print ad
 			try:
 				ad=float(ad)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if ch:
-			print 'ch'
-			print ch
 			try:
 				ch=float(ch)
 			except:
@@ -1016,8 +1012,6 @@ def eec():
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if sr:
-			print 'sr'
-			print sr
 			try:
 				sr=float(sr)
 			except:
@@ -1174,35 +1168,18 @@ def create():
 	newloc=False
 	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
 		newloc=True
-		
-	print name
-	print time
-	print date
-	print qty
-	print photo
-	print ad
-	print ch
-	print stu
-	print sr
-	print ntag
-	print change
-	print newloc
-	print l
+
 	if name=="" or time=="" or date=="" or qty=="" or photo =="" or ad=="" or ch=="" or stu=="" or sr=="" or (ntag=="" and change==False) or (newloc==False and l==0):
 		er= "All data not entered"
 		return redirect("/evcr")
 	else:
 		if ad:
-			print 'ad'
-			print ad
 			try:
 				ad=float(ad)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if ch:
-			print 'ch'
-			print ch
 			try:
 				ch=float(ch)
 			except:
@@ -1215,8 +1192,6 @@ def create():
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if sr:
-			print 'sr'
-			print sr
 			try:
 				sr=float(sr)
 			except:
@@ -1360,6 +1335,99 @@ def frevs():
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	return render_template("friendevents.html", lis=pw)
+	
+@app.route('/usearch', methods=['POST'])
+def usearch():
+	return render_template("usersearch.html")
+
+
+@app.route('/us', methods=['POST'])
+def us():
+	error=None
+	dval=request.form['drop']
+	sval=request.form['searched']
+	pw = []
+	stmt=""
+	if not sval:
+		error="No searchable value entered"
+		if hid:
+			return render_template("husersearch.html", error=error)
+		else:
+			return render_template("usersearch.html", error=error)
+	if not isinstance(sval, int):
+		sval=sval.encode('ascii','ignore')
+	sval=str(sval).lower()
+	stmt="SELECT name, loc, uid FROM Reg_User"
+	cursor=g.conn.execute(stmt)
+	uinfo=[]
+	res=[]
+	for result in cursor:
+		uinfo.append(result)
+	for thing in uinfo:
+		if dval=='uname':
+			val=thing[0]
+			if not isinstance(val, int):
+				val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
+				res.append(thing[2])
+		if dval=='city':
+			val=thing[1]
+			if not isinstance(val, int):
+				val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
+				res.append(thing[2])
+	fin=[]
+	if res:
+		user=""
+		for thing in res:
+			user=thing[2]
+			stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
+			cursor=g.conn.execute(stmt, (uid, user, user, uid))
+			fs="Not friends with this user"
+			pw=[]
+			for result in cursor:
+				pw.append(result)
+			if len(pw)>=1:
+				for thing in pw:
+					fs=thing[2]
+		stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
+		cursor=g.conn.execute(stmt, (user,))
+		ints=[]
+		for thing in cursor:
+			for inter in thing:
+				ints.append(inter)
+		i=0
+		inters=""
+		for thing in ints:
+			if i==0:
+				inters=thing
+		else:
+			inters+=", "+thing
+		i+=1
+		
+		
+		p.extend([thing[x]])
+		p.extend([fs])
+		p.extend([inters])
+		fin.append(p)
+
+
+	fin=[]	
+	for thing in res:
+		p=[]
+		for x in range(0,len(thing)):
+			p.extend([thing[x]])
+			tags=tagdict[thing[0]]
+		p.extend([tags])
+		fin.append(p)
+	fin=sorted(fin, key=operator.itemgetter(8,9))
+	if hid:
+		return render_template("heventsearch.html", lis=fin)
+	else:
+		return render_template("eventsearch.html", lis=fin)
+
 
 
 if __name__ == "__main__":
