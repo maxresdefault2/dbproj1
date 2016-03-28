@@ -1488,6 +1488,8 @@ def uticks():
 			else:
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
+		print 'typestr'
+		print typestr
 		p.extend(typestr)
 		p.extend(str(cost))
 		print 'p'
