@@ -1662,7 +1662,7 @@ def buytick():
 		nev.append(p)
 	print nev
 	
-	return render_template('buytickets.html', lis=pw)
+	return render_template('buytickets.html', lis=pw, lis2=nev)
 
 if __name__ == "__main__":
   import click
