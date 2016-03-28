@@ -1568,6 +1568,9 @@ def uviewev():
 
 @app.route('/going', methods=['POST'])
 def going():
+	print 'x'
+	xy=request.form.getlist('going')
+	print xy
 	going=request.form['going']
 	print 'hi'
 	if going:
