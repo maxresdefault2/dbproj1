@@ -1446,7 +1446,7 @@ def uticks():
 		return redirect('/hhome')
 	global er
 	er=None
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, SUM(o.qty), tt.type, SUM(price) FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and o.uid=%s and o.eid=ti.eid and ti.typeid=tt.typeid and o.typeid=tt.typeid group by e.ename"
+	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, tt.type, SUM(o.qty), SUM(price) FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and o.uid=%s and o.eid=ti.eid and ti.typeid=tt.typeid and o.typeid=tt.typeid group by e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, tt.type"
 	cursor = g.conn.execute(stmt, (uid,))
 	pw=[]
 	enames=[]
