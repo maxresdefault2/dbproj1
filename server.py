@@ -1467,6 +1467,14 @@ def uticks():
 		cost=0
 		for i in ev:
 			if i[0]==thing:
+				print 'thing'
+				print thing
+				print 'i'
+				print i
+				print 'tdic'
+				print tdic
+				print '1one'
+				print i[1]
 				if i[1] in tdic.keys():
 					tdic[i[1]]=int(i[2])
 				else:
