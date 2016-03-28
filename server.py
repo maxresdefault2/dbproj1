@@ -677,6 +677,8 @@ def usc():
 		print 'thing'
 		print thing
 		x=thing in request.form
+		print 'x'
+		print x
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
