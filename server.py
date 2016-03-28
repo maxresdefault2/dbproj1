@@ -215,18 +215,18 @@ def uri():
 	print loc
 	if not uid and not name and not password:
 		er="All required fields must be filled"
-		return redirect('/userregister', error=er)
+		return redirect('/userregister')
 	try:
 		uid=int(uid)
 	except:
 		er="UID must be an integer"
-		return redirect('/userregister', error=er)
+		return redirect('/userregister')
 	stmt="SELECT * FROM Reg_User WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (uid,))
 	rc= cursor.rowcount
 	if rc!=0:
 		er="UID taken, please enter a new number"
-		return redirect('/userregister', error=er)
+		return redirect('/userregister')
 	if loc =="":
 		print 'not loc'
 		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, null)"
@@ -252,18 +252,18 @@ def hri():
 	hname=request.form['hname']
 	if not hid and not name and not password and not hname:
 		er="All required fields must be filled"
-		return redirect('/hostregister', error=er)
+		return redirect('/hostregister')
 	try:
 		hid=int(hid)
 	except:
 		er="UID must be an integer"
-		return redirect('/hostregister', error=er)
+		return redirect('/hostregister')
 	stmt="SELECT * FROM Host WHERE uid=%s"
 	cursor=g.conn.execute(stmt, (hid,))
 	rc= cursor.rowcount
 	if rc!=0:
 		er="UID taken, please enter a new number"
-		return redirect('/hostregister', error=er)
+		return redirect('/hostregister')
 	stmt="INSERT INTO Host VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (hid, name, password, hname))
 	cursor=g.conn.execute("SELECT * from Host")
