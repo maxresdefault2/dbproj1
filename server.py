@@ -1373,14 +1373,14 @@ def us():
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
-				res.append(thing[2])
+				res.append(thing)
 		if dval=='city':
 			val=thing[1]
 			if not isinstance(val, int):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
-				res.append(thing[2])
+				res.append(thing)
 	fin=[]
 	if res:
 		user=""
