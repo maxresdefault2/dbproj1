@@ -1662,7 +1662,26 @@ def buytick():
 		nev.append(p)
 	print nev
 	
-	return render_template('buytickets.html', lis=pw, lis2=nev)
+	stmt="SELECT tt.type, ti.price FROM Tick_Info ti, Tick_Type tt where ti.eid = %s  and ti.typeid = tt.typeid"
+	cursor=g.conn.execute(stmt, (gev,))
+	tpr=[]
+	for result in cursor:
+		tpr.append(result)
+	ap=0.0
+	ch=0.0
+	stu=0.0
+	sr=0.0
+	for thing in tpr:
+		if thing[0]=="adult":
+			ap=thing[1]
+		if thing[0]=="child":
+			ch=thing[1]
+		if thing[0]=="student":
+			stu=thing[1]
+		if thing[0]=="senior":
+			sr=thing[1]
+	
+	return render_template('buytickets.html', lis=pw, lis2=nev, ap=ap, ch=ch, stu=stu, sr=sr, error=er)
 
 if __name__ == "__main__":
   import click
