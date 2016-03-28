@@ -1569,7 +1569,10 @@ def uviewev():
 @app.route('/going', methods=['POST'])
 def going():
 	going=request.form['going']
-	print going
+	if going:
+		print going
+	else:
+		print 'no'
 	return redirect('/uhome')
 
 if __name__ == "__main__":
