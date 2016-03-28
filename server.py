@@ -894,6 +894,8 @@ def delev():
 	global eev
 	stmt="DELETE FROM Marked WHERE eid = %s"
 	cursor=g.conn.execute(stmt, (eev,))
+	stmt="DELETE FROM Owns_Tickets_Has_For WHERE eid=%s"
+	cursor=g.conn.execute(stmt, (eev,))
 	stmt="DELETE FROM Event_Create_Where WHERE eid = %s"
 	cursor=g.conn.execute(stmt, (eev,))
 	return redirect('/hhome')
