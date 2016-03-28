@@ -199,6 +199,7 @@ def uregister():
 
 @app.route('/uri', methods=['POST'])
 def uri():
+	print uid
 	error=None
 	global uid
 	if uid:
@@ -225,7 +226,7 @@ def uri():
 	if rc!=0:
 		error="UID taken, please enter a new number"
 		return render_template("userregister.html", error=error)
-	if not loc:
+	if loc =="":
 		print 'not loc'
 		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, null)"
 		g.conn.execute(stmt, (uid, name, password,))
