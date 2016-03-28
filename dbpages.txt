@@ -20,10 +20,9 @@ make pricing table,make sure qty works on eved, add option to edit that on h eve
 add not nulls and checks
 for event create, make eid one greater than max for eids and for ec and eed make new lid 1+ max lid
 find users
-
 u my tickets 
+
 event pages (buy link(for users), info, mark as going(for users))
-images link to event pages (link to edit event if host and your event)
 u buy ticket for events (not over qty, pickup only, types)
 h see who has tickets for my event/how many/price event page
 add * to required fields

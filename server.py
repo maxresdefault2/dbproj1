@@ -1522,6 +1522,42 @@ def uticks():
 		print thing
 	return render_template("usertickets.html", lis=pw)
 
+@app.route('/uviewev', methods=['GET', 'POST'])
+def uviewev():
+	eid=request.form['drop']
+	global utoadd
+	utoadd=user
+	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
+	cursor = g.conn.execute(stmt, (eid,))
+	pw=[]
+	enames=[]
+	tagdict={}
+	for result in cursor:
+		if result[0] in enames:
+			l=len(pw)
+			for i in range(0,l):
+				if str(pw[i][0])==str(result[0]):
+					dictval= tagdict[result[0]]
+					newdictval = dictval+", "+str(result[2])
+					tagdict[result[0]]=newdictval
+		else:
+			enames.append(result[0])
+			tagdict[result[0]]=result[2]
+			pw.append(result)
+	fin=[]	
+	for thing in pw:
+		p=[]
+		for x in range(0,len(thing)):
+			p.extend([thing[x]])
+			tags=tagdict[thing[0]]
+		p.extend([tags])
+		fin.append(p)
+
+	pw=sorted(fin, key=operator.itemgetter(8,9))
+	if hid:
+		return render_template('usereventpage.html', lis=pw)
+	else:
+		return render_template('usereventpage.html', lis=pw)
 
 
 
