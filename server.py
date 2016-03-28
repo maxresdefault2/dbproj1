@@ -1476,7 +1476,7 @@ def uticks():
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	for thing in pw:
 		print thing
-	return render_template("userhome.html", lis=pw)
+	return render_template("usertickets.html", lis=pw)
 
 
 
