@@ -707,8 +707,6 @@ def addfr():
 
 @app.route('/viewprof', methods=['GET', 'POST'])
 def viewprof():
-	if hid:
-		return redirect('/hhome')
 	user=request.form['drop']
 	global utoadd
 	utoadd=user
