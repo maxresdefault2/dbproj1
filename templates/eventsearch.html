@@ -46,6 +46,7 @@
 	</form>
 
 	<br><br>
+	{% if n %}
 	<h4> View events by selecting from the dropdown menu </h4>
 	<form action="/uviewev" method="post" id="main_form">
 		<select name="drop">
@@ -60,6 +61,7 @@
 
 	</form>
 	<br><br>
+	{% endif %}
 	<div>
 	   {% for n in lis %}
 	   <div>{{n[0]}}</div>
