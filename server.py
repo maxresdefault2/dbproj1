@@ -1398,7 +1398,7 @@ def us():
 				pw.append(result)
 			if len(pw)>=1:
 				for xthing in pw:
-					fs=thing[2]
+					fs=xthing[2]
 			stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
 			cursor=g.conn.execute(stmt, (user,))
 			ints=[]
