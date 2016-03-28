@@ -22,7 +22,7 @@
 	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
 	<br>
 	<h3> Search </h3>
-	<form action="/es" method="post" id="main_form">
+	<form action="/us" method="post" id="main_form">
 		<select name="drop">
 		<option value="uname">User Name</option>
 		<option value="city">City</option>
@@ -38,18 +38,6 @@
 
 
 	</form>
-
-	<br><br>
-	<div>
-	{% for n in lis %}
-	   <div>{{n[0]}}</div>
-	   <div> Location: {{n[1]}}</div>
-	   <div> Friends since: {{fs}}</div>
-	   <div> Interests: {{inters}}</div>
-	   <br>
-	{% endfor %}
-	</div>
-
 
   </div>
 
