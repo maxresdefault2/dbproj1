@@ -1710,12 +1710,12 @@ def buying():
 		er="No value entered"
 		return redirect('/buytick')
 	stmt="SELECT MAX(tid) FROM Owns_Tickets_Has_For"
-		cursor=g.conn.execute(stmt)
-		t=[]
-		for thing in cursor:
-			for xt in thing:
-				t.append(xt)
-		tid=int(t[0])+1
+	cursor=g.conn.execute(stmt)
+	t=[]
+	for thing in cursor:
+		for xt in thing:
+			t.append(xt)
+	tid=int(t[0])+1
 	if ad:
 		stmt="SELECT typeid from Tick_Type where type = 'adult'"
 		cursor=g.conn.execute(stmt)
