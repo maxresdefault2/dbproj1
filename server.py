@@ -311,7 +311,7 @@ def uli():
 	except:
 		uid=""
 		er= "UID must be an integer"
-		return redirect('/userlogin")
+		return redirect('/userlogin')
 
 	password=request.form['password']
 	stmt="SELECT password FROM Reg_User WHERE uid = %s"
