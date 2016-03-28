@@ -1481,9 +1481,9 @@ def uticks():
 					tdic[i[1]]=int(i[2])
 				cost+=i[3]
 		typestr=""
-		typeirt=0
+		typeitr=0
 		for key, value in tdic.iteritems():
-			if typeirt==0:
+			if typeitr==0:
 				typestr=str(key)+": "+str(value)
 			else:
 				typestr+=", "+str(key)+": "+str(value)
