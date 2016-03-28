@@ -1525,8 +1525,6 @@ def uticks():
 @app.route('/uviewev', methods=['GET', 'POST'])
 def uviewev():
 	eid=request.form['drop']
-	global utoadd
-	utoadd=user
 	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
 	pw=[]
