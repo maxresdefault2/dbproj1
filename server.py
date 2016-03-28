@@ -1574,8 +1574,12 @@ def going():
 	global gev
 	print gev
 	going=request.form.getlist('going')
+	stmt="SELECT * FROM Going where eid=%s and uid=%"
+	cursor=g.conn.execute(stmt, (gev, uid,))
+	print cursor.rowcount
 	if going:
 		print 'yes'
+		
 	else:
 		print 'no'
 	return redirect('/uhome')
