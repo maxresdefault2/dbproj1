@@ -1694,18 +1694,30 @@ def buying():
 	ch=request.form['chprice']
 	stu=request.form['stprice']
 	sr=request.form['srprice']
-	if ad and not isinstance(ad, int):
-		er="Quantity must be an integer"
-		return redirect('/buytick')
-	if ch and not isinstance(ch, int):
-		er="Quantity must be an integer"
-		return redirect('/buytick')
-	if sr and not isinstance(sr, int):
-		er="Quantity must be an integer"
-		return redirect('/buytick')
-	if stu and not isinstance(stu, int):
-		er="Quantity must be an integer"
-		return redirect('/buytick')
+	if ad:
+		try:
+			ad=int(ad)
+		except:
+			er="Quantity must be an integer"
+			return redirect('/buytick')
+	if ch:
+		try:
+			ch=int(ch)
+		except:
+			er="Quantity must be an integer"
+			return redirect('/buytick')
+	if sr:
+		try:
+			sr=int(sr)
+		except:
+			er="Quantity must be an integer"
+			return redirect('/buytick')
+	if stu:
+		try:
+			stu=int(stu)
+		except:
+			er="Quantity must be an integer"
+			return redirect('/buytick')
 	if not ad and not ch and not sr and not stu:
 		er="No value entered"
 		return redirect('/buytick')
