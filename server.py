@@ -1446,6 +1446,13 @@ def uticks():
 		return redirect('/hhome')
 	global er
 	er=None
+	stmt="SELECT ti.eid, tt.type, SUM(o.qty), SUM(ti.price*o.qty) where o.eid=ti.eid and o.typeid=ti.typeid and tt.typeid=ti.typeid and tt.typeid=o.typei and o.uid = %s group by ti.eid, tt.type"
+	cursor=g.conn.execute(stmt, (uid,))
+	ev=[]
+	for result in cursor:
+		ev.append(result)
+	print 'ev'
+	print ev
 	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, tt.type, SUM(o.qty), SUM(price) FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and o.uid=%s and o.eid=ti.eid and e.eid = o.eid and e.eid = ti.eid and ti.typeid=tt.typeid and o.typeid=tt.typeid group by tt.type, e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo"
 	cursor = g.conn.execute(stmt, (uid,))
 	pw=[]
