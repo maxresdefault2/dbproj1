@@ -449,6 +449,10 @@ def usettings():
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
+	print 'yw'
+	print yw
+	print 'xw'
+	print xw
 	return render_template("usersettings.html", name=name, pw=password, loc=loc, seltags=yw, tags=xw, error=error)
 
 
