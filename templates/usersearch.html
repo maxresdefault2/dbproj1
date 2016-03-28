@@ -43,7 +43,7 @@
 		<form action="/viewprof" method="post" id="main_form">
 			<select name="drop">
 			{% for n in lis %}
-				<option value={{n[3]}}>{{n[0]}}</option>
+				<option value={{n[2]}}>{{n[0]}}</option>
 			{% endfor %}
 			</select>
 			<br><br>
@@ -58,8 +58,8 @@
 	{% for n in lis %}
 	   <div>{{n[0]}}</div>
 	   <div> Location: {{n[1]}}</div>
-	   <div> Friends since: {{fs}}</div>
-	   <div> Interests: {{inters}}</div>
+	   <div> Friends since: {{n[3]}}</div>
+	   <div> Interests: {{n[4]}}</div>
 	   <br>
 	{% endfor %}
 	</div>
