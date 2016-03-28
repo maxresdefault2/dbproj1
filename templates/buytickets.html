@@ -52,13 +52,13 @@
 			<p class=error><strong>Error:</strong> {{ error }}
 		{% endif %}
 		<br>
-		<div>Adult: $10.00 <input type = "text" name= "adprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
+		<div>Adult: ${{ap}} <input type = "text" name= "adprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
 		<br><br>
-		<div>Child: $10.00<input type = "text" name= "chprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
+		<div>Child: ${{ch}} <input type = "text" name= "chprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
 		<br><br>
-		<div>Student: $10.00<input type = "text" name= "stprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
+		<div>Student: ${{stu}} <input type = "text" name= "stprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
 		<br><br>
-		<div>Senior: $10.00<input type = "text" name= "srprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
+		<div>Senior: ${{sr}} <input type = "text" name= "srprice" value="" maxlength="100" size="50" class="inputbox3" placeholder = "qty" /></div>
 		<br>
 		<input type="submit" value="Buy" class = "input_button">
 	</form>

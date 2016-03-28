@@ -1220,8 +1220,8 @@ def create():
 				for pri in thing:
 					pr.append(pri)
 			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (ad, eev, typ,))
+			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+			cursor=g.conn.execute(stmt, (enum, typ, ad,))
 		if ch:
 			stmt="SELECT typeid from Tick_Type where type = 'child'"
 			cursor=g.conn.execute(stmt)
@@ -1230,8 +1230,8 @@ def create():
 				for pri in thing:
 					pr.append(pri)
 			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (ch, eev, typ,))
+			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+			cursor=g.conn.execute(stmt, (enum, typ, ch,))
 		if stu:
 			stmt="SELECT typeid from Tick_Type where type = 'student'"
 			cursor=g.conn.execute(stmt)
@@ -1240,8 +1240,8 @@ def create():
 				for pri in thing:
 					pr.append(pri)
 			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (stu, eev, typ,))
+			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+			cursor=g.conn.execute(stmt, (enum, typ, stu,))
 		if sr:
 			stmt="SELECT typeid from Tick_Type where type = 'senior'"
 			cursor=g.conn.execute(stmt)
@@ -1250,8 +1250,8 @@ def create():
 				for pri in thing:
 					pr.append(pri)
 			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (sr, eev, typ,))
+			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+			cursor=g.conn.execute(stmt, (enum, typ, sr,))
 	
 		lnum=0
 		if l!=0:
@@ -1683,6 +1683,85 @@ def buytick():
 	
 	return render_template('buytickets.html', lis=pw, lis2=nev, ap=ap, ch=ch, stu=stu, sr=sr, error=er)
 
+@app.route('/buying', methods=['POST'])
+def buying():
+	if hid:
+		return redirect('/hhome')
+	global gev
+	global er
+	er=None
+	ad=request.form['adprice']
+	ch=request.form['chprice']
+	stu=request.form['stprice']
+	sr=request.form['srprice']
+	if ad and not isinstance(ad, int):
+		er="Quantity must be an integer"
+		return redirect('/buytick')
+	if ch and not isinstance(ch, int):
+		er="Quantity must be an integer"
+		return redirect('/buytick')
+	if sr and not isinstance(sr, int):
+		er="Quantity must be an integer"
+		return redirect('/buytick')
+	if stu and not isinstance(stu, int):
+		er="Quantity must be an integer"
+		return redirect('/buytick')
+	if not ad and not ch and not sr and not stu:
+		er="No value entered"
+		return redirect('/buytick')
+	stmt="SELECT MAX(tid) FROM Owns_Tickets_Has_For"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for thing in cursor:
+			for xt in thing:
+				t.append(xt)
+		tid=int(t[0])+1
+	if ad:
+		stmt="SELECT typeid from Tick_Type where type = 'adult'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Owns_Tickets_Has_For VALUES(%s, %s, %s, %s, %s)"
+		cursor=g.conn.execute(stmt, (tid, uid, gev, ad, typ,))
+		tid+=1
+	if ch:
+		stmt="SELECT typeid from Tick_Type where type = 'child'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Owns_Tickets_Has_For VALUES(%s, %s, %s, %s, %s)"
+		cursor=g.conn.execute(stmt, (tid, uid, gev, ch, typ,))
+		tid+=1
+	if stu:
+		stmt="SELECT typeid from Tick_Type where type = 'student'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Owns_Tickets_Has_For VALUES(%s, %s, %s, %s, %s)"
+		cursor=g.conn.execute(stmt, (tid, uid, gev, st, typ,))
+		tid+=1
+	if sr:
+		stmt="SELECT typeid from Tick_Type where type = 'senior'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Owns_Tickets_Has_For VALUES(%s, %s, %s, %s, %s)"
+		cursor=g.conn.execute(stmt, (tid, uid, gev, sr, typ,))
+		tid+=1
+	return redirect('/buytick')
+	
 if __name__ == "__main__":
   import click
 
