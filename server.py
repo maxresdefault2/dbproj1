@@ -1627,7 +1627,7 @@ def buytick():
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	
-	return render_template('buytickets.html')
+	return render_template('buytickets.html', lis=pw)
 
 if __name__ == "__main__":
   import click
