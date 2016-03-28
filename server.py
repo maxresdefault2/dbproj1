@@ -218,7 +218,6 @@ def uri():
 	names=[]
 	for result in cursor:
 		names.append(result)
-	print names
 	return redirect('/uhome')
 
 
@@ -245,7 +244,6 @@ def hri():
 	names=[]
 	for result in cursor:
 		names.append(result)
-	print names
 	return redirect('/hhome')
 
 
@@ -333,7 +331,6 @@ def hli():
 def uhome():
 	if hid:
 		return redirect('/hhome')
-	print uid
 	global er
 	er=None
 	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = %s"
@@ -398,14 +395,12 @@ def usettings():
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
-	print xw
 	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
-	print yw
 	return render_template("usersettings.html", name=name, pw=password, loc=loc, seltags=yw, tags=xw, error=error)
 
 
@@ -530,7 +525,6 @@ def es():
 def hhome():
 	if uid:
 		return redirect('/uhome')
-	print hid
 	global eev
 	global er
 	global rendedit
@@ -617,7 +611,6 @@ def usc():
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
-	print xw
 	change=False
 	for thing in xw:
 		x=thing in request.form
@@ -706,7 +699,6 @@ def addfr():
 	friends=False
 	if len(pw)>=1:
 		friends=True
-	print friends
 	if not friends:
 		stmt="INSERT into Friend VALUES (%s, %s, %s)"
 		cursor=g.conn.execute(stmt, (uid, utoadd, today,))
@@ -719,15 +711,12 @@ def viewprof():
 		return redirect('/hhome')
 	user=request.form['drop']
 	global utoadd
-	print user
 	utoadd=user
 	stmt="SELECT name, loc FROM Reg_User WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (user,))
 	uinfo=[]
 	for result in cursor:
 		uinfo.append(result)
-	print uid
-	print user
 	user=int(user)
 	stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 	cursor=g.conn.execute(stmt, (uid, user, user, uid))
@@ -787,17 +776,14 @@ def viewprof():
 
 @app.route('/editevent', methods=['GET', 'POST'])
 def editevent():
-	print 'in editevent'
 	if uid:
 		return redirect('/uhome')
 	global eev
-	print rendedit
 	if rendedit:
 		eid=eev
 	else:
 		eid=request.form['drop']
 		eev=eid
-	print 'eid is '+str(eid)
 	global er
 	global renedit
 	renedit=False
@@ -806,7 +792,6 @@ def editevent():
 	pw=[]
 	for result in cursor:
 		pw.append(result)
-	print pw
 	name=pw[0][3]
 	time=pw[0][4]
 	date=pw[0][5]
@@ -834,7 +819,6 @@ def editevent():
 			st=thing[1]
 		if thing[0]=="senior":
 			sr=thing[1]
-	print 'things'
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
 	pw=[]
@@ -888,7 +872,6 @@ def editevent():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
-	print locs
 	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=st, sr=sr, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
@@ -902,7 +885,6 @@ def delev():
 def eec():
 	global er
 	er=None
-	print eev
 	global rendedit
 	rendedit=True
 	if uid:
@@ -919,8 +901,6 @@ def eec():
 	ch=request.form['chprice']
 	st=request.form['stprice']
 	sr=request.form['srprice']
-	print 'hi'
-	print l
 	if qty:
 		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
 		cursor=g.conn.execute(stmt, (eev,))
@@ -944,7 +924,6 @@ def eec():
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
-	print xw
 	change=False
 	for thing in xw:
 		x=thing in request.form
@@ -1013,24 +992,32 @@ def eec():
 		return redirect("/editevent")
 	else:
 		if ad:
+			print 'ad'
+			print ad
 			try:
 				ad=float(ad)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if ch:
+			print 'ch'
+			print ch
 			try:
 				ch=float(ch)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if st:
+			print 'st'
+			print st
 			try:
 				st=float(st)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
 		if sr:
+			print 'sr'
+			print sr
 			try:
 				sr=float(sr)
 			except:
@@ -1125,7 +1112,6 @@ def evcr():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
-	print locs
 	return render_template("eventcreate.html", useltags=tg, lis=locs, error=er)
 
 
@@ -1144,8 +1130,6 @@ def create():
 	ntag=request.form['ntag']
 	l=request.form['drop']
 	l=int(l)
-	print 'hi'
-	print l
 	stmt= "SELECT COUNT(*) From Event_Create_Where"
 	cursor=g.conn.execute(stmt)
 	numevs=[]
@@ -1259,7 +1243,6 @@ def create():
 def frevs():
 	if hid:
 		return redirect('/hhome')
-	print uid
 	global er
 	er=None
 	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r2.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r1.uid = %s UNION SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r1.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r2.uid = %s"
