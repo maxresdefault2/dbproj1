@@ -816,8 +816,14 @@ def editevent():
 	if pw[0][11]:
 		roomno=" "+str(pw[0][11])
 	loc=str(pw[0][9])+roomno+" "+str(pw[0][10])+" "+str(pw[0][13])+" "+str(pw[0][12])+", "+str(pw[0][14])+" "+str(pw[0][15])
-
-
+	stmt="SELECT * FROM Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where o.eid = ? and o.eid=ti.eid and ti.typeid = tt.typeid"
+	cursor=g.conn.execute(stmt, (eid,))
+	tpr=[]
+	for result in cursor:
+		tpr.append(result)
+	for thing in tpr:
+		print thing
+	print 'things'
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
 	pw=[]
