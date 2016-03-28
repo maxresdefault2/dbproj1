@@ -441,14 +441,12 @@ def usettings():
 	cursor=g.conn.execute(stmt, (uid,))
 	xw=[]
 	for result in cursor:
-		for thing in result:
-			xw.append(thing)
+		xw.append(thing)
 	stmt = "SELECT tname, tag_id from Tags INTERSECT SELECT t.tname, t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
-		for thing in result:
-			yw.append(thing)
+		yw.append(thing)
 	print 'yw'
 	print yw
 	print 'xw'
