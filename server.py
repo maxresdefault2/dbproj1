@@ -1574,7 +1574,7 @@ def going():
 	global gev
 	print gev
 	going=request.form.getlist('going')
-	stmt="SELECT * FROM Going where eid=%s and uid=%"
+	stmt="SELECT * FROM Going where eid=%s and uid=%s"
 	cursor=g.conn.execute(stmt, (gev, uid,))
 	print cursor.rowcount
 	if going:
