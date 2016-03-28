@@ -30,25 +30,25 @@
 			<p class=error><strong>Error:</strong> {{ error }}
 		{% endif %}
 		<br>
-		<input type = "text" name= "name" value="" maxlength="100" size="50" class="inputbox" placeholder = "Event Name" />
+		<div>*<input type = "text" name= "name" value="" maxlength="100" size="50" class="inputbox" placeholder = "Event Name" /></div>
 		<br><br>
-		<input type = "text" name= "time" value="" maxlength="100" size="50" class="inputbox" placeholder = "Time (in format XX:XX:XX)" />
+		<div>*<input type = "text" name= "time" value="" maxlength="100" size="50" class="inputbox" placeholder = "Time (in format XX:XX:XX)" /></div>
 		<br><br>
-		<input type = "text" name= "date" value="" maxlength="100" size="50" class="inputbox" placeholder = "Date (in format YYYY-MM-DD)" />
+		<div>*<input type = "text" name= "date" value="" maxlength="100" size="50" class="inputbox" placeholder = "Date (in format YYYY-MM-DD)" /></div>
 		<br><br>
-		<input type = "text" name= "qty" value="" maxlength="100" size="50" class="inputbox" placeholder = "Number of tickets for event" />
+		<div>*<input type = "text" name= "qty" value="" maxlength="100" size="50" class="inputbox" placeholder = "Number of tickets for event" /></div>
 		<br><br>
-		<input type = "text" name= "photo" value="" maxlength="100" size="50" class="inputbox" placeholder = "Photo URL" />
+		<div>*<input type = "text" name= "photo" value="" maxlength="100" size="50" class="inputbox" placeholder = "Photo URL" /></div>
 		<br>
 		<h5> Prices: </h5>
 			<br>
-			<input type = "text" name= "adprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Adult" />
+			<div>*<input type = "text" name= "adprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Adult" /></div>
 			<br><br>
-			<input type = "text" name= "chprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Child" />
+			<div>*<input type = "text" name= "chprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Child" /></div>
 			<br><br>
-			<input type = "text" name= "stprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Student" />
+			<div>*<input type = "text" name= "stprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Student" /></div>
 			<br><br>
-			<input type = "text" name= "srprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Senior" />
+			<div>*<input type = "text" name= "srprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Senior" /></div>
 			<br>
 		<h5> Tags: </h5>
 			<div class="checkbox">
@@ -62,7 +62,7 @@
 		<br>
 		<div>
 			<h5> Choose preset location or create new one </h5>
-			<select name="drop">
+			<div>*<select name="drop">
 					<option value=0>Select</option>
 			{% for n in lis %}
 				{% if n[3] %}
@@ -72,22 +72,22 @@
 					<option value={{n[0]}}>{{n[1]}} {{n[2]}} {{n[5]}} {{n[4]}}, {{n[6]}} {{n[7]}}</option>
 				{% endif %}
 			{% endfor %}
-			</select>
+			</select></div>
 			<br><br>
 		</div>
-		<input type = "text" name= "lname" value="" maxlength="100" size="50" class="inputbox" placeholder = "Location Name" />
+		<div>*<input type = "text" name= "lname" value="" maxlength="100" size="50" class="inputbox" placeholder = "Location Name" /></div>
 		<br><br>
-		<input type = "text" name= "rname" value="" maxlength="100" size="50" class="inputbox" placeholder = "Room Name (optional)" />
+		<input type = "text" name= "rname" value="" maxlength="100" size="50" class="inputbox" placeholder = "Room Name" />
 		<br><br>
-		<input type = "text" name= "bnum" value="" maxlength="100" size="50" class="inputbox" placeholder = "Building Number" />
+		<div>*<input type = "text" name= "bnum" value="" maxlength="100" size="50" class="inputbox" placeholder = "Building Number" /></div>
 		<br><br>
-		<input type = "text" name= "st" value="" maxlength="100" size="50" class="inputbox" placeholder = "Street (include 'Street', 'Lane', etc)" />
+		<div>*<input type = "text" name= "st" value="" maxlength="100" size="50" class="inputbox" placeholder = "Street (include 'Street', 'Lane', etc)" /></div>
 		<br><br>
-		<input type = "text" name= "city" value="" maxlength="100" size="50" class="inputbox" placeholder = "City" />
+		<div>*<input type = "text" name= "city" value="" maxlength="100" size="50" class="inputbox" placeholder = "City" /></div>
 		<br><br>
-		<input type = "text" name= "state" value="" maxlength="100" size="50" class="inputbox" placeholder = "State Abbreviation (VA, FL, etc)" />
+		<div>*<input type = "text" name= "state" value="" maxlength="100" size="50" class="inputbox" placeholder = "State Abbreviation (VA, FL, etc)" /></div>
 		<br><br>
-		<input type = "text" name= "zipc" value="" maxlength="100" size="50" class="inputbox" placeholder = "Zip Code" />
+		<div>*<input type = "text" name= "zipc" value="" maxlength="100" size="50" class="inputbox" placeholder = "Zip Code" /></div>
 
 		<br><br>
 				
