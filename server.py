@@ -1511,6 +1511,9 @@ def uticks():
 				p.extend([thingx[x]])
 				tags=tagdict[thingx[0]]
 			p.extend([tags])
+			p.extend([thing[0]])
+			p.extend([thing[1]])
+			p.extend([thing[2]])
 			fin.append(p)
 	
 	pw=sorted(fin, key=operator.itemgetter(8,9))
