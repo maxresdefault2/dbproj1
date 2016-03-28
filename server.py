@@ -1452,6 +1452,9 @@ def uticks():
 	enames=[]
 	tagdict={}
 	for result in cursor:
+		pw.append(result)
+	print pw
+	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
