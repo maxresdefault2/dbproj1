@@ -1555,11 +1555,11 @@ def uviewev():
 	
 	stmt="SELECT * FROM Going WHERE uid = %s and eid = %s"
 	cursor=g.conn.execute(stmt, (uid, eid,))
-	g=[]
+	d=[]
 	for thing in cursor:
-		g.append(thing)
+		d.append(thing)
 	going=False
-	if g:
+	if d:
 		going=True
 	if hid:
 		return render_template('usereventpage.html', lis=pw)
