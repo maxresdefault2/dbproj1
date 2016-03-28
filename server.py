@@ -1387,7 +1387,6 @@ def us():
 		print 'res'
 		print res
 		for thing in res:
-			print thing
 			user=thing[2]
 			stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 			cursor=g.conn.execute(stmt, (uid, user, user, uid))
@@ -1418,6 +1417,12 @@ def us():
 		p.extend([fs])
 		p.extend([inters])
 		fin.append(p)
+		
+		print thing
+		print p
+	for thing in fin:
+		print 'fin'
+		print thing
 	if hid:
 		return render_template("husersearch.html", lis=fin)
 	else:
