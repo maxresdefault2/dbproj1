@@ -1481,6 +1481,7 @@ def uticks():
 		nev.append(p)
 	print 'nev'
 	print nev
+	fin=[]
 	for thing in nev:
 		eid=int(thing[0])
 		stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid=%s"
@@ -1500,7 +1501,6 @@ def uticks():
 				enames.append(result[0])
 				tagdict[result[0]]=result[2]
 				pw.append(result)
-		fin=[]	
 		print 'pw'
 		print pw
 		print 'tagdict'
