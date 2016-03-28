@@ -1468,9 +1468,9 @@ def uticks():
 		for i in ev:
 			if i[0]==thing:
 				if i[1] in tdic.keys():
-					tdic[i[1]]=i[2]
+					tdic[i[1]]=int(i[2])
 				else:
-					tdic[i[1]]+=i[2]
+					tdic[i[1]]+=int(i[2])
 				cost+=i[3]
 		typestr=""
 		typeirt=0
