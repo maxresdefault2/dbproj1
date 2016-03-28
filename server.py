@@ -1569,6 +1569,7 @@ def uviewev():
 @app.route('/going', methods=['POST'])
 def going():
 	going=request.form['going']
+	print 'hi'
 	if going:
 		print going
 	else:
