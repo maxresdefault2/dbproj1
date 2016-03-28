@@ -1413,26 +1413,17 @@ def us():
 			inters+=", "+thing
 		i+=1
 		
-		
+		p=[]
 		p.extend([thing[x]])
 		p.extend([fs])
 		p.extend([inters])
 		fin.append(p)
 
-
-	fin=[]	
-	for thing in res:
-		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
 	fin=sorted(fin, key=operator.itemgetter(8,9))
 	if hid:
-		return render_template("heventsearch.html", lis=fin)
+		return render_template("husersearch.html", lis=fin)
 	else:
-		return render_template("eventsearch.html", lis=fin)
+		return render_template("usersearch.html", lis=fin)
 
 
 
