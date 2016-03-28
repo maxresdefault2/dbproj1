@@ -846,16 +846,19 @@ def editevent():
 			ads=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='child' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
+	rc= cursor.rowcount
 	if rc>0:
 		for thing in cursor:
 			chs=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='student' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
+	rc= cursor.rowcount
 	if rc>0:
 		for thing in cursor:
 			sts=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='senior' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
+	rc= cursor.rowcount
 	if rc>0:
 		for thing in cursor:
 			srs=int(thing[0])
