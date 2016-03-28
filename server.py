@@ -774,9 +774,9 @@ def viewprof():
 			inters+=", "+thing
 		i+=1
 	if hid:
-		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, hid=True)
+		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
 	else:
-		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend)
+		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend, uid=True)
 
 @app.route('/editevent', methods=['GET', 'POST'])
 def editevent():
