@@ -1576,16 +1576,12 @@ def going():
 	stmt="SELECT * FROM Going where eid=%s and uid=%s"
 	cursor=g.conn.execute(stmt, (gev, uid,))
 	rc= cursor.rowcount
-	if going and rc>0:
-		continue
-	elif going and rc==0:
+	if going and rc==0:
 		stmt="INSERT INTO Going VALUES(%s, %s)"
 		cursor=g.conn.execute(stmt, (uid, gev,))
-	elif not going and rc>0:
+	if not going and rc>0:
 		stmt="DELETE FROM Going WHERE uid=%s and eid=%s"
 		cursor=g.conn.execute(stmt, (uid, gev,))
-	else:
-		continue
 	return redirect('/uhome')
 
 if __name__ == "__main__":
