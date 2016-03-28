@@ -840,20 +840,25 @@ def editevent():
 	srs=0
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='adult' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
-	for thing in cursor:
-		ads=int(thing[0])
+	rc= cursor.rowcount
+	if rc>0:
+		for thing in cursor:
+			ads=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='child' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
-	for thing in cursor:
-		chs=int(thing[0])
+	if rc>0:
+		for thing in cursor:
+			chs=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='student' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
-	for thing in cursor:
-		sts=int(thing[0])
+	if rc>0:
+		for thing in cursor:
+			sts=int(thing[0])
 	stmt="SELECT SUM(qty) FROM Owns_Tickets_Has_For o, Tick_Type t where t.type='senior' and t.typeid=o.typeid and o.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
-	for thing in cursor:
-		srs=int(thing[0])
+	if rc>0:
+		for thing in cursor:
+			srs=int(thing[0])
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (eid,))
 	pw=[]
