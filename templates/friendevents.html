@@ -23,6 +23,7 @@
 	<a href="/uhome"><img class='img-reg' src='static/logo.png'></a>
 
 	<h1>Friend's Events</h1><br>
+	{% if lis %}
 	<h4> View events by selecting from the dropdown menu </h4>
 	<form action="/uviewev" method="post" id="main_form">
 		<select name="drop">
@@ -36,8 +37,9 @@
 
 
 	</form>
+	{% end if %}
 	<br><br>
-
+	
 	<div>
 
 	   {% for n in lis %}
