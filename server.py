@@ -774,7 +774,7 @@ def viewprof():
 			inters+=", "+thing
 		i+=1
 	if hid:
-		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
+		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, hid=True)
 	else:
 		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend)
 
