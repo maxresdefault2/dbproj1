@@ -1627,6 +1627,41 @@ def buytick():
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	
+	stmt="SELECT ti.eid, tt.type, SUM(o.qty), SUM(ti.price*o.qty) from Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where o.eid=ti.eid and o.typeid=ti.typeid and tt.typeid=ti.typeid and tt.typeid=o.typeid and o.uid = %s and o.eid = %s group by ti.eid, tt.type"
+	cursor=g.conn.execute(stmt, (uid, gev,))
+	ev=[]
+	for result in cursor:
+		ev.append(result)
+	nev=[]
+	vals=[]
+	for thing in ev:
+		vals.append(thing[0])
+	v=list(set(vals))
+	for thing in v:
+		p=[]
+		p.extend([str(thing)])
+		tdic={}
+		cost=0
+		for i in ev:
+			if i[0]==thing:
+				if i[1] in tdic.keys():
+					tdic[i[1]]+=int(i[2])
+				else:
+					tdic[i[1]]=int(i[2])
+				cost+=i[3]
+		typestr=""
+		typeitr=0
+		for key, value in tdic.iteritems():
+			if typeitr==0:
+				typestr=str(key)+": "+str(value)
+			else:
+				typestr+=", "+str(key)+": "+str(value)
+			typeitr+=1
+		p.extend([typestr])
+		p.extend([str(cost)])
+		nev.append(p)
+	print nev
+	
 	return render_template('buytickets.html', lis=pw)
 
 if __name__ == "__main__":
