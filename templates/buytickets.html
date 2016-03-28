@@ -45,8 +45,23 @@
 	<br>
 	<h3><u>All tickets are to be picked up at the box office</u></h3>
 	<br>
-	<h5>Buy Tickets</h5>
+	<h4>Buy Tickets</h4>
 	<br>
+	<form action="/uhome" method="post" id="main_form">
+		{% if error %}
+			<p class=error><strong>Error:</strong> {{ error }}
+		{% endif %}
+		<br>
+		<div>Adult: $10.00 <input type = "text" name= "adprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Adult" /></div>
+		<br><br>
+		<input type = "text" name= "chprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Child" />
+		<br><br>
+		<input type = "text" name= "stprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Student" />
+		<br><br>
+		<input type = "text" name= "srprice" value="" maxlength="100" size="50" class="inputbox" placeholder = "Senior" />
+		<br>
+		<input type="submit" value="Buy" class = "input_button">
+	</form>
   </div>
   
 </body>
