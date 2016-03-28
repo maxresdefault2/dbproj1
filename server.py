@@ -1457,13 +1457,36 @@ def uticks():
 	vals=[]
 	for thing in ev:
 		vals.append(thing[0])
-	print 'vals'
-	print vals
 	v=list(set(vals))
 	print 'v'
 	print v
-
-		
+	for thing in v:
+		p=[]
+		p.extend(thing)
+		tdic={}
+		cost=0
+		for i in ev:
+			if i[0]==thing:
+				if i[1] in tdic:
+					tdic[i[1]]=i[2]
+				else:
+					tdic[i[1]]+=i[2]
+				cost+=i[3]
+		typestr=""
+		typeirt=0
+		for key, value in tdic.iteritems():
+			if typeirt==0:
+				typestr=str(key)+": "+str(value)
+			else:
+				typestr+=", "+str(key)+": "+str(value)
+			typeitr+=1
+		p.extend(typestr)
+		p.extend(cost)
+		print 'p'
+		print p
+		nev.append(p)
+	print 'nev'
+	print nev
 	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid"
 	cursor = g.conn.execute(stmt)
 	pw=[]
