@@ -1414,7 +1414,7 @@ def us():
 		i+=1
 		
 		p=[]
-		p.extend([thing[x]])
+		p.extend([thing])
 		p.extend([fs])
 		p.extend([inters])
 		fin.append(p)
