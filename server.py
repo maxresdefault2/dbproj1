@@ -449,6 +449,15 @@ def es():
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
+				sti0=pw[i][0]
+				if not isinstance(sti0, int) and not isinstance(sti0, float):
+					sti0=sti0.encode('ascii','ignore')
+				res0=result[0]
+				if not isinstance(res0, int) and not isinstance(res0, float):
+					res0=res0.encode('ascii','ignore')
+				res2=result[2]
+				if not isinstance(res2, int) and not isinstance(res2, float):
+					res2=res2.encode('ascii','ignore')
 				if str(pw[i][0])==str(result[0]):
 					dictval= tagdict[result[0]]
 					newdictval = dictval+", "+str(result[2])
