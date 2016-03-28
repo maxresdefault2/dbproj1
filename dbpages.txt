@@ -27,6 +27,7 @@ images link to event pages (link to edit event if host and your event)
 u buy ticket for events (not over qty, pickup only, types)
 h see who has tickets for my event/how many/price event page
 add * to required fields
+tags optional
 use now() on since on upage and friends page
 can't insert tagname that has name in db
 make sure only accepts right datatypes before submitting anything, check delete order for evdel
