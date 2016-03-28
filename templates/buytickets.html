@@ -35,28 +35,7 @@
 	   <br>
 	   {% endfor %}
 	</div>
-	<br>
-	<a href="/buytick"><u><h4>Buy Tickets</h4></u></a><br>
-	<form action="/going" method="post" id="main_form">
-	<div class="checkbox">
-	{% for n in lis %}
-		{% if going %}
-			<label><input type="checkbox" id={{n[10]}} name="going" checked="checked" value="yes"}>Going</label><br>
-			<br>
-		{% endif %}
-		{% if not going %}
-			<label><input type="checkbox" id={{n[10]}} name="going" value="yes"}>Going</label><br>
-			<br>
-		{% endif %}
-	{% endfor %}
-	</div>
-		
-
-				
-		<input type="submit" value="Submit" class = "input_button">
-
   </div>
-
   
 </body>
 
