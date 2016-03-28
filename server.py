@@ -1451,15 +1451,11 @@ def uticks():
 	ev=[]
 	for result in cursor:
 		ev.append(result)
-	print 'ev'
-	print ev
 	nev=[]
 	vals=[]
 	for thing in ev:
 		vals.append(thing[0])
 	v=list(set(vals))
-	print 'v'
-	print v
 	for thing in v:
 		p=[]
 		p.extend([str(thing)])
@@ -1467,14 +1463,6 @@ def uticks():
 		cost=0
 		for i in ev:
 			if i[0]==thing:
-				print 'thing'
-				print thing
-				print 'i'
-				print i
-				print 'tdic'
-				print tdic
-				print '1one'
-				print i[1]
 				if i[1] in tdic.keys():
 					tdic[i[1]]+=int(i[2])
 				else:
@@ -1488,44 +1476,44 @@ def uticks():
 			else:
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
-		print 'typestr'
-		print typestr
 		p.extend([typestr])
 		p.extend([str(cost)])
-		print 'p'
-		print p
 		nev.append(p)
 	print 'nev'
 	print nev
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid"
-	cursor = g.conn.execute(stmt)
 	pw=[]
-	enames=[]
-	tagdict={}
+	for thing in nev:
+		eid=int(thing[0])
+		stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and eid=%s"
+		cursor = g.conn.execute(stmt, (eid,))
+		pw=[]
+		enames=[]
+		tagdict={}
 
-	for result in cursor:
-		if result[0] in enames:
-			l=len(pw)
-			for i in range(0,l):
-				if str(pw[i][0])==str(result[0]):
-					dictval= tagdict[result[0]]
-					newdictval = dictval+", "+str(result[2])
-					tagdict[result[0]]=newdictval
-		else:
-			enames.append(result[0])
-			tagdict[result[0]]=result[2]
-			pw.append(result)
-	fin=[]	
-	for thing in pw:
-		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
+		for result in cursor:
+			if result[0] in enames:
+				l=len(pw)
+				for i in range(0,l):
+					if str(pw[i][0])==str(result[0]):
+						dictval= tagdict[result[0]]
+						newdictval = dictval+", "+str(result[2])
+						tagdict[result[0]]=newdictval
+			else:
+				enames.append(result[0])
+				tagdict[result[0]]=result[2]
+				pw.append(result)
+		fin=[]	
+		for thing in pw:
+			p=[]
+			for x in range(0,len(thing)):
+				p.extend([thing[x]])
+				tags=tagdict[thing[0]]
+			p.extend([tags])
+			fin.append(p)
 	
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	for thing in pw:
+		print 'thing'
 		print thing
 	return render_template("usertickets.html", lis=pw)
 
