@@ -1,0 +1,141 @@
+Reg_User:
+ uid |      name      | password |      loc
+-----+----------------+----------+---------------
+   4 | George         | banana   | Boston
+   5 | Michael        | dad      | San Francisco
+   6 | George Michael | awkward  | Denver
+   7 | Maeby          | cousin   | Seattle
+   8 | Annyong        | hello    | Bronx
+   9 | Lindsay        | teamocil | Tampa
+  10 | Oscar          | hair     | Chicago
+   3 | Tobias         | blue     | Brooklyn
+   2 | Buster         | brother  | Los Angeles
+   1 | Gob            | magic    | New York
+
+    uid |  name   |   password   |        hname
+-----+---------+--------------+----------------------
+   1 | Lucille | vodka        | Bluth Company
+   2 | Barry   | lawyer       | Barry Law
+   3 | Loblaw  | bob          | Loblaw Law
+   4 | Holt    | mistakes     | Steve Holt Used Cars
+   5 | Ron     | foxsucks     | Hollywood Inc.
+   6 | Maggie  | blindjustice | Newport Law
+   7 | Rita    | misterf      | British Spies
+   8 | Tony    | bread        | The Gothic Castle
+   9 | Marta   | hermano      | El Amor Prohibido
+  10 | Gene    | aaaaa        | Gene Parmesan P.I.
+  
+Location:
+  lid |        loc_name        | building_num |    room    |       city       |           street            | state |  zip
+-----+------------------------+--------------+------------+------------------+-----------------------------+-------+-------
+   1 | The Kitchen            | 512          |            | New York         | W 19th Street               | NY    | 10026
+   2 | Columbia               | 2920         |            | New York         | Broadway                    | NY    | 10027
+   3 | Madison Square Garden  | 4            | Blue Hall  | New York         | Pennsylvania Plaza          | NY    | 10025
+   4 | Smoke Jazz Club        | 2751         |            | New York         | Broadway                    | NY    | 10027
+   6 | The Bell House         | 149          |            | Brooklyn         | 7th Street                  | NY    | 11215
+   7 | Highline Ballroom      | 431          | Ballroom A | New York         | W 16th Street               | NY    | 10011
+   8 | Highline Ballroom      | 431          | Ballroom B | New York         | W 16th Street               | NY    | 10011
+   9 | Radio City Music Hall  | 1260         |            | New York         | Ave of the Americas         | NY    | 10020
+  10 | Renaissance Event Hall | 27-34        |            | Long Island City | 21st Street                 | NY    | 11102
+   5 | Streetside             | Pier 86      |            | New York         | W 46th Street & 12th Avenue | NY    | 10027
+
+Friend:
+ uid1 | uid2 |   since
+------+------+------------
+    2 |    3 | 2016-01-11
+    3 |    4 | 2015-02-08
+    1 |    2 | 2015-02-08
+    4 |    5 | 2014-03-06
+    5 |    6 | 2015-02-08
+    7 |    8 | 2013-01-07
+    8 |    9 | 2015-12-08
+    9 |   10 | 2011-04-28
+    5 |    7 | 2010-02-18
+    5 |    2 | 2010-02-18
+
+Event_Create_Where:
+ eid | lid | uid |              ename               |   time   |   edate    | tickqty |              photo
+-----+-----+-----+----------------------------------+----------+------------+---------+---------------------------------
+  10 |  10 |  10 | Speed Dating Brunch              | 10:10:00 | 2016-06-28 |     100 | http://i.imgur.com/3IcRi53.jpg
+   2 |   4 |   2 | The Kools                        | 02:20:00 | 2016-03-09 |     100 | http://i.imgur.com/lyv1RWv.jpg
+  11 |   3 |   8 | Tony Wonder’s Bread Extravaganza | 20:00:00 | 2016-05-30 |     500 | https://i.imgur.com/vG2A393.jpg
+   1 |   1 |   1 | An Intimate Evening With Me      | 01:10:00 | 2016-03-02 |     200 | http://i.imgur.com/LZ8n1Kt.png
+   3 |   7 |   3 | Special Loblaw Client Reunion    | 03:30:00 | 2016-04-20 |     150 | http://i.imgur.com/bS6kpzL.jpg
+   4 |   2 |   4 | How to Avoid Ending Up Like Me   | 04:40:00 | 2016-05-11 |     250 | http://i.imgur.com/MlwIq2X.jpg
+   5 |   5 |   5 | June Kickoff Parade              | 05:50:00 | 2016-06-01 |    1000 | http://i.imgur.com/VoGo1qb.jpg
+   6 |   6 |   6 | Uprising                         | 06:00:00 | 2016-05-02 |      75 | http://i.imgur.com/ob1ixP7.jpg
+   8 |   2 |   8 | End Discrimination for Good!     | 08:20:00 | 2016-06-06 |     500 | http://i.imgur.com/10edvEE.jpg
+   7 |   6 |   7 | Espionage Dinner Theatre         | 07:10:00 | 2016-03-13 |      50 | http://i.imgur.com/IcNGwYo.jpg
+   9 |   8 |   9 | Seagulls                         | 09:30:00 | 2016-10-10 |     200 | http://i.imgur.com/y8gx7ZA.jpg
+
+Tags:
+ tag_id |   tname
+--------+------------
+      1 | Concert
+      2 | Reunion
+      3 | Meeting
+      4 | Parade
+      5 | Dinner
+      6 | Party
+      7 | Protest
+      8 | Screening
+      9 | Brunch
+     10 | Speech
+     11 | Magic Show
+
+Owns_Tickets_Has_For:
+ tid |  type   | price | uid | qty | eid
+-----+---------+-------+-----+-----+-----
+   1 | adult   | 12.00 |   1 |   1 |   1
+   2 | adult   |  2.00 |   1 |   2 |   2
+   3 | adult   |  3.00 |   1 |   3 |   3
+   4 | student |  0.00 |   1 |   4 |   4
+   5 | senior  | 40.00 |   1 |   5 |   5
+   6 | adult   | 12.00 |   1 |   1 |   1
+   7 | adult   |  2.00 |   2 |   1 |   1
+   8 | adult   |  7.50 |   2 |   1 |   4
+   9 | adult   | 15.00 |   4 |   2 |   1
+  10 | adult   | 30.00 |   9 |   1 |   5
+
+Interested:
+ tag_id | uid
+--------+-----
+      7 |   3
+      7 |  10
+      7 |   9
+      7 |   1
+      4 |   2
+      4 |   1
+      5 |   7
+      5 |   6
+      5 |   5
+      1 |   3
+
+Marked:
+ tag_id | eid
+--------+-----
+      1 |   2
+      2 |   3
+      3 |   4
+      4 |   5
+      5 |   6
+      7 |   8
+      8 |   9
+      9 |  10
+      5 |   7
+     10 |   1
+     11 |  11
+
+Going:
+ uid | eid
+-----+-----
+   1 |   2
+   1 |   3
+   1 |   4
+   2 |   5
+   3 |   6
+   8 |   9
+   4 |   4
+   9 |   5
+  10 |   3
+   5 |   6
