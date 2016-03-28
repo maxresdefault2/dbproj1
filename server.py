@@ -1594,7 +1594,7 @@ def going():
 		cursor=g.conn.execute(stmt, (uid, gev,))
 	return redirect('/uhome')
 	
-@app.route('/buytick', methods=['POST'])
+@app.route('/buytick')
 def buytick():
 	if hid:
 		return redirect('/hhome')
