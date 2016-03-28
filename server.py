@@ -446,7 +446,7 @@ def usettings():
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
-		yw.append(result)
+		yw.append(result	)
 	print 'yw'
 	print yw
 	print 'xw'
@@ -658,29 +658,20 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
+	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
-	#stmt = "SELECT tname from Tags"
 	stmt = "SELECT tag_id from Tags"
 	cursor=g.conn.execute(stmt)
-	#print 'yw'
-	#print yw
+
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
 			
-	for thing in xw:
-		print 'thing'
-		print thing
-		z=request.form.getlist(thing)
-		print 'z'
-		print z
-	j=raw_input('k')
 	change=False
 	print 'xw'
 	print xw
@@ -696,15 +687,16 @@ def usc():
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
-			var=0
+			'''var=0
 			stmt= "SELECT * from Tags"
 			cursor=g.conn.execute(stmt)
 			alltags=[]
 			for result in cursor:
 				if result[1]==thing:
-					var= int(result[0])
+					var= int(result[0])'''
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (var, uid))
+			cursor=g.conn.execute(stmt, (thing, uid))
+			#cursor=g.conn.execute(stmt, (var, uid))
 			change=True
 		elif x==False and thing in yw:
 			var=0
