@@ -214,6 +214,12 @@ def uri():
 	except:
 		error="UID must be an integer"
 		return render_template("userregister.html", error=error)
+	stmt="SELECT * FROM Reg_User WHERE uid=%s"
+	cursor=g.conn.execute(stmt, (uid,))
+	rc= cursor.rowcount
+	if rc!=0:
+		error="UID taken, please enter a new number"
+		return render_template("userregister.html", error=error)
 	stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (uid, name, password, loc))
 	cursor=g.conn.execute("SELECT * from Reg_User")
@@ -239,7 +245,13 @@ def hri():
 		hid=int(hid)
 	except:
 		error="UID must be an integer"
-		return render_template("userregister.html", error=error)
+		return render_template("hostregister.html", error=error)
+	stmt="SELECT * FROM Host WHERE uid=%s"
+	cursor=g.conn.execute(stmt, (hid,))
+	rc= cursor.rowcount
+	if rc!=0:
+		error="UID taken, please enter a new number"
+		return render_template("hostregister.html", error=error)
 	stmt="INSERT INTO Host VALUES (%s, %s, %s, %s)"
 	g.conn.execute(stmt, (hid, name, password, hname))
 	cursor=g.conn.execute("SELECT * from Host")
