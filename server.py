@@ -727,6 +727,7 @@ def viewprof():
 	notfriend=True
 	if uid and uid==user:
 		notfriend=False
+		fs="This is you"
 	if len(pw)>=1:
 		notfriend=False
 		for thing in pw:
