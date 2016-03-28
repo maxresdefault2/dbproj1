@@ -1386,45 +1386,44 @@ def us():
 		user=""
 		print 'res'
 		print res
-		for j in res:
-			print 'j'
-			print j
-			for thing in j:
-				print 'thing'
-				print thing
-				user=thing[2]
-				stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
-				cursor=g.conn.execute(stmt, (uid, user, user, uid))
-				fs="Not friends with this user"
-				pw=[]
-				for result in cursor:
-					pw.append(result)
-				if len(pw)>=1:
-					for thing in pw:
-						fs=thing[2]
-				stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
-				cursor=g.conn.execute(stmt, (user,))
-				ints=[]
-				for xthing in cursor:
-					for inter in xthing:
-						ints.append(inter)
-				i=0
-				inters=""
-				for xthing in ints:
-					if i==0:
-						inters=xthing
-					else:
-						inters+=", "+xthing
-					i+=1
-				
-				p=[]
-				p.extend([thing])
-				p.extend([fs])
-				p.extend([inters])
-				fin.append(p)
-				
-				print thing
-				print p
+		for thing in res:
+			print 'thing2'
+			print thing[2]
+			user=thing[2]
+			stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
+			cursor=g.conn.execute(stmt, (uid, user, user, uid))
+			fs="Not friends with this user"
+			pw=[]
+			for result in cursor:
+				pw.append(result)
+			if len(pw)>=1:
+				for thing in pw:
+					fs=thing[2]
+			stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
+			cursor=g.conn.execute(stmt, (user,))
+			ints=[]
+			for xthing in cursor:
+				for inter in xthing:
+					ints.append(inter)
+			i=0
+			inters=""
+			for xthing in ints:
+				if i==0:
+					inters=xthing
+				else:
+					inters+=", "+xthing
+				i+=1
+			
+			p=[]
+			p.extend([thing[0]])
+			p.extend([thing[1]])
+			p.extend([thing[2]])
+			p.extend([fs])
+			p.extend([inters])
+			fin.append(p)
+			
+			print thing
+			print p
 	for thing in fin:
 		print 'fin'
 		print thing
