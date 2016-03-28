@@ -200,7 +200,6 @@ def uregister():
 
 @app.route('/uri', methods=['POST'])
 def uri():
-	print uid
 	global er
 	er=None
 	global uid
