@@ -1397,29 +1397,29 @@ def us():
 			if len(pw)>=1:
 				for thing in pw:
 					fs=thing[2]
-		stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
-		cursor=g.conn.execute(stmt, (user,))
-		ints=[]
-		for thing in cursor:
-			for inter in thing:
-				ints.append(inter)
-		i=0
-		inters=""
-		for thing in ints:
-			if i==0:
-				inters=thing
-		else:
-			inters+=", "+thing
-		i+=1
-		
-		p=[]
-		p.extend([thing])
-		p.extend([fs])
-		p.extend([inters])
-		fin.append(p)
-		
-		print thing
-		print p
+			stmt="SELECT t.tname FROM Interested i, Reg_User r, Tags t WHERE i.uid=r.uid and t.tag_id=i.tag_id and r.uid = %s"
+			cursor=g.conn.execute(stmt, (user,))
+			ints=[]
+			for xthing in cursor:
+				for inter in xthing:
+					ints.append(inter)
+			i=0
+			inters=""
+			for xthing in ints:
+				if i==0:
+					inters=xthing
+				else:
+					inters+=", "+xthing
+				i+=1
+			
+			p=[]
+			p.extend([thing])
+			p.extend([fs])
+			p.extend([inters])
+			fin.append(p)
+			
+			print thing
+			print p
 	for thing in fin:
 		print 'fin'
 		print thing
