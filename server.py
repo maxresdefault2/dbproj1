@@ -725,6 +725,8 @@ def viewprof():
 	for result in cursor:
 		pw.append(result)
 	notfriend=True
+	if uid and uid==user:
+		notfriend=False
 	if len(pw)>=1:
 		notfriend=False
 		for thing in pw:
