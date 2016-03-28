@@ -16,9 +16,9 @@ add interests to profiles
 h create events (eid, ename, loc, time, date,
 	#ticks, photo url, tag, price/types)
 u friends' events
-
 make pricing table,make sure qty works on eved, add option to edit that on h event page  & add to create
 add not nulls and checks
+
 for event create, make eid one greater than max for eids and for ec and eed make new lid 1+ max lid
 find users
 shower
@@ -30,5 +30,5 @@ h see who has tickets for my event/how many/price event page
 add * to required fields
 use now() on since on upage and friends page
 can't insert tagname that has name in db
-make sure only accepts right datatypes before submitting anything
+make sure only accepts right datatypes before submitting anything, check delete order for evdel
 test everything & things that shouldn't work!

@@ -970,7 +970,7 @@ def eec():
 	newloc=False
 	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
 		newloc=True
-		stmt="SELECT COUNT(lid) FROM Location"
+		stmt="SELECT MAX(lid) FROM Location"
 		cursor=g.conn.execute(stmt)
 		t=[]
 		for thing in cursor:
@@ -1079,7 +1079,7 @@ def eec():
 			stmt="UPDATE Event_Create_Where SET photo = %s WHERE eid = %s"
 			cursor=g.conn.execute(stmt, (photo, eev,))
 		if ntag:
-			stmt="SELECT COUNT(tag_id) FROM Tags"
+			stmt="SELECT MAX(tag_id) FROM Tags"
 			cursor=g.conn.execute(stmt)
 			t=[]
 			for thing in cursor:
@@ -1133,7 +1133,7 @@ def create():
 	sr=request.form['srprice']
 	l=request.form['drop']
 	l=int(l)
-	stmt= "SELECT COUNT(*) From Event_Create_Where"
+	stmt= "SELECT MAX(*) From Event_Create_Where"
 	cursor=g.conn.execute(stmt)
 	numevs=[]
 	for thing in cursor:
@@ -1267,7 +1267,7 @@ def create():
 		if l!=0:
 			lnum=l
 		if l==0 and newloc==True:
-			stmt="SELECT COUNT(lid) FROM Location"
+			stmt="SELECT MAX(lid) FROM Location"
 			cursor=g.conn.execute(stmt)
 			lnum=0
 			t=[]
@@ -1286,7 +1286,7 @@ def create():
 		cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
 		
 		if ntag:
-			stmt="SELECT COUNT(tag_id) FROM Tags"
+			stmt="SELECT MAX(tag_id) FROM Tags"
 			cursor=g.conn.execute(stmt)
 			t=[]
 			for thing in cursor:
