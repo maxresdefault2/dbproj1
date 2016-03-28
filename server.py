@@ -1562,9 +1562,9 @@ def uviewev():
 	if d:
 		going=True
 	if hid:
-		return render_template('usereventpage.html', lis=pw)
+		return render_template('usereventpage.html', lis=pw, going=going)
 	else:
-		return render_template('usereventpage.html', lis=pw)
+		return render_template('usereventpage.html', lis=pw, going=going)
 
 
 
