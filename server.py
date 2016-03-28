@@ -1446,7 +1446,7 @@ def uticks():
 		return redirect('/hhome')
 	global er
 	er=None
-	stmt="SELECT ti.eid, tt.type, SUM(o.qty), SUM(ti.price*o.qty) where o.eid=ti.eid and o.typeid=ti.typeid and tt.typeid=ti.typeid and tt.typeid=o.typei and o.uid = %s group by ti.eid, tt.type"
+	stmt="SELECT ti.eid, tt.type, SUM(o.qty), SUM(ti.price*o.qty) from Owns_Tickets_Has_For o, Tick_Info ti, Tick_Type tt where o.eid=ti.eid and o.typeid=ti.typeid and tt.typeid=ti.typeid and tt.typeid=o.typei and o.uid = %s group by ti.eid, tt.type"
 	cursor=g.conn.execute(stmt, (uid,))
 	ev=[]
 	for result in cursor:
