@@ -1418,8 +1418,6 @@ def us():
 		p.extend([fs])
 		p.extend([inters])
 		fin.append(p)
-
-	fin=sorted(fin, key=operator.itemgetter(8,9))
 	if hid:
 		return render_template("husersearch.html", lis=fin)
 	else:
