@@ -1312,7 +1312,7 @@ def frevs():
 		return redirect('/hhome')
 	global er
 	er=None
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r2.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r1.uid = %s UNION SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r1.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r2.uid = %s"
+	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r2.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r1.uid = %s UNION SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r1.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r2.uid = %s"
 	cursor = g.conn.execute(stmt, (uid, uid,))
 	pw=[]
 	enames=[]
@@ -1572,16 +1572,20 @@ def uviewev():
 @app.route('/going', methods=['POST'])
 def going():
 	global gev
-	print gev
 	going=request.form.getlist('going')
 	stmt="SELECT * FROM Going where eid=%s and uid=%s"
 	cursor=g.conn.execute(stmt, (gev, uid,))
-	print cursor.rowcount
-	if going:
-		print 'yes'
-		
+	rc= cursor.rowcount
+	if going and rc>0:
+		continue
+	elif going and rc==0:
+		stmt="INSERT INTO Going VALUES(%s, %s)"
+		cursor=g.conn.execute(stmt, (uid, gev,))
+	elif not going and rc>0:
+		stmt="DELETE FROM Going WHERE uid=%s and eid=%s"
+		cursor=g.conn.execute(stmt, (uid, gev,))
 	else:
-		print 'no'
+		continue
 	return redirect('/uhome')
 
 if __name__ == "__main__":
