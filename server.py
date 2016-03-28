@@ -1502,11 +1502,11 @@ def uticks():
 				tagdict[result[0]]=result[2]
 				pw.append(result)
 		fin=[]	
-		for thing in pw:
+		for thingx in pw:
 			p=[]
-			for x in range(0,len(thing)):
-				p.extend([thing[x]])
-				tags=tagdict[thing[0]]
+			for x in range(0,len(thingx)):
+				p.extend([thingx[x]])
+				tags=tagdict[thingx[0]]
 			p.extend([tags])
 			fin.append(p)
 	
