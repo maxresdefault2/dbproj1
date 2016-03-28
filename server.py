@@ -1467,7 +1467,7 @@ def uticks():
 		cost=0
 		for i in ev:
 			if i[0]==thing:
-				if i[1] in tdic:
+				if i[1] in tdic.keys():
 					tdic[i[1]]=i[2]
 				else:
 					tdic[i[1]]+=i[2]
