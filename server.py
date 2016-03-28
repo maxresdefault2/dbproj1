@@ -808,7 +808,7 @@ def editevent():
 		tpr.append(result)
 	ap=0.0
 	ch=0.0
-	st=0.0
+	stu=0.0
 	sr=0.0
 	for thing in tpr:
 		if thing[0]=="adult":
@@ -816,7 +816,7 @@ def editevent():
 		if thing[0]=="child":
 			ch=thing[1]
 		if thing[0]=="student":
-			st=thing[1]
+			stu=thing[1]
 		if thing[0]=="senior":
 			sr=thing[1]
 	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
@@ -872,7 +872,7 @@ def editevent():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
-	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=st, sr=sr, error=er)
+	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=stu, sr=sr, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
 def delev():
@@ -899,7 +899,7 @@ def eec():
 	l=int(l)
 	ad=request.form['adprice']
 	ch=request.form['chprice']
-	st=request.form['stprice']
+	stu=request.form['stprice']
 	sr=request.form['srprice']
 	if qty:
 		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
@@ -987,7 +987,7 @@ def eec():
 		er="Full location must be entered"
 		return redirect("/editevent")
 	 
-	if name=="" and time=="" and date=="" and qty=="" and photo =="" and ntag=="" and ad=="" and ch=="" and st=="" and sr=="" and change==False and newloc==False and l==0:
+	if name=="" and time=="" and date=="" and qty=="" and photo =="" and ntag=="" and ad=="" and ch=="" and stu=="" and sr=="" and change==False and newloc==False and l==0:
 		er= "No new data entered"
 		return redirect("/editevent")
 	else:
@@ -1007,11 +1007,9 @@ def eec():
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
-		if st:
-			print 'st'
-			print st
+		if stu:
 			try:
-				st=float(st)
+				stu=float(stu)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
@@ -1043,7 +1041,7 @@ def eec():
 			typ=int(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (ch, eev, typ,))
-		if st:
+		if stu:
 			stmt="SELECT typeid from Tick_Type where type = 'student'"
 			cursor=g.conn.execute(stmt)
 			pr=[]
@@ -1052,7 +1050,7 @@ def eec():
 					pr.append(pri)
 			typ=int(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (st, eev, typ,))
+			cursor=g.conn.execute(stmt, (stu, eev, typ,))
 		if sr:
 			stmt="SELECT typeid from Tick_Type where type = 'senior'"
 			cursor=g.conn.execute(stmt)
@@ -1129,7 +1127,7 @@ def create():
 	ntag=request.form['ntag']
 	ad=request.form['adprice']
 	ch=request.form['chprice']
-	st=request.form['stprice']
+	stu=request.form['stprice']
 	sr=request.form['srprice']
 	l=request.form['drop']
 	l=int(l)
@@ -1182,13 +1180,13 @@ def create():
 	print photo
 	print ad
 	print ch
-	print st
+	print stu
 	print sr
 	print ntag
 	print change
 	print newloc
 	print l
-	if name=="" or time=="" or date=="" or qty=="" or photo =="" or ad=="" or ch=="" or st=="" or sr=="" or (ntag=="" and change==False) or (newloc==False and l==0):
+	if name=="" or time=="" or date=="" or qty=="" or photo =="" or ad=="" or ch=="" or stu=="" or sr=="" or (ntag=="" and change==False) or (newloc==False and l==0):
 		er= "All data not entered"
 		return redirect("/evcr")
 	else:
@@ -1208,11 +1206,9 @@ def create():
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
-		if st:
-			print 'st'
-			print st
+		if stu:
 			try:
-				st=float(st)
+				stu=float(stu)
 			except:
 				er="Prices must be numbers"
 				return redirect("/editevent")
@@ -1244,7 +1240,7 @@ def create():
 			typ=int(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
 			cursor=g.conn.execute(stmt, (ch, eev, typ,))
-		if st:
+		if stu:
 			stmt="SELECT typeid from Tick_Type where type = 'student'"
 			cursor=g.conn.execute(stmt)
 			pr=[]
@@ -1253,7 +1249,7 @@ def create():
 					pr.append(pri)
 			typ=int(pr[0])
 			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (st, eev, typ,))
+			cursor=g.conn.execute(stmt, (stu, eev, typ,))
 		if sr:
 			stmt="SELECT typeid from Tick_Type where type = 'senior'"
 			cursor=g.conn.execute(stmt)
