@@ -1551,7 +1551,7 @@ def create():
 		stmt="INSERT INTO Tags VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (num, ntag,))
 		stmt="INSERT INTO Marked VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (enum, eev,))
+		cursor=g.conn.execute(stmt, (num, enum,))
 	
 	if ad:
 		stmt="SELECT typeid from Tick_Type where type = 'adult'"
