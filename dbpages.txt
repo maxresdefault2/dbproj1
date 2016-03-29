@@ -25,9 +25,10 @@ event pages (buy link(for users), info, mark as going(for users))
 u buy ticket for events (not over qty, pickup only, types)
 h see type sold on event page
 add * to required fields
-
 login with wrong stuff
-tags optional
+
+tags optional for event
+user can select many tags
 remove friend
 make sure quotes work in non-num types
 cleanup git
@@ -35,3 +36,4 @@ use now() on since on upage and friends page
 can't insert tagname that has name in db
 make sure only accepts right datatypes before submitting anything, check delete order for evdel
 test everything & things that shouldn't work!
+turn off debug

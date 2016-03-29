@@ -685,32 +685,18 @@ def usc():
 		x=thing in request.form
 		print 'x'
 		print x
-		if x and thing in yw:
+		print 'yw'
+		print yw
+		if x==True and thing in yw:
 			continue
-		elif x and thing not in yw:
-			'''var=0
-			stmt= "SELECT * from Tags"
-			cursor=g.conn.execute(stmt)
-			alltags=[]
-			for result in cursor:
-				if result[1]==thing:
-					var= int(result[0])'''
+		elif x==True and thing not in yw:
 			thing=int(thing)
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
-			#cursor=g.conn.execute(stmt, (var, uid))
 			change=True
 		elif x==False and thing in yw:
-			'''var=0
-			stmt= "SELECT * from Tags"
-			cursor=g.conn.execute(stmt)
-			alltags=[]
-			for result in cursor:
-				if result[1]==thing:
-					var= int(result[0])'''
 			thing = int(thing)
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
-			#stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
 		elif x==False and thing not in yw:
