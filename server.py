@@ -945,7 +945,7 @@ def editevent():
 			x.append(num)
 	going= x[0]
 	seltags=tags.split(',')
-	stmt = "SELECT tname, tag_id from Tags EXCEPT SELECT t.tname, t.tid from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
+	stmt = "SELECT tname, tag_id from Tags EXCEPT SELECT t.tname, t.tag_id from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
 	cursor=g.conn.execute(stmt, (eid,))
 	tg=[]
 	for thing in cursor:
