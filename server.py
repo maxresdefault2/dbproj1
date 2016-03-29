@@ -1643,8 +1643,8 @@ def uticks():
 	print 'nev'
 	print nev
 	fin=[]
-	for thing in nev:
-		eid=int(thing[0])
+	for ything in nev:
+		eid=int(ything[0])
 		stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
 		cursor = g.conn.execute(stmt, (gev,))
 		nt=[]
@@ -1686,9 +1686,9 @@ def uticks():
 				for x in range(0,len(thing)):
 					p.extend([thing[x]])
 				p.extend([tags])
-			p.extend([thing[0]])
-			p.extend([thing[1]])
-			p.extend([thing[2]])
+			p.extend([ything[0]])
+			p.extend([ything[1]])
+			p.extend([ything[2]])
 			fin.append(p)
 	
 	pw=sorted(fin, key=operator.itemgetter(7,8))
