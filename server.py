@@ -1556,14 +1556,14 @@ def us():
 	for thing in uinfo:
 		if dval=='uname':
 			val=thing[0]
-			if not isinstance(val, int):
+			if not isinstance(val, int) and thing[0]:
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
 			val=thing[1]
-			if not isinstance(val, int):
+			if not isinstance(val, int) and thing[1]:
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:

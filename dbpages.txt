@@ -28,12 +28,12 @@ add * to required fields
 login with wrong stuff
 tags optional for event
 user can select many tags
-
 remove friend
+
 make sure quotes work in non-num types
-cleanup git
 use now() on since on upage and friends page
 can't insert tagname that has name in db
 make sure only accepts right datatypes before submitting anything, check delete order for evdel
 test everything & things that shouldn't work!
+cleanup git
 turn off debug
