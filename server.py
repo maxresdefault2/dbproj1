@@ -434,6 +434,8 @@ def uhome():
 def logout():
 	global uid
 	global hid
+	global er
+	er=None
 	uid=""
 	hid=""
 	return redirect('/')
@@ -1191,24 +1193,37 @@ def eec():
 	if ad:
 		try:
 			ad=float(ad)
+			if ad<0:
+				er="Prices must zero or greater"
+				return redirect("/editevent")
+				
 		except:
 			er="Prices must be numbers"
 			return redirect("/editevent")
 	if ch:
 		try:
 			ch=float(ch)
+			if ch<0:
+				er="Prices must zero or greater"
+				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
 			return redirect("/editevent")
 	if stu:
 		try:
 			stu=float(stu)
+			if stu<0:
+				er="Prices must zero or greater"
+				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
 			return redirect("/editevent")
 	if sr:
 		try:
 			sr=float(sr)
+			if sr<0:
+				er="Prices must zero or greater"
+				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
 			return redirect("/editevent")
@@ -1474,24 +1489,36 @@ def create():
 	if ad:
 		try:
 			ad=float(ad)
+			if ad<0:
+				er="Prices must zero or greater"
+				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
 			return redirect("/evcr")
 	if ch:
 		try:
 			ch=float(ch)
+			if ch<0:
+				er="Prices must zero or greater"
+				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
 			return redirect("/evcr")
 	if stu:
 		try:
 			stu=float(stu)
+			if stu<0:
+				er="Prices must zero or greater"
+				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
 			return redirect("/evcr")
 	if sr:
 		try:
 			sr=float(sr)
+			if sr<0:
+				er="Prices must zero or greater"
+				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
 			return redirect("/evcr")
