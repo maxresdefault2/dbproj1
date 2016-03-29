@@ -1167,7 +1167,7 @@ def eec():
 			for thing in result:
 				t.append(thing)
 		for thing in t:
-			if thing.lower()==ntag.lower()
+			if thing.lower()==ntag.lower():
 				er="Created tag already exists"
 				return redirect('/editevent')
 	if st:
