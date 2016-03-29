@@ -591,7 +591,7 @@ def hhome():
 	er=None
 	eev=0
 	print hid
-	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h Location l where e.lid=l.lid and e.uid=h.uid and e.uid = %s"
+	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.uid = %s"
 	cursor = g.conn.execute(stmt, (hid,))
 	nt=[]
 	for thing in cursor:
