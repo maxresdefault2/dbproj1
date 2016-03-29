@@ -658,9 +658,6 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	t=request.form.getlist('1')
-	print request.form.getlist('Speech')
-	k=raw_input('k')
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
 	yw=[]
@@ -691,27 +688,28 @@ def usc():
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
-			var=0
+			'''var=0
 			stmt= "SELECT * from Tags"
 			cursor=g.conn.execute(stmt)
 			alltags=[]
 			for result in cursor:
 				if result[1]==thing:
-					var= int(result[0])
+					var= int(result[0])'''
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			#cursor=g.conn.execute(stmt, (var, uid))
 			change=True
 		elif x==False and thing in yw:
-			var=0
+			'''var=0
 			stmt= "SELECT * from Tags"
 			cursor=g.conn.execute(stmt)
 			alltags=[]
 			for result in cursor:
 				if result[1]==thing:
-					var= int(result[0])
+					var= int(result[0])'''
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
-			cursor=g.conn.execute(stmt, (var, uid))
+			#stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
+			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
 		elif x==False and thing not in yw:
 			continue
