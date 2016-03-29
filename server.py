@@ -658,12 +658,14 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
+	t=request.form.getlist('1')
 	for n in range(0,12):
+		n=str(n)
 		print n
 		print request.form.getlist(n)
 		y=n in request.form
 		print y
-	print request.form.getlist('Speech')
+	'''print request.form.getlist('Speech')
 	k=raw_input('k')
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
@@ -694,13 +696,13 @@ def usc():
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
-			'''var=0
+			var=0
 			stmt= "SELECT * from Tags"
 			cursor=g.conn.execute(stmt)
 			alltags=[]
 			for result in cursor:
 				if result[1]==thing:
-					var= int(result[0])'''
+					var= int(result[0])
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			#cursor=g.conn.execute(stmt, (var, uid))
@@ -734,7 +736,7 @@ def usc():
 		cursor=g.conn.execute(stmt, (password, uid,))
 	if loc:
 		stmt="UPDATE Reg_User SET loc = %s WHERE uid = %s"
-		cursor=g.conn.execute(stmt, (loc, uid,))
+		cursor=g.conn.execute(stmt, (loc, uid,))'''
 	return redirect("/usettings")
 
 @app.route('/hsc', methods=['GET','POST'])
