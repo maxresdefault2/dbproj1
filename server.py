@@ -1619,38 +1619,30 @@ def create():
 		stmt="INSERT INTO Marked VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (num, enum,))
 	
-	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
 	cursor=g.conn.execute(stmt, (enum,))
 	yw=[]
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
-	stmt = "SELECT tag_id from Tags"
+	stmt = "SELECT tname from Tags"
 	cursor=g.conn.execute(stmt)
 	xw=[]
 	for result in cursor:
 		for thing in result:
 			xw.append(thing)
-	change=False
 	for thing in xw:
-		if not isinstance(thing, int) and not isinstance(thing, float) and thing:
-			thing=thing.encode('ascii', 'ignore')
-		x=str(thing) in request.form
-		if x and thing in yw:
-			continue
-		elif x and thing not in yw:
+		x=thing in request.form
+		if x and thing not in yw:
+			var=0
+			stmt= "SELECT * from Tags"
+			cursor=g.conn.execute(stmt)
+			alltags=[]
+			for result in cursor:
+				if result[1]==thing:
+					var= int(result[0])
 			stmt="INSERT INTO Marked VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (thing, enum))
-			change=True
-		elif not x and thing in yw:
-			stmt="DELETE FROM Marked WHERE tag_id=%s and eid=%s"
-			cursor=g.conn.execute(stmt, (thing, enum))
-			change=True
-		elif not x and thing not in yw:
-			continue
-		else:
-			er= "Something went wrong"
-			return redirect("/evcr")
+			cursor=g.conn.execute(stmt, (var, enum))
 
 	return redirect('/evcr')
 
