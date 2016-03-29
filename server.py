@@ -1456,11 +1456,16 @@ def frevs():
 		return redirect('/hhome')
 	global er
 	er=None
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r2.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r1.uid = %s UNION SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = g.eid and g.uid = r1.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r2.uid = %s"
+	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and e.eid = g.eid and g.uid = r2.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r1.uid = %s UNION SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Reg_User r1, Reg_User r2, Friend f, Location l, Going g where e.lid=l.lid and e.uid=h.uid and e.eid = g.eid and g.uid = r1.uid and r1.uid!=r2.uid and r1.uid=f.uid1 and r2.uid=f.uid2 and r2.uid = %s"
 	cursor = g.conn.execute(stmt, (uid, uid,))
+	nt=[]
+	for thing in cursor:
+		nt.append(thing)
 	pw=[]
 	enames=[]
 	tagdict={}
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m, Going g where g.eid = e.eid and e.eid=m.eid and t.tag_id=m.tag_id and g.uid=%s"
+	cursor=g.conn.execute(stmt, (uid,))
 	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
@@ -1474,15 +1479,26 @@ def frevs():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	for thing in pw:
+	print 'nt'
+	print nt
+	print 'pw'
+	print pw
+	for thing in nt:
 		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
-
-	pw=sorted(fin, key=operator.itemgetter(8,9))
+		tags=""
+		for xthing in pw:
+			if xthing[0]==thing[9]:
+				for x in range(0,len(thing)):
+					p.extend([thing[x]])
+				tags=tagdict[xthing[0]]
+				p.extend([tags])
+				fin.append(p)
+		if tags=="":
+			for x in range(0,len(thing)):
+				p.extend([thing[x]])
+			p.extend([tags])
+			fin.append(p)
+	pw=sorted(fin, key=operator.itemgetter(7,8))
 	return render_template("friendevents.html", lis=pw)
 	
 @app.route('/usearch')
