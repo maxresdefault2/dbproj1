@@ -1667,7 +1667,6 @@ def uticks():
 				enames.append(result[0])
 				tagdict[result[0]]=result[2]
 				pw.append(result)
-		fin=[]	
 		print 'nt'
 		print nt
 		print 'pw'
