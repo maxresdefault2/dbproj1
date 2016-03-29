@@ -1023,7 +1023,7 @@ def eec():
 			stmt="INSERT INTO Marked VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, eev))
 			change=True
-		elif not x and thing in yw:)
+		elif not x and thing in yw:
 			stmt="DELETE FROM Marked WHERE tag_id=%s and eid=%s"
 			cursor=g.conn.execute(stmt, (thing, eev))
 			change=True
