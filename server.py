@@ -1194,7 +1194,7 @@ def eec():
 		try:
 			ad=float(ad)
 			if ad<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/editevent")
 				
 		except:
@@ -1204,7 +1204,7 @@ def eec():
 		try:
 			ch=float(ch)
 			if ch<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
@@ -1213,7 +1213,7 @@ def eec():
 		try:
 			stu=float(stu)
 			if stu<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
@@ -1222,7 +1222,7 @@ def eec():
 		try:
 			sr=float(sr)
 			if sr<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/editevent")
 		except:
 			er="Prices must be numbers"
@@ -1490,7 +1490,7 @@ def create():
 		try:
 			ad=float(ad)
 			if ad<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
@@ -1499,7 +1499,7 @@ def create():
 		try:
 			ch=float(ch)
 			if ch<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
@@ -1508,7 +1508,7 @@ def create():
 		try:
 			stu=float(stu)
 			if stu<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
@@ -1517,7 +1517,7 @@ def create():
 		try:
 			sr=float(sr)
 			if sr<0:
-				er="Prices must zero or greater"
+				er="Prices must be zero or greater"
 				return redirect("/evcr")
 		except:
 			er="Prices must be numbers"
