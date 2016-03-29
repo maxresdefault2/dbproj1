@@ -2184,7 +2184,7 @@ def buying():
 				pr.append(pri)
 		typ=int(pr[0])
 		stmt="INSERT INTO Owns_Tickets_Has_For VALUES(%s, %s, %s, %s, %s)"
-		cursor=g.conn.execute(stmt, (tid, uid, gev, st, typ,))
+		cursor=g.conn.execute(stmt, (tid, uid, gev, stu, typ,))
 		tid+=1
 	if sr:
 		stmt="SELECT typeid from Tick_Type where type = 'senior'"
