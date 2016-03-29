@@ -53,7 +53,7 @@
 		<h5> Tags: </h5>
 			<div class="checkbox">
 			{% for t in useltags %}
-				<label><input type="checkbox" id={{t}} name={{t}} value="no">{{t}}</label><br>
+				<label><input type="checkbox" id={{t[1]}} name={{t[1]}} checked="checked" value="yes"}>{{t[0]}}</label><br>
 			{% endfor %}
 			<br>
 			<input type = "text" name= "ntag" value="" maxlength="100" size="50"
