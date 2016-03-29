@@ -1614,6 +1614,9 @@ def create():
 		num=int(t[0])+1
 		stmt="INSERT INTO Tags VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (num, ntag,))
+		print num
+		print enum
+		print ntag
 		stmt="INSERT INTO Marked VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (num, enum,))
 	
