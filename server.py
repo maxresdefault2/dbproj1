@@ -1177,7 +1177,7 @@ def eec():
 			return redirect('/editevent')
 	if zipc:
 		try:
-			zipc=int(zipc)
+			zc=int(zipc)
 		except:
 			er="Zipcode must only contain numbers"
 			return redirect('/editevent')
