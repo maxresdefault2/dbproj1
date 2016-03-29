@@ -676,10 +676,9 @@ def usc():
 	print 'xw'
 	print xw
 	for thing in xw:
-		thing = str(thing)
 		print 'thing'
 		print thing
-		x=thing in request.form
+		x=string(thing) in request.form
 		print 'x'
 		print x
 		print 'yw'
@@ -687,13 +686,11 @@ def usc():
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
-			thing=int(thing)
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
-		elif not x and thing in yw:
+		elif not x and intthing in yw:
 			print 'delete'
-			thing = int(thing)
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
