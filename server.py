@@ -617,6 +617,7 @@ def hhome():
 		fin.append(p)
 
 	pw=sorted(fin, key=operator.itemgetter(8,9))
+	print pw
 
 	return render_template("hosthome.html", lis=pw)
 
