@@ -622,7 +622,7 @@ def hhome():
 		p=[]
 		tags=""
 		for xthing in pw:
-			if xthing[0]==thing[0]:
+			if xthing[0]==thing[9]:
 				for x in range(0,len(thing)):
 					p.extend([thing[x]])
 				tags=tagdict[xthing[0]]
@@ -633,7 +633,7 @@ def hhome():
 				p.extend([thing[x]])
 			p.extend([tags])
 			fin.append(p)
-	pw=sorted(fin, key=operator.itemgetter(8,9))
+	pw=sorted(fin, key=operator.itemgetter(7,8))
 	print pw
 
 	return render_template("hosthome.html", lis=pw)
