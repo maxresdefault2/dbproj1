@@ -26,9 +26,9 @@ u buy ticket for events (not over qty, pickup only, types)
 h see type sold on event page
 add * to required fields
 login with wrong stuff
-
 tags optional for event
 user can select many tags
+
 remove friend
 make sure quotes work in non-num types
 cleanup git

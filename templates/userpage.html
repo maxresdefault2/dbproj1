@@ -41,6 +41,12 @@
 	</form>
 	<br><br>
 	{% endif %}
+	{% if friend %}
+	<form action="/delfriend" method="post" id="main_form">
+		<input type="submit" value="Remove Friend" class = "input_button">
+	</form>
+	<br><br>
+	{% endif %}
 	{% if lis2 %}
 	<h4> View events by selecting from the dropdown menu </h4>
 	<form action="/uviewev" method="post" id="main_form">

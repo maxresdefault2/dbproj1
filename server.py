@@ -804,6 +804,25 @@ def addfr():
 		cursor=g.conn.execute(stmt, (uid, utoadd, today,))
 	return redirect('/friends')
 	
+@app.route('/delfriend', methods=['GET', 'POST'])
+def delfr():
+	if hid:
+		return redirect('/hhome')
+	error=None
+	today="2016-03-27"
+	stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s"
+	cursor=g.conn.execute(stmt, (uid, utoadd,))
+	rw=cursor.rowcount
+	if rc>0:
+		stmt="DELETE FROM Friend WHERE uid1 = %s and uid2 = %s)"
+		cursor=g.conn.execute(stmt, (uid, utoadd,))
+	stmt= "SELECT * from Friend f where f.uid2=%s and f.uid1=%s"
+	cursor=g.conn.execute(stmt, (uid, utoadd,))
+	rw=cursor.rowcount
+	if rc>0:
+		stmt="DELETE FROM Friend WHERE uid2 = %s and uid1 = %s)"
+		cursor=g.conn.execute(stmt, (uid, utoadd,))
+	return redirect('/friends')
 
 @app.route('/viewprof', methods=['GET', 'POST'])
 def viewprof():
@@ -818,6 +837,7 @@ def viewprof():
 	user=int(user)
 	fs="Not friends with this user"
 	notfriend=True
+	friend=False
 	if uid:
 		stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 		cursor=g.conn.execute(stmt, (uid, user, user, uid))
@@ -831,6 +851,8 @@ def viewprof():
 			notfriend=False
 			for thing in pw:
 				fs=thing[2]
+	if not notfriend:
+		friend = True
 	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l, Going g where e.lid=l.lid and e.uid=h.uid and g.eid = e.eid and g.uid = %s"
 	cursor = g.conn.execute(stmt, (user,))
 	nt=[]
@@ -892,7 +914,7 @@ def viewprof():
 	if hid:
 		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
 	else:
-		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend, uid=True)
+		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend, friend=friend, uid=True)
 
 @app.route('/editevent', methods=['GET', 'POST'])
 def editevent():
