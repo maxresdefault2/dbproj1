@@ -823,7 +823,7 @@ def viewprof():
 	pw=[]
 	enames=[]
 	tagdict={}
-	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m, Going g where e.eid=m.eid and t.tag_id=m.tag_id and g.eid=e.eid and g.uid=%"
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m, Going g where e.eid=m.eid and t.tag_id=m.tag_id and g.eid=e.eid and g.uid=%s"
 	cursor=g.conn.execute(stmt, (user,))
 	for result in cursor:
 		if result[0] in enames:
