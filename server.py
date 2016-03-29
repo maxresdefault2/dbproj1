@@ -930,7 +930,7 @@ def editevent():
 		for result in cursor:
 			t=result[2]
 			if not isinstance(t, int):
-				val=val.encode('ascii','ignore')
+				t=t.encode('ascii','ignore')
 			if beg:
 				beg=False
 				tags=str(t)
