@@ -1688,6 +1688,8 @@ def uticks():
 			p.extend([ything[0]])
 			p.extend([ything[1]])
 			p.extend([ything[2]])
+			print 'p'
+			print p
 			fin.append(p)
 	
 	pw=sorted(fin, key=operator.itemgetter(7,8))
