@@ -2134,6 +2134,10 @@ def buying():
 			x.append(num)
 	sold= x[0]
 	
+	if not pos:
+		pos=0
+	if not sold:
+		sold=0
 	avail=pos-sold
 	print avail
 
