@@ -1540,19 +1540,7 @@ def create():
 		return redirect("/evcr")
 		
 	
-	if ntag:
-		stmt="SELECT MAX(tag_id) FROM Tags"
-		cursor=g.conn.execute(stmt)
-		t=[]
-		for thing in cursor:
-			for xt in thing:
-				t.append(xt)
-		num=int(t[0])+1
-		stmt="INSERT INTO Tags VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (num, ntag,))
-		stmt="INSERT INTO Marked VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (num, enum,))
-	
+
 	if ad:
 		stmt="SELECT typeid from Tick_Type where type = 'adult'"
 		cursor=g.conn.execute(stmt)
@@ -1616,6 +1604,18 @@ def create():
 	stmt="INSERT INTO Event_Create_Where VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
 
+	if ntag:
+		stmt="SELECT MAX(tag_id) FROM Tags"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for thing in cursor:
+			for xt in thing:
+				t.append(xt)
+		num=int(t[0])+1
+		stmt="INSERT INTO Tags VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, ntag,))
+		stmt="INSERT INTO Marked VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, enum,))
 	
 	
 	
