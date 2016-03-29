@@ -584,15 +584,7 @@ def es():
 			if sval in val:
 				res.append(thing)
 
-	fin=[]	
-	for thing in res:
-		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
-	fin=sorted(fin, key=operator.itemgetter(8,9))
+	fin=sorted(res, key=operator.itemgetter(8,9))
 	if hid:
 		return render_template("heventsearch.html", lis=fin)
 	else:
