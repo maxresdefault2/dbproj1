@@ -919,32 +919,36 @@ def editevent():
 	for thing in cursor:
 		if thing[0]:
 			srs=int(thing[0])
-	stmt = "SELECT e.ename, t.tname  FROM Event_Create_Where e, Tags t, Marked m where t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
-	cursor = g.conn.execute(stmt, (eid,))
-	pw=[]
-	enames=[]
-	tagdict={}
+			
+			
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id and e.eid=%s"
+	cursor=g.conn.execute(stmt, (eid,))
+	tags=""
+	rc=cursor.rowcount
+	if rc>0:
+		beg=True
+		for result in cursor:
+			t=result[2]
+			if not isinstance(t, int):
+				val=val.encode('ascii','ignore')
+			if beg:
+				beg=False
+				tags=str(t)
+			else:
+				tags=", "+str(t)
+			
 	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				if str(pw[i][0])==str(result[0]):
 					dictval= tagdict[result[0]]
-					newdictval = dictval+", "+str(result[1])
+					newdictval = dictval+", "+str(result[2])
 					tagdict[result[0]]=newdictval
 		else:
 			enames.append(result[0])
-			tagdict[result[0]]=result[1]
+			tagdict[result[0]]=result[2]
 			pw.append(result)
-	fin=[]	
-	for thing in pw:
-		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
-	tags= fin[0][2]
 
 	stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
 	cursor=g.conn.execute(stmt, (eid,))
