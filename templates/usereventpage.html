@@ -41,11 +41,11 @@
 	<div class="checkbox">
 	{% for n in lis %}
 		{% if going %}
-			<label><input type="checkbox" id={{n[10]}} name="going" checked="checked" value="yes"}>Going</label><br>
+			<label><input type="checkbox" id={{n[9]}} name="going" checked="checked" value="yes"}>Going</label><br>
 			<br>
 		{% endif %}
 		{% if not going %}
-			<label><input type="checkbox" id={{n[10]}} name="going" value="yes"}>Going</label><br>
+			<label><input type="checkbox" id={{n[9]}} name="going" value="yes"}>Going</label><br>
 			<br>
 		{% endif %}
 	{% endfor %}

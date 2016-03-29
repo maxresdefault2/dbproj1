@@ -1831,9 +1831,11 @@ def going():
 	global gev
 	print gev
 	going=request.form.getlist('going')
+	print going
 	stmt="SELECT * FROM Going where eid=%s and uid=%s"
 	cursor=g.conn.execute(stmt, (gev, uid,))
 	rc= cursor.rowcount
+	print rc
 	if going and rc==0:
 		stmt="INSERT INTO Going VALUES(%s, %s)"
 		cursor=g.conn.execute(stmt, (uid, gev,))
