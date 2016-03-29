@@ -1443,16 +1443,6 @@ def create():
 		except:
 			er="Ticket quantity must be an integer"
 			return redirect('/evcr')
-		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
-		cursor=g.conn.execute(stmt, (eev,))
-		x=[]
-		for thing in cursor:
-			for num in thing:
-				x.append(num)
-		sold= x[0]
-		if int(qty)<int(sold):
-			er="Ticket quantity cannot be less than amount sold"
-			return redirect('/evcr')
 	if ntag:
 		stmt="SELECT tname from Tags"
 		cursor=g.conn.execute(stmt)
