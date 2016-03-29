@@ -2149,7 +2149,7 @@ def buying():
 
 	if tytot>avail:
 		er="Not enough tickets available"
-			return redirect('/buytick')
+		return redirect('/buytick')
 	
 	
 	stmt="SELECT MAX(tid) FROM Owns_Tickets_Has_For"
