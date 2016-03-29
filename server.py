@@ -678,7 +678,7 @@ def usc():
 	for thing in xw:
 		print 'thing'
 		print thing
-		x=string(thing) in request.form
+		x=str(thing) in request.form
 		print 'x'
 		print x
 		print 'yw'
