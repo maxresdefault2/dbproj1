@@ -679,27 +679,24 @@ def usc():
 		thing = str(thing)
 		print 'thing'
 		print thing
-		z=request.form.getlist(thing)
-		print 'z'
-		print z
 		x=thing in request.form
 		print 'x'
 		print x
 		print 'yw'
 		print yw
-		if x==True and thing in yw:
+		if x and thing in yw:
 			continue
-		elif x==True and thing not in yw:
+		elif x and thing not in yw:
 			thing=int(thing)
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
-		elif x==False and thing in yw:
+		elif not x and thing in yw:
 			thing = int(thing)
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
-		elif x==False and thing not in yw:
+		elif not x and thing not in yw:
 			continue
 		else:
 			er= "Something went wrong"
