@@ -628,6 +628,12 @@ def hhome():
 				tags=tagdict[xthing[0]]
 				p.extend([tags])
 				fin.append(p)
+		if tags=="":
+			for x in range(0,len(thing)):
+					p.extend([thing[x]])
+				tags=tagdict[xthing[0]]
+				p.extend([tags])
+				fin.append(p)
 	print fin
 	k=raw_input('k')
 	pw=sorted(fin, key=operator.itemgetter(8,9))
