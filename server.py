@@ -389,16 +389,25 @@ def uhome():
 	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m, Going g where g.eid = e.eid and e.eid=m.eid and t.tag_id=m.tag_id and g.uid=%s"
 	cursor=g.conn.execute(stmt, (uid,))
 	for result in cursor:
+		pwi0=pw[i][0]
+		if not isinstance(pwi0, int) and pwi0:
+			pwi0=pwi0.encode('ascii', 'ignore')
+		r0=result[0]
+		if not isinstance(r0, int) and r0:
+			r0=r0.encode('ascii', 'ignore')
+		r2=result[2]
+		if not isinstance(r2, int) and r2:
+			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
-				if str(pw[i][0])==str(result[0]):
-					dictval= tagdict[result[0]]
-					newdictval = dictval+", "+str(result[2])
-					tagdict[result[0]]=newdictval
+				if str(pwi0)==str(r0):
+					dictval= tagdict[r0]
+					newdictval = dictval+", "+str(r2)
+					tagdict[r0]=newdictval
 		else:
-			enames.append(result[0])
-			tagdict[result[0]]=result[2]
+			enames.append(r0)
+			tagdict[r0]=r2
 			pw.append(result)
 	fin=[]	
 	for thing in nt:
