@@ -828,7 +828,7 @@ def delfr():
 def viewprof():
 	user=request.form['drop']
 	global utoadd
-	utoadd=user
+	utoadd=int(user)
 	stmt="SELECT name, loc FROM Reg_User WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (user,))
 	uinfo=[]
