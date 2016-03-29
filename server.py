@@ -814,7 +814,7 @@ def delfr():
 	cursor=g.conn.execute(stmt, (uid, utoadd,))
 	rc=cursor.rowcount
 	if rc>0:
-		stmt="DELETE FROM Friend WHERE uid1 = %s and uid2 = %s)"
+		stmt="DELETE FROM Friend WHERE uid1 = %s and uid2 = %s"
 		cursor=g.conn.execute(stmt, (uid, utoadd,))
 	stmt= "SELECT * from Friend f where f.uid2=%s and f.uid1=%s"
 	cursor=g.conn.execute(stmt, (uid, utoadd,))
@@ -828,7 +828,7 @@ def delfr():
 def viewprof():
 	user=request.form['drop']
 	global utoadd
-	utoadd=int(user)
+	utoadd=user
 	stmt="SELECT name, loc FROM Reg_User WHERE uid = %s"
 	cursor=g.conn.execute(stmt, (user,))
 	uinfo=[]
