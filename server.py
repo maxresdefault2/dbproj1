@@ -815,7 +815,7 @@ def viewprof():
 			notfriend=False
 			for thing in pw:
 				fs=thing[2]
-	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l, Going g where e.lid=l.lid and e.uid=h.uid and g.eid = e.eid g.uid = %s"
+	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l, Going g where e.lid=l.lid and e.uid=h.uid and g.eid = e.eid and g.uid = %s"
 	cursor = g.conn.execute(stmt, (user,))
 	nt=[]
 	for thing in cursor:
