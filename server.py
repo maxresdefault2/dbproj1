@@ -1159,6 +1159,8 @@ def eec():
 			for num in thing:
 				x.append(num)
 		sold= x[0]
+		if not sold:
+			sold=0
 		if int(qty)<int(sold):
 			er="Ticket quantity cannot be less than amount sold"
 			return redirect('/editevent')
