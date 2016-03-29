@@ -1645,11 +1645,16 @@ def uticks():
 	fin=[]
 	for thing in nev:
 		eid=int(thing[0])
-		stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid=%s"
-		cursor = g.conn.execute(stmt, (eid,))
+		stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
+		cursor = g.conn.execute(stmt, (gev,))
+		nt=[]
+		for thing in cursor:
+			nt.append(thing)
+		pw=[]
 		enames=[]
 		tagdict={}
-		pw=[]
+		stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id and e.eid=%s"
+		cursor=g.conn.execute(stmt, (gev,))
 		for result in cursor:
 			if result[0] in enames:
 				l=len(pw)
@@ -1662,25 +1667,32 @@ def uticks():
 				enames.append(result[0])
 				tagdict[result[0]]=result[2]
 				pw.append(result)
+		fin=[]	
+		print 'nt'
+		print nt
 		print 'pw'
 		print pw
-		print 'tagdict'
-		print tagdict
-		for thingx in pw:
+		for thing in nt:
 			p=[]
-			for x in range(0,len(thingx)):
-				p.extend([thingx[x]])
-				tags=tagdict[thingx[0]]
-			p.extend([tags])
+			tags=""
+			for xthing in pw:
+				if xthing[0]==thing[9]:
+					for x in range(0,len(thing)):
+						p.extend([thing[x]])
+					tags=tagdict[xthing[0]]
+					p.extend([tags])
+					fin.append(p)
+			if tags=="":
+				for x in range(0,len(thing)):
+					p.extend([thing[x]])
+				p.extend([tags])
 			p.extend([thing[0]])
 			p.extend([thing[1]])
 			p.extend([thing[2]])
 			fin.append(p)
 	
-	pw=sorted(fin, key=operator.itemgetter(8,9))
-	for thing in pw:
-		print 'thing'
-		print thing
+	pw=sorted(fin, key=operator.itemgetter(7,8))
+	print pw
 	return render_template("usertickets.html", lis=pw)
 
 @app.route('/uviewev', methods=['GET', 'POST'])
