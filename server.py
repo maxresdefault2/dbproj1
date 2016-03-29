@@ -1186,7 +1186,7 @@ def eec():
 		except:
 			er="Zipcode must only contain numbers"
 			return redirect('/editevent')
-		if len(zipc)!=2:
+		if len(zipc)!=5:
 			er="Zipcode must have 5 numbers"
 			return redirect('/editevent')
 			
@@ -1482,7 +1482,7 @@ def create():
 		except:
 			er="Zipcode must only contain numbers"
 			return redirect('/evcr')
-		if len(zipc)!=2:
+		if len(zipc)!=5:
 			er="Zipcode must have 5 numbers"
 			return redirect('/evcr')
 			
