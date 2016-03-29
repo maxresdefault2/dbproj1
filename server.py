@@ -939,7 +939,7 @@ def editevent():
 				beg=False
 				tags=str(t)
 			else:
-				tags=", "+str(t)
+				tags+=", "+str(t)
 			
 	for result in cursor:
 		if result[0] in enames:
