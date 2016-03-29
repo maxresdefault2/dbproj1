@@ -949,8 +949,7 @@ def editevent():
 	cursor=g.conn.execute(stmt, (eid,))
 	tg=[]
 	for thing in cursor:
-		for t in thing:
-			tg.append(t)
+			tg.append(thing)
 	stmt="SELECT * from Location"
 	cursor=g.conn.execute(stmt)
 	locs=[]
@@ -958,6 +957,12 @@ def editevent():
 		locs.append(thing)
 	print seltags
 	print tg
+	stmt = "SELECT t.tname, t.tag_id from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
+	cursor=g.conn.execute(stmt, (eid,))
+	seltags=[]
+	for thing in cursor:
+			seltags.append(thing)
+	
 	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=stu, sr=sr, ads=ads, chs=chs, sts=sts, srs=srs, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
