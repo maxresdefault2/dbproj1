@@ -1132,6 +1132,7 @@ def eec():
 	city=request.form['city']
 	state=request.form['state']
 	zipc=request.form['zipc']
+	print st
 	if time:
 		try:
 			datetime.datetime.strptime(time, '%H:%M:%S')
