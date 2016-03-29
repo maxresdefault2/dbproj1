@@ -1640,11 +1640,16 @@ def uviewev():
 	eid=request.form['drop']
 	global gev
 	gev=eid
-	stmt = "SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid and e.eid = %s"
-	cursor = g.conn.execute(stmt, (eid,))
+stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
+	cursor = g.conn.execute(stmt, (gev,))
+	nt=[]
+	for thing in cursor:
+		nt.append(thing)
 	pw=[]
 	enames=[]
 	tagdict={}
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id and e.eid=%s"
+	cursor=g.conn.execute(stmt, (gev,))
 	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
@@ -1658,15 +1663,27 @@ def uviewev():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	for thing in pw:
+	print 'nt'
+	print nt
+	print 'pw'
+	print pw
+	for thing in nt:
 		p=[]
-		for x in range(0,len(thing)):
-			p.extend([thing[x]])
-			tags=tagdict[thing[0]]
-		p.extend([tags])
-		fin.append(p)
+		tags=""
+		for xthing in pw:
+			if xthing[0]==thing[9]:
+				for x in range(0,len(thing)):
+					p.extend([thing[x]])
+				tags=tagdict[xthing[0]]
+				p.extend([tags])
+				fin.append(p)
+		if tags=="":
+			for x in range(0,len(thing)):
+				p.extend([thing[x]])
+			p.extend([tags])
+			fin.append(p)
 
-	pw=sorted(fin, key=operator.itemgetter(8,9))
+	pw=sorted(fin, key=operator.itemgetter(7,8))
 	
 	if hid:
 		return render_template('hosteventpage.html', lis=pw)
