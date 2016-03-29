@@ -695,6 +695,7 @@ def usc():
 			for result in cursor:
 				if result[1]==thing:
 					var= int(result[0])'''
+			thing=int(thing)
 			stmt="INSERT INTO Interested VALUES (%s, %s)"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			#cursor=g.conn.execute(stmt, (var, uid))
@@ -707,6 +708,7 @@ def usc():
 			for result in cursor:
 				if result[1]==thing:
 					var= int(result[0])'''
+			thing = int(thing)
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			#stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
