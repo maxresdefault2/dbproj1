@@ -1172,6 +1172,7 @@ def eec():
 				er="Created tag already exists"
 				return redirect('/editevent')
 	if st:
+		print len(st)
 		if len(st)!=2:
 			er="State must have two characters"
 			return redirect('/editevent')
