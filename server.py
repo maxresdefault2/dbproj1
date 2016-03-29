@@ -659,13 +659,7 @@ def usc():
 	password=request.form['password']
 	loc=request.form['loc']
 	t=request.form.getlist('1')
-	for n in range(0,12):
-		n=str(n)
-		print n
-		print request.form.getlist(n)
-		y=n in request.form
-		print y
-	'''print request.form.getlist('Speech')
+	print request.form.getlist('Speech')
 	k=raw_input('k')
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
@@ -685,6 +679,7 @@ def usc():
 	print 'xw'
 	print xw
 	for thing in xw:
+		thing = str(thing)
 		print 'thing'
 		print thing
 		z=request.form.getlist(thing)
@@ -736,7 +731,7 @@ def usc():
 		cursor=g.conn.execute(stmt, (password, uid,))
 	if loc:
 		stmt="UPDATE Reg_User SET loc = %s WHERE uid = %s"
-		cursor=g.conn.execute(stmt, (loc, uid,))'''
+		cursor=g.conn.execute(stmt, (loc, uid,))
 	return redirect("/usettings")
 
 @app.route('/hsc', methods=['GET','POST'])
