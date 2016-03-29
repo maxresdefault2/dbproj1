@@ -1464,8 +1464,8 @@ def frevs():
 	pw=[]
 	enames=[]
 	tagdict={}
-	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where and e.eid=m.eid and t.tag_id=m.tag_id"
-	cursor=g.conn.execute(stmt,)
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id"
+	cursor=g.conn.execute(stmt)
 	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
