@@ -490,33 +490,50 @@ def es():
 		else:
 			return render_template("eventsearch.html", error=error)
 	sval=str(sval).lower()
-	stmt="SELECT e.ename, h.hname, t.tname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Tags t, Marked m, Location l where e.lid=l.lid and e.uid=h.uid and t.tag_id=m.tag_id and e.eid=m.eid"
-	cursor=g.conn.execute(stmt)
+	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid"
+	cursor = g.conn.execute(stmt)
+	nt=[]
+	for thing in cursor:
+		nt.append(thing)
+	pw=[]
 	enames=[]
 	tagdict={}
+	stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id"
+	cursor=g.conn.execute(stmt)
 	for result in cursor:
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
-				sti0=pw[i][0]
-				if not isinstance(sti0, int) and not isinstance(sti0, float):
-					sti0=sti0.encode('ascii','ignore')
-				res0=result[0]
-				if not isinstance(res0, int) and not isinstance(res0, float):
-					res0=res0.encode('ascii','ignore')
-				res2=result[2]
-				if not isinstance(res2, int) and not isinstance(res2, float):
-					res2=res2.encode('ascii','ignore')
-				if str(sti0)==str(res0):
+				if str(pw[i][0])==str(result[0]):
 					dictval= tagdict[result[0]]
-					newdictval = dictval+", "+str(res2)
+					newdictval = dictval+", "+str(result[2])
 					tagdict[result[0]]=newdictval
 		else:
 			enames.append(result[0])
 			tagdict[result[0]]=result[2]
 			pw.append(result)
+	fin=[]	
+	print 'nt'
+	print nt
+	print 'pw'
+	print pw
+	for thing in nt:
+		p=[]
+		tags=""
+		for xthing in pw:
+			if xthing[0]==thing[9]:
+				for x in range(0,len(thing)):
+					p.extend([thing[x]])
+				tags=tagdict[xthing[0]]
+				p.extend([tags])
+				fin.append(p)
+		if tags=="":
+			for x in range(0,len(thing)):
+				p.extend([thing[x]])
+			p.extend([tags])
+			fin.append(p)
 	res=[]
-	for thing in pw:
+	for thing in fin:
 		if dval=='ename':
 			val=thing[0]
 			if not isinstance(val, int):
@@ -532,39 +549,40 @@ def es():
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
-			val=thing[3]
+			val=thing[2]
 			if not isinstance(val, int):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='zip':
-			val=thing[4]
+			val=thing[3]
 			if not isinstance(val, int):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='state':
-			val=thing[5]
+			val=thing[4]
 			if not isinstance(val, int):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='loc_name':
-			val=thing[6]
+			val=thing[5]
 			if not isinstance(val, int):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
-	if dval=='tag_name':
-		for en, tg in tagdict.iteritems():
-			if sval in str(tg).lower():
-				for thing in pw:
-					if thing[0]==en:
-						res.append(thing)
+		if dval=='tag_name':
+			val=thing[10]
+			if not isinstance(val, int):
+				val=val.encode('ascii','ignore')
+			val=str(val).lower()
+			if sval in val:
+				res.append(thing)
 
 	fin=[]	
 	for thing in res:
