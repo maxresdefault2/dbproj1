@@ -1874,7 +1874,7 @@ def uviewev():
 	eid=request.form['drop']
 	global gev
 	gev=int(eid)
-	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
+	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid, l.building_num, l.room, l.street FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
 	cursor = g.conn.execute(stmt, (gev,))
 	nt=[]
 	for thing in cursor:

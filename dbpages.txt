@@ -34,8 +34,9 @@ make sure quotes work in non-num types
 can't insert tagname that has name in db
 make sure only accepts right datatypes before submitting anything
 change building number to building in evcr/eved
-
 check delete order for evdel
+user can't buy more tickets than number left
+
 test everything & things that shouldn't work!
 cleanup git
 turn off debug
