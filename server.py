@@ -945,7 +945,7 @@ def editevent():
 			x.append(num)
 	going= x[0]
 	seltags=tags.split(',')
-	stmt = "SELECT tname from Tags EXCEPT SELECT t.tname from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
+	stmt = "SELECT tname, tag_id from Tags EXCEPT SELECT t.tname, t.tid from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
 	cursor=g.conn.execute(stmt, (eid,))
 	tg=[]
 	for thing in cursor:
@@ -956,6 +956,8 @@ def editevent():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
+	print seltags
+	print tg
 	return render_template("editevent.html", name=name, time=time, date=date, qty=qty, photo=photo, loc=loc, tags=tags, at=sold, going=going, seltags=seltags, useltags=tg, lis=locs, ap=ap, ch=ch, st=stu, sr=sr, ads=ads, chs=chs, sts=sts, srs=srs, error=er)
 
 @app.route('/delev', methods=['POST', 'GET'])
@@ -1000,13 +1002,13 @@ def eec():
 		if int(qty)<int(sold):
 			er="Ticket quantity cannot be less than amount sold"
 			return redirect('/editevent')
-	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
+	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
 	cursor=g.conn.execute(stmt, (eev,))
 	yw=[]
 	for result in cursor:
 		for thing in result:
 			yw.append(thing)
-	stmt = "SELECT tname from Tags"
+	stmt = "SELECT tag_id from Tags"
 	cursor=g.conn.execute(stmt)
 	xw=[]
 	for result in cursor:
@@ -1014,32 +1016,18 @@ def eec():
 			xw.append(thing)
 	change=False
 	for thing in xw:
-		x=thing in request.form
+		x=str(thing) in request.form
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
-			var=0
-			stmt= "SELECT * from Tags"
-			cursor=g.conn.execute(stmt)
-			alltags=[]
-			for result in cursor:
-				if result[1]==thing:
-					var= int(result[0])
 			stmt="INSERT INTO Marked VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (var, eev))
+			cursor=g.conn.execute(stmt, (thing, eev))
 			change=True
-		elif x==False and thing in yw:
-			var=0
-			stmt= "SELECT * from Tags"
-			cursor=g.conn.execute(stmt)
-			alltags=[]
-			for result in cursor:
-				if result[1]==thing:
-					var= int(result[0])
+		elif not x and thing in yw:)
 			stmt="DELETE FROM Marked WHERE tag_id=%s and eid=%s"
-			cursor=g.conn.execute(stmt, (var, eev))
+			cursor=g.conn.execute(stmt, (thing, eev))
 			change=True
-		elif x==False and thing not in yw:
+		elif not x and thing not in yw:
 			continue
 		else:
 			er= "Something went wrong"
