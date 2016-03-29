@@ -1624,10 +1624,7 @@ def create():
 		print enum
 		stmt="INSERT INTO Marked VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (ntnum, enum))
-		print 'sure'
-		ntnum=str(ntnum)
-		stmt="INSERT INTO Marked VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (ntnum, enum))
+		
 	
 	
 	
