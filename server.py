@@ -812,13 +812,13 @@ def delfr():
 	today="2016-03-27"
 	stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s"
 	cursor=g.conn.execute(stmt, (uid, utoadd,))
-	rw=cursor.rowcount
+	rc=cursor.rowcount
 	if rc>0:
 		stmt="DELETE FROM Friend WHERE uid1 = %s and uid2 = %s)"
 		cursor=g.conn.execute(stmt, (uid, utoadd,))
 	stmt= "SELECT * from Friend f where f.uid2=%s and f.uid1=%s"
 	cursor=g.conn.execute(stmt, (uid, utoadd,))
-	rw=cursor.rowcount
+	rc=cursor.rowcount
 	if rc>0:
 		stmt="DELETE FROM Friend WHERE uid2 = %s and uid1 = %s)"
 		cursor=g.conn.execute(stmt, (uid, utoadd,))
