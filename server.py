@@ -1140,7 +1140,7 @@ def eec():
 			return redirect('/editevent')
 	if date:
 		try:
-			time.strptime(date, '%Y-%m-%d')
+			datetime.datetime.strptime(date, '%Y-%m-%d')
 		except ValueError:
 			er="Date in incorrect format"
 			return redirect('/editevent')
