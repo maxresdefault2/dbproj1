@@ -614,10 +614,6 @@ def hhome():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -633,8 +629,6 @@ def hhome():
 				p.extend([thing[x]])
 			p.extend([tags])
 			fin.append(p)
-	print fin
-	k=raw_input('k')
 	pw=sorted(fin, key=operator.itemgetter(8,9))
 	print pw
 
