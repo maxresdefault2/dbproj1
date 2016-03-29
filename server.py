@@ -20,6 +20,7 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
 import operator
+import time
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
@@ -791,7 +792,7 @@ def addfr():
 	if hid:
 		return redirect('/hhome')
 	error=None
-	today="2016-03-27"
+	today=time.strftime("%Y-%m-%d")
 	stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 	cursor=g.conn.execute(stmt, (uid, utoadd, utoadd, uid))
 	pw=[]
