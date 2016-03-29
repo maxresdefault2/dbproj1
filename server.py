@@ -284,7 +284,7 @@ def hregister():
 	return redirect('/uhome')
   if hid:
 	return redirect('/hhome')
-  return render_template("hostregister.html")
+  return render_template("hostregister.html", error=er)
 
 @app.route('/userlogin')
 def ulogin():
