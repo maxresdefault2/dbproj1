@@ -1402,8 +1402,7 @@ def evcr():
 	cursor=g.conn.execute(stmt)
 	tg=[]
 	for thing in cursor:
-		for t in thing:
-			tg.append(t)
+			tg.append(thing)
 	stmt="SELECT * from Location"
 	cursor=g.conn.execute(stmt)
 	locs=[]
