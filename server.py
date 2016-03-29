@@ -20,6 +20,7 @@ from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
 import operator
+import datetime
 import time
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
@@ -1133,7 +1134,7 @@ def eec():
 	zipc=request.form['zipc']
 	if time:
 		try:
-			time.strptime(time, '%H:%M:%S')
+			datetime.strptime(time, '%H:%M:%S')
 		except ValueError:
 			er="Time in incorrect format"
 			return redirect('/editevent')
