@@ -1437,7 +1437,6 @@ def create():
 	city=request.form['city']
 	state=request.form['state']
 	zipc=request.form['zipc']
-	ntag=request.form['ntag']
 	print 'in create'
 	if time:
 		try:
@@ -1605,25 +1604,6 @@ def create():
 	cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
 
 	
-	ntnum=0
-	if ntag:
-		stmt="SELECT MAX(tag_id) FROM Tags"
-		cursor=g.conn.execute(stmt)
-		t=[]
-		for thing in cursor:
-			for xt in thing:
-				t.append(xt)
-		num=int(t[0])+1
-		ntnum=num
-		stmt="INSERT INTO Tags VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (num, ntag,))
-
-	
-	if ntag:
-		print ntnum
-		print enum
-		stmt="INSERT INTO Marked VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (ntnum, enum,))
 		
 	
 	
