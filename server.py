@@ -390,16 +390,16 @@ def uhome():
 	cursor=g.conn.execute(stmt, (uid,))
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -503,7 +503,7 @@ def es():
 			return render_template("heventsearch.html", error=error)
 		else:
 			return render_template("eventsearch.html", error=error)
-	if not isinstance(sval, int) and not isinstance (sval, float) and not sval.isdecimal():
+	if not isinstance(sval, int) and not isinstance (sval, float):
 		sval=sval.encode('ascii', 'ignore')
 	sval=str(sval).lower()
 	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid"
@@ -518,16 +518,16 @@ def es():
 	cursor=g.conn.execute(stmt)
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -557,49 +557,49 @@ def es():
 	for thing in fin:
 		if dval=='ename':
 			val=thing[0]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='hname':
 			val=thing[1]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
 			val=thing[2]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='zip':
 			val=thing[3]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='state':
 			val=thing[4]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='loc_name':
 			val=thing[5]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='tag_name':
 			val=thing[10]
-			if not isinstance(val, int) and not isinstance(val, float) and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float):
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
@@ -633,16 +633,16 @@ def hhome():
 	cursor=g.conn.execute(stmt, (hid,))
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -726,7 +726,7 @@ def usc():
 			
 	change=False
 	for thing in xw:
-		if not isinstance(thing, int) and not isinstance (thing, float) and not thing.isdecimal():
+		if not isinstance(thing, int) and not isinstance (thing, float):
 			thing=thing.encode('ascii', 'ignore')
 		x=str(thing) in request.form
 		if x and thing in yw:
@@ -866,16 +866,16 @@ def viewprof():
 	cursor=g.conn.execute(stmt, (user,))
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -949,26 +949,26 @@ def editevent():
 	roomno=""
 	if pw[0][11]:
 		p11=pw[0][11]
-		if not isinstance(p11, int) and not isinstance(p11, float) and not p11.isdecimal():
+		if not isinstance(p11, int) and not isinstance(p11, float):
 			p11=p11.encode('ascii', 'ignore')
 		roomno=" "+str(p11)
 		p9=pw[0][9]
-		if not isinstance(p9, int) and not isinstance(p9, float) and p9 and not p9.isdecimal():
+		if not isinstance(p9, int) and not isinstance(p9, float) and p9:
 			p9=p9.encode('ascii', 'ignore')
 		p10=pw[0][10]
-		if not isinstance(p10, int) and not isinstance(p10, float) and p10 and not p10.isdecimal():
+		if not isinstance(p10, int) and not isinstance(p10, float) and p10:
 			p10=p10.encode('ascii', 'ignore')
 		p13=pw[0][13]
-		if not isinstance(p13, int) and not isinstance(p13, float) and p13 and not p13.isdecimal():
+		if not isinstance(p13, int) and not isinstance(p13, float) and p13:
 			p13=p13.encode('ascii', 'ignore')
 		p12=pw[0][12]
-		if not isinstance(p12, int) and not isinstance(p12, float) and p12 and not p12.isdecimal():
+		if not isinstance(p12, int) and not isinstance(p12, float) and p12:
 			p12=p12.encode('ascii', 'ignore')
 		p14=pw[0][14]
-		if not isinstance(p14, int) and not isinstance(p14, float) and p14 and not p14.isdecimal():
+		if not isinstance(p14, int) and not isinstance(p14, float) and p14:
 			p14=p14.encode('ascii', 'ignore')
 		p15=pw[0][15]
-		if not isinstance(p15, int) and not isinstance(p15, float) and p15 and not p15.isdecimal():
+		if not isinstance(p15, int) and not isinstance(p15, float) and p15:
 			p15=p15.encode('ascii', 'ignore')
 	loc=str(p9)+roomno+" "+str(p10)+" "+str(p13)+" "+str(p12)+", "+str(p14)+" "+str(p15)
 	stmt="SELECT tt.type, ti.price FROM Tick_Info ti, Tick_Type tt where ti.eid = %s  and ti.typeid = tt.typeid"
@@ -1023,8 +1023,10 @@ def editevent():
 		beg=True
 		for result in cursor:
 			t=result[2]
-			if not isinstance(t, int) and not isinstance(t, float) and t and not t.isdecimal():
-				t=t.encode('ascii', 'ignore')
+			if not isinstance(t, int) and not isinstance(t, float) and t:
+					t=t.encode('ascii', 'ignore')
+			if not isinstance(t, int):
+				t=t.encode('ascii','ignore')
 			if beg:
 				beg=False
 				tags=str(t)
@@ -1033,16 +1035,16 @@ def editevent():
 			
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -1146,7 +1148,7 @@ def eec():
 			xw.append(thing)
 	change=False
 	for thing in xw:
-		if not isinstance(thing, int) and not isinstance(thing, float) and thing and not thing.isdecimal():
+		if not isinstance(thing, int) and not isinstance(thing, float) and thing:
 			thing=thing.encode('ascii', 'ignore')
 		x=str(thing) in request.form
 		if x and thing in yw:
@@ -1525,16 +1527,16 @@ def frevs():
 	cursor=g.conn.execute(stmt)
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -1584,7 +1586,7 @@ def us():
 			return render_template("husersearch.html", error=error)
 		else:
 			return render_template("usersearch.html", error=error)
-	if not isinstance(sval, int) and not isinstance(sval, float) and not sval.isdecimal():
+	if not isinstance(sval, int) and not isinstance(sval, float):
 		sval=sval.encode('ascii','ignore')
 	sval=str(sval).lower()
 	stmt="SELECT name, loc, uid FROM Reg_User"
@@ -1596,14 +1598,14 @@ def us():
 	for thing in uinfo:
 		if dval=='uname':
 			val=thing[0]
-			if not isinstance(val, int) and not isinstance(val, float) and val and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float) and thing[0]:
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
 				res.append(thing)
 		if dval=='city':
 			val=thing[1]
-			if not isinstance(val, int) and not isinstance(val, float) and thing[1] and not val.isdecimal():
+			if not isinstance(val, int) and not isinstance(val, float) and thing[1]:
 				val=val.encode('ascii','ignore')
 			val=str(val).lower()
 			if sval in val:
@@ -1671,7 +1673,7 @@ def uticks():
 		vals.append(thing[0])
 	v=list(set(vals))
 	for thing in v:
-		if not isinstance(thing, int) and not isinstance(thing, float) and thing and not thing.isdecimal():
+		if not isinstance(thing, int) and not isinstance(thing, float) and thing:
 			thing=thing.encode('ascii', 'ignore')
 		p=[]
 		p.extend([str(thing)])
@@ -1687,9 +1689,9 @@ def uticks():
 		typestr=""
 		typeitr=0
 		for key, value in tdic.iteritems():
-			if not isinstance(key, int) and not isinstance(key, float) and key and not key.isdecimal():
+			if not isinstance(key, int) and not isinstance(key, float) and key:
 				key=key.encode('ascii', 'ignore')
-			if not isinstance(value, int) and not isinstance(value, float) and value and not value.isdecimal():
+			if not isinstance(value, int) and not isinstance(value, float) and value:
 				value=value.encode('ascii', 'ignore')
 			if typeitr==0:
 				typestr=str(key)+": "+str(value)
@@ -1697,7 +1699,7 @@ def uticks():
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
 		p.extend([typestr])
-		if not isinstance(cost, int) and not isinstance(cost, float) and cost and not cost.isdecimal():
+		if isinstance(cost, str) and cost:
 				cost=cost.encode('ascii', 'ignore')
 		p.extend([str(cost)])
 		nev.append(p)
@@ -1716,16 +1718,16 @@ def uticks():
 		cursor=g.conn.execute(stmt, (eid,))
 		for result in cursor:
 			r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -1773,16 +1775,16 @@ def uviewev():
 	cursor=g.conn.execute(stmt, (gev,))
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -1859,16 +1861,16 @@ def buytick():
 	cursor=g.conn.execute(stmt, (gev,))
 	for result in cursor:
 		r0=result[0]
-		if not isinstance(r0, int) and not isinstance(r0, float) and r0 and not r0.isdecimal():
+		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
-		if not isinstance(r2, int) and not isinstance(r2, float) and r2 and not r2.isdecimal():
+		if not isinstance(r2, int) and not isinstance(r2, float) and r2:
 			r2=r2.encode('ascii', 'ignore')
 		if result[0] in enames:
 			l=len(pw)
 			for i in range(0,l):
 				pwi0=pw[i][0]
-				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0 and not pwi0.isdecimal():
+				if not isinstance(pwi0, int) and not isinstance(pwi0, float) and pwi0:
 					pwi0=pwi0.encode('ascii', 'ignore')
 				if str(pwi0)==str(r0):
 					dictval= tagdict[r0]
@@ -1909,7 +1911,7 @@ def buytick():
 	v=list(set(vals))
 	for thing in v:
 		p=[]
-		if not isinstance(thing, int) and not isinstance(thing, float) and thing and not thing.isdecimal():
+		if not isinstance(thing, int) and not isinstance(thing, float) and thing:
 			thing=thing.encode('ascii', 'ignore')
 		p.extend([str(thing)])
 		tdic={}
@@ -1924,9 +1926,9 @@ def buytick():
 		typestr=""
 		typeitr=0
 		for key, value in tdic.iteritems():
-			if not isinstance(key, int) and not isinstance(key, float) and key and not key.isdecimal():
+			if not isinstance(key, int) and not isinstance(key, float) and key:
 				key=key.encode('ascii', 'ignore')
-			if not isinstance(value, int) and not isinstance(value, float) and value and not value.isdecimal():
+			if not isinstance(value, int) and not isinstance(value, float) and value:
 				value=value.encode('ascii', 'ignore')
 			if typeitr==0:
 				typestr=str(key)+": "+str(value)
@@ -1934,8 +1936,7 @@ def buytick():
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
 		p.extend([typestr])
-		print type(cost)
-		if not isinstance(cost, int) and not isinstance(cost, float) and cost and not cost.isdecimal():
+		if isinstance(cost, str) and cost:
 				cost=cost.encode('ascii', 'ignore')
 		p.extend([str(cost)])
 		nev.append(p)
