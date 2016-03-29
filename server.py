@@ -1936,6 +1936,7 @@ def buytick():
 				typestr+=", "+str(key)+": "+str(value)
 			typeitr+=1
 		p.extend([typestr])
+		print type(cost)
 		if not isinstance(cost, int) and not isinstance(cost, float) and cost:
 				cost=cost.encode('ascii', 'ignore')
 		p.extend([str(cost)])
