@@ -2094,33 +2094,64 @@ def buying():
 	ch=request.form['chprice']
 	stu=request.form['stprice']
 	sr=request.form['srprice']
+	tytot=0
 	if ad:
 		try:
 			ad=int(ad)
+			tytot+=ad
 		except:
 			er="Quantity must be an integer"
 			return redirect('/buytick')
 	if ch:
 		try:
 			ch=int(ch)
+			tytot+=ch
 		except:
 			er="Quantity must be an integer"
 			return redirect('/buytick')
 	if sr:
 		try:
 			sr=int(sr)
+			tytot+=sr
 		except:
 			er="Quantity must be an integer"
 			return redirect('/buytick')
 	if stu:
 		try:
 			stu=int(stu)
+			tytot+=stu
 		except:
 			er="Quantity must be an integer"
 			return redirect('/buytick')
+
 	if not ad and not ch and not sr and not stu:
 		er="No value entered"
 		return redirect('/buytick')
+		
+	stmt="SELECT tickqty from Event_Create_Where where eid=%s"
+	cursor=g.conn.execute(stmt, (gev,))
+	t=[]
+	for thing in cursor:
+		for xt in thing:
+			t.append(xt)
+	pos=t[0]
+	
+	stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
+	cursor=g.conn.execute(stmt, (gev,))
+	x=[]
+	for thing in cursor:
+		for num in thing:
+			x.append(num)
+	sold= x[0]
+	
+	avail=pos-sold
+	print avail
+
+	if tytot>avail:
+		er="Not enough tickets available"
+			return redirect('/buytick')
+	
+	
 	stmt="SELECT MAX(tid) FROM Owns_Tickets_Has_For"
 	cursor=g.conn.execute(stmt)
 	t=[]
