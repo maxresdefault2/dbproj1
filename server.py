@@ -1398,7 +1398,7 @@ def eec():
 def evcr():
 	if uid:
 		return redirect('/uhome')
-	stmt = "SELECT t.tag_id, tname from Tags"
+	stmt = "SELECT tag_id, tname from Tags"
 	cursor=g.conn.execute(stmt)
 	tg=[]
 	for thing in cursor:
