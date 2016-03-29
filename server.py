@@ -1691,6 +1691,8 @@ def uticks():
 			print 'p'
 			print p
 			fin.append(p)
+			print 'fin'
+			print fin
 	
 	pw=sorted(fin, key=operator.itemgetter(7,8))
 	print pw
