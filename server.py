@@ -1646,7 +1646,7 @@ def uticks():
 	for ything in nev:
 		eid=int(ything[0])
 		stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.eid = %s"
-		cursor = g.conn.execute(stmt, (gev,))
+		cursor = g.conn.execute(stmt, (eid,))
 		nt=[]
 		for thing in cursor:
 			nt.append(thing)
@@ -1654,7 +1654,7 @@ def uticks():
 		enames=[]
 		tagdict={}
 		stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id and e.eid=%s"
-		cursor=g.conn.execute(stmt, (gev,))
+		cursor=g.conn.execute(stmt, (eid,))
 		for result in cursor:
 			if result[0] in enames:
 				l=len(pw)
