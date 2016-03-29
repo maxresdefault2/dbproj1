@@ -31,9 +31,11 @@ user can select many tags
 remove friend
 use now() on since on upage and friends page
 make sure quotes work in non-num types
-
 can't insert tagname that has name in db
-make sure only accepts right datatypes before submitting anything, check delete order for evdel
+make sure only accepts right datatypes before submitting anything
+change building number to building in evcr/eved
+
+check delete order for evdel
 test everything & things that shouldn't work!
 cleanup git
 turn off debug
