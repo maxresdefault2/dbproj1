@@ -658,9 +658,10 @@ def usc():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	for n in range(0,11):
+	for n in range(0,12):
 		print n
 		print request.form.getlist(n)
+	print request.form.getlist('Speech')
 	k=raw_input('k')
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Interested i where t.tag_id = i.tag_id and i.uid= %s"
 	cursor=g.conn.execute(stmt, (uid,))
