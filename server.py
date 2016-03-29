@@ -1124,7 +1124,31 @@ def eec():
 	ch=request.form['chprice']
 	stu=request.form['stprice']
 	sr=request.form['srprice']
+	lname=request.form['lname']
+	rname=request.form['rname']
+	bnum=request.form['bnum']
+	st=request.form['st']
+	city=request.form['city']
+	state=request.form['state']
+	zipc=request.form['zipc']
+	if time:
+		try:
+			time.strptime(time, '%H:%M:%S')
+		except ValueError:
+			er="Time in incorrect format"
+			return redirect('/editevent')
+	if date:
+		try:
+			time.strptime(date, '%Y-%m-%d')
+		except ValueError:
+			er="Date in incorrect format"
+			return redirect('/editevent')
 	if qty:
+		try:
+			qty=int(qty)
+		except:
+			er="Ticket quantity must be an integer"
+			return redirect('/editevent')
 		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
 		cursor=g.conn.execute(stmt, (eev,))
 		x=[]
@@ -1135,6 +1159,97 @@ def eec():
 		if int(qty)<int(sold):
 			er="Ticket quantity cannot be less than amount sold"
 			return redirect('/editevent')
+	if ntag:
+		stmt="SELECT tname from Tags"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for result in cursor:
+			for thing in result:
+				t.append(thing)
+		for thing in t:
+			if thing.lower()==ntag.lower()
+				er="Created tag already exists"
+				return redirect('/editevent')
+	if st:
+		if len(st)!=2:
+			er="State must have two characters"
+			return redirect('/editevent')
+	if zipc:
+		try:
+			zipc=int(zipc)
+		except:
+			er="Zipcode must only contain numbers"
+			return redirect('/editevent')
+		if len(zipc)!=2:
+			er="Zipcode must have 5 numbers"
+			return redirect('/editevent')
+			
+	if ad:
+		try:
+			ad=float(ad)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if ch:
+		try:
+			ch=float(ch)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if stu:
+		try:
+			stu=float(stu)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if sr:
+		try:
+			sr=float(sr)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+			
+	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
+	cursor=g.conn.execute(stmt, (eev,))
+	yw=[]
+	for result in cursor:
+		for thing in result:
+			yw.append(thing)
+	stmt = "SELECT tag_id from Tags"
+	cursor=g.conn.execute(stmt)
+	xw=[]
+	for result in cursor:
+		for thing in result:
+			xw.append(thing)
+	change=False
+	for thing in xw:
+		if not isinstance(thing, int) and not isinstance(thing, float) and thing:
+			thing=thing.encode('ascii', 'ignore')
+		x=str(thing) in request.form
+		if x and thing in yw:
+			continue
+		elif x and thing not in yw:
+			change=True
+		elif not x and thing in yw:
+			change=True
+		elif not x and thing not in yw:
+			continue
+		else:
+			er= "Something went wrong"
+			return redirect("/editevent")
+	
+	newloc=False
+	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
+		newloc=True
+		
+	if newloc==False and (lname!="" or bnum!="" or st!="" or city!="" or state!="" or zipc!="" or rname!=""):
+		er="Full location must be entered"
+		return redirect("/editevent")
+				
+	if name=="" and time=="" and date=="" and qty=="" and photo =="" and ntag=="" and ad=="" and ch=="" and stu=="" and sr=="" and change==False and newloc==False and l==0:
+		er= "No new data entered"
+		return redirect("/editevent")
+			
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
 	cursor=g.conn.execute(stmt, (eev,))
 	yw=[]
@@ -1168,17 +1283,9 @@ def eec():
 			er= "Something went wrong"
 			return redirect("/editevent")
 			
-	lname=request.form['lname']
-	rname=request.form['rname']
-	bnum=request.form['bnum']
-	st=request.form['st']
-	city=request.form['city']
-	state=request.form['state']
-	zipc=request.form['zipc']
 
-	newloc=False
-	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
-		newloc=True
+
+	if newloc:
 		stmt="SELECT MAX(lid) FROM Location"
 		cursor=g.conn.execute(stmt)
 		t=[]
@@ -1194,108 +1301,77 @@ def eec():
 			cursor=g.conn.execute(stmt, (num, lname, bnum, rname, city, st, state, zipc,))
 		stmt="UPDATE Event_Create_Where SET lid = %s where eid = %s"
 		cursor=g.conn.execute(stmt, (num, eev,))
-	if newloc==False and (lname!="" or bnum!="" or st!="" or city!="" or state!="" or zipc!="" or rname!=""):
-		er="Full location must be entered"
-		return redirect("/editevent")
 	 
-	if name=="" and time=="" and date=="" and qty=="" and photo =="" and ntag=="" and ad=="" and ch=="" and stu=="" and sr=="" and change==False and newloc==False and l==0:
-		er= "No new data entered"
-		return redirect("/editevent")
-	else:
-		if ad:
-			try:
-				ad=float(ad)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if ch:
-			try:
-				ch=float(ch)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if stu:
-			try:
-				stu=float(stu)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if sr:
-			try:
-				sr=float(sr)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if ad:
-			stmt="SELECT typeid from Tick_Type where type = 'adult'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (ad, eev, typ,))
-		if ch:
-			stmt="SELECT typeid from Tick_Type where type = 'child'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (ch, eev, typ,))
-		if stu:
-			stmt="SELECT typeid from Tick_Type where type = 'student'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (stu, eev, typ,))
-		if sr:
-			stmt="SELECT typeid from Tick_Type where type = 'senior'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
-			cursor=g.conn.execute(stmt, (sr, eev, typ,))
-		if name:
-			stmt="UPDATE Event_Create_Where SET ename = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (name, eev,))
-		if time:
-			stmt="UPDATE Event_Create_Where SET time = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (time, eev,))
-		if date:
-			stmt="UPDATE Event_Create_Where SET edate = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (date, eev,))
-		if qty:
-			stmt="UPDATE Event_Create_Where SET tickqty = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (qty, eev,))
-		if photo:
-			stmt="UPDATE Event_Create_Where SET photo = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (photo, eev,))
-		if ntag:
-			stmt="SELECT MAX(tag_id) FROM Tags"
-			cursor=g.conn.execute(stmt)
-			t=[]
-			for thing in cursor:
-				for xt in thing:
-					t.append(xt)
-			num=int(t[0])+1
-			stmt="INSERT INTO Tags VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (num, ntag,))
-			stmt="INSERT INTO Marked VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (num, eev,))
-		if l!=0:
-			stmt="UPDATE Event_Create_Where SET lid = %s WHERE eid = %s"
-			cursor=g.conn.execute(stmt, (l, eev,))
+	if ad:
+		stmt="SELECT typeid from Tick_Type where type = 'adult'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
+		cursor=g.conn.execute(stmt, (ad, eev, typ,))
+	if ch:
+		stmt="SELECT typeid from Tick_Type where type = 'child'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
+		cursor=g.conn.execute(stmt, (ch, eev, typ,))
+	if stu:
+		stmt="SELECT typeid from Tick_Type where type = 'student'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
+		cursor=g.conn.execute(stmt, (stu, eev, typ,))
+	if sr:
+		stmt="SELECT typeid from Tick_Type where type = 'senior'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="UPDATE Tick_Info SET price = %s WHERE eid = %s and typeid=%s"
+		cursor=g.conn.execute(stmt, (sr, eev, typ,))
+	if name:
+		stmt="UPDATE Event_Create_Where SET ename = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (name, eev,))
+	if time:
+		stmt="UPDATE Event_Create_Where SET time = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (time, eev,))
+	if date:
+		stmt="UPDATE Event_Create_Where SET edate = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (date, eev,))
+	if qty:
+		stmt="UPDATE Event_Create_Where SET tickqty = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (qty, eev,))
+	if photo:
+		stmt="UPDATE Event_Create_Where SET photo = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (photo, eev,))
+	if ntag:
+		stmt="SELECT MAX(tag_id) FROM Tags"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for thing in cursor:
+			for xt in thing:
+				t.append(xt)
+		num=int(t[0])+1
+		stmt="INSERT INTO Tags VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, ntag,))
+		stmt="INSERT INTO Marked VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, eev,))
+	if l!=0:
+		stmt="UPDATE Event_Create_Where SET lid = %s WHERE eid = %s"
+		cursor=g.conn.execute(stmt, (l, eev,))
 	return redirect('/editevent')
 
 
