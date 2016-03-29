@@ -1175,6 +1175,9 @@ def eec():
 		if len(state)!=2:
 			er="State must have two characters"
 			return redirect('/editevent')
+		if not state.isalpha():
+			er="State must use alphabetical characters"
+			return redirect('/editevent')
 	if zipc:
 		try:
 			zc=int(zipc)
@@ -1413,35 +1416,6 @@ def create():
 	sr=request.form['srprice']
 	l=request.form['drop']
 	l=int(l)
-	stmt= "SELECT MAX(eid) From Event_Create_Where"
-	cursor=g.conn.execute(stmt)
-	numevs=[]
-	for thing in cursor:
-		for xt in thing:
-			numevs.append(xt)
-	enum=int(numevs[0])+1
-	stmt = "SELECT tname from Tags"
-	cursor=g.conn.execute(stmt)
-	xw=[]
-	for result in cursor:
-		for thing in result:
-			xw.append(thing)
-	yw=xw
-	change=False
-	for thing in xw:
-		x=thing in request.form
-		if x and thing in yw:
-			continue
-		elif x and thing not in yw:
-			change=True
-		elif x==False and thing in yw:
-			change=True
-		elif x==False and thing not in yw:
-			continue
-		else:
-			er= "Something went wrong"
-			return redirect("/editevent")
-			
 	lname=request.form['lname']
 	rname=request.form['rname']
 	bnum=request.form['bnum']
@@ -1450,6 +1424,96 @@ def create():
 	state=request.form['state']
 	zipc=request.form['zipc']
 	ntag=request.form['ntag']
+	
+	if time:
+		try:
+			datetime.datetime.strptime(time, '%H:%M:%S')
+		except ValueError:
+			er="Time in incorrect format"
+			return redirect('/editevent')
+	if date:
+		try:
+			datetime.datetime.strptime(date, '%Y-%m-%d')
+		except ValueError:
+			er="Date in incorrect format"
+			return redirect('/editevent')
+	if qty:
+		try:
+			qty=int(qty)
+		except:
+			er="Ticket quantity must be an integer"
+			return redirect('/editevent')
+		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
+		cursor=g.conn.execute(stmt, (eev,))
+		x=[]
+		for thing in cursor:
+			for num in thing:
+				x.append(num)
+		sold= x[0]
+		if int(qty)<int(sold):
+			er="Ticket quantity cannot be less than amount sold"
+			return redirect('/editevent')
+	if ntag:
+		stmt="SELECT tname from Tags"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for result in cursor:
+			for thing in result:
+				t.append(thing)
+		for thing in t:
+			if thing.lower()==ntag.lower():
+				er="Created tag already exists"
+				return redirect('/editevent')
+	if state:
+		if len(state)!=2:
+			er="State must have two characters"
+			return redirect('/editevent')
+		if not state.isalpha():
+			er="State must use alphabetical characters"
+			return redirect('/editevent')
+	if zipc:
+		try:
+			zc=int(zipc)
+		except:
+			er="Zipcode must only contain numbers"
+			return redirect('/editevent')
+		if len(zipc)!=2:
+			er="Zipcode must have 5 numbers"
+			return redirect('/editevent')
+			
+	if ad:
+		try:
+			ad=float(ad)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if ch:
+		try:
+			ch=float(ch)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if stu:
+		try:
+			stu=float(stu)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+	if sr:
+		try:
+			sr=float(sr)
+		except:
+			er="Prices must be numbers"
+			return redirect("/editevent")
+			
+	stmt= "SELECT MAX(eid) From Event_Create_Where"
+	cursor=g.conn.execute(stmt)
+	numevs=[]
+	for thing in cursor:
+		for xt in thing:
+			numevs.append(xt)
+	enum=int(numevs[0])+1
+		
 
 	newloc=False
 	if lname!="" and bnum!="" and st!="" and city!="" and state!="" and zipc!="":
@@ -1458,131 +1522,110 @@ def create():
 	if name=="" or time=="" or date=="" or qty=="" or photo =="" or ad=="" or ch=="" or stu=="" or sr=="" or (newloc==False and l==0):
 		er= "All data not entered"
 		return redirect("/evcr")
-	else:
-		if ad:
-			try:
-				ad=float(ad)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if ch:
-			try:
-				ch=float(ch)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if stu:
-			try:
-				stu=float(stu)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if sr:
-			try:
-				sr=float(sr)
-			except:
-				er="Prices must be numbers"
-				return redirect("/editevent")
-		if ad:
-			stmt="SELECT typeid from Tick_Type where type = 'adult'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
-			cursor=g.conn.execute(stmt, (enum, typ, ad,))
-		if ch:
-			stmt="SELECT typeid from Tick_Type where type = 'child'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
-			cursor=g.conn.execute(stmt, (enum, typ, ch,))
-		if stu:
-			stmt="SELECT typeid from Tick_Type where type = 'student'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
-			cursor=g.conn.execute(stmt, (enum, typ, stu,))
-		if sr:
-			stmt="SELECT typeid from Tick_Type where type = 'senior'"
-			cursor=g.conn.execute(stmt)
-			pr=[]
-			for thing in cursor:
-				for pri in thing:
-					pr.append(pri)
-			typ=int(pr[0])
-			stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
-			cursor=g.conn.execute(stmt, (enum, typ, sr,))
+		
 	
-		lnum=0
-		if l!=0:
-			lnum=l
-		if l==0 and newloc==True:
-			stmt="SELECT MAX(lid) FROM Location"
-			cursor=g.conn.execute(stmt)
-			lnum=0
-			t=[]
-			for thing in cursor:
-				for xt in thing:
-					t.append(xt)
-				lnum=int(t[0])+1
-				if rname=="":
-					stmt="INSERT INTO Location VALUES (%s, %s, %s, null, %s, %s, %s, %s)"
-					cursor=g.conn.execute(stmt, (lnum, lname, bnum, city, st, state, zipc,))	
-				else:
-					stmt="INSERT INTO Location VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-					cursor=g.conn.execute(stmt, (lnum, lname, bnum, rname, city, st, state, zipc,))
-		
-		stmt="INSERT INTO Event_Create_Where VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-		cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
-		
-		if ntag:
-			stmt="SELECT MAX(tag_id) FROM Tags"
-			cursor=g.conn.execute(stmt)
-			t=[]
-			for thing in cursor:
-				for xt in thing:
-					t.append(xt)
-			num=int(t[0])+1
-			stmt="INSERT INTO Tags VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (num, ntag,))
-			stmt="INSERT INTO Marked VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (num, enum,))
-		
-		stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
-		cursor=g.conn.execute(stmt, (enum,))
-		yw=[]
-		for result in cursor:
-			for thing in result:
-				yw.append(thing)
-		stmt = "SELECT tname from Tags"
+	
+	
+	if ad:
+		stmt="SELECT typeid from Tick_Type where type = 'adult'"
 		cursor=g.conn.execute(stmt)
-		xw=[]
-		for result in cursor:
-			for thing in result:
-				xw.append(thing)
-		for thing in xw:
-			x=thing in request.form
-			if x and thing not in yw:
-				var=0
-				stmt= "SELECT * from Tags"
-				cursor=g.conn.execute(stmt)
-				alltags=[]
-				for result in cursor:
-					if result[1]==thing:
-						var= int(result[0])
-				stmt="INSERT INTO Marked VALUES (%s, %s)"
-				cursor=g.conn.execute(stmt, (var, enum))
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+		cursor=g.conn.execute(stmt, (enum, typ, ad,))
+	if ch:
+		stmt="SELECT typeid from Tick_Type where type = 'child'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+		cursor=g.conn.execute(stmt, (enum, typ, ch,))
+	if stu:
+		stmt="SELECT typeid from Tick_Type where type = 'student'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+		cursor=g.conn.execute(stmt, (enum, typ, stu,))
+	if sr:
+		stmt="SELECT typeid from Tick_Type where type = 'senior'"
+		cursor=g.conn.execute(stmt)
+		pr=[]
+		for thing in cursor:
+			for pri in thing:
+				pr.append(pri)
+		typ=int(pr[0])
+		stmt="INSERT INTO Tick_Info VALUES(%s, %s, %s)"
+		cursor=g.conn.execute(stmt, (enum, typ, sr,))
+
+	lnum=0
+	if l!=0:
+		lnum=l
+	if l==0 and newloc==True:
+		stmt="SELECT MAX(lid) FROM Location"
+		cursor=g.conn.execute(stmt)
+		lnum=0
+		t=[]
+		for thing in cursor:
+			for xt in thing:
+				t.append(xt)
+			lnum=int(t[0])+1
+			if rname=="":
+				stmt="INSERT INTO Location VALUES (%s, %s, %s, null, %s, %s, %s, %s)"
+				cursor=g.conn.execute(stmt, (lnum, lname, bnum, city, st, state, zipc,))	
+			else:
+				stmt="INSERT INTO Location VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+				cursor=g.conn.execute(stmt, (lnum, lname, bnum, rname, city, st, state, zipc,))
+	
+	stmt="INSERT INTO Event_Create_Where VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+	cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
+	
+	if ntag:
+		stmt="SELECT MAX(tag_id) FROM Tags"
+		cursor=g.conn.execute(stmt)
+		t=[]
+		for thing in cursor:
+			for xt in thing:
+				t.append(xt)
+		num=int(t[0])+1
+		stmt="INSERT INTO Tags VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, ntag,))
+		stmt="INSERT INTO Marked VALUES (%s, %s)"
+		cursor=g.conn.execute(stmt, (num, enum,))
+	
+	stmt = "SELECT tname from Tags INTERSECT SELECT t.tname from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
+	cursor=g.conn.execute(stmt, (enum,))
+	yw=[]
+	for result in cursor:
+		for thing in result:
+			yw.append(thing)
+	stmt = "SELECT tname from Tags"
+	cursor=g.conn.execute(stmt)
+	xw=[]
+	for result in cursor:
+		for thing in result:
+			xw.append(thing)
+	for thing in xw:
+		x=thing in request.form
+		if x and thing not in yw:
+			var=0
+			stmt= "SELECT * from Tags"
+			cursor=g.conn.execute(stmt)
+			alltags=[]
+			for result in cursor:
+				if result[1]==thing:
+					var= int(result[0])
+			stmt="INSERT INTO Marked VALUES (%s, %s)"
+			cursor=g.conn.execute(stmt, (var, enum))
 
 	return redirect('/evcr')
 
