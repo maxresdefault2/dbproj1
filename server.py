@@ -857,6 +857,7 @@ def editevent():
 		eid=eev
 	else:
 		eid=request.form['drop']
+		print eid
 		eid=int(eid)
 		eev=eid
 	global er
