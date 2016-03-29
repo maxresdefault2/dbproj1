@@ -1424,7 +1424,7 @@ def create():
 	state=request.form['state']
 	zipc=request.form['zipc']
 	ntag=request.form['ntag']
-	
+	print 'in create'
 	if time:
 		try:
 			datetime.datetime.strptime(time, '%H:%M:%S')
