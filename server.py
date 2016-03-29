@@ -1134,7 +1134,7 @@ def eec():
 	zipc=request.form['zipc']
 	if time:
 		try:
-			datetime.strptime(time, '%H:%M:%S')
+			datetime.datetime.strptime(time, '%H:%M:%S')
 		except ValueError:
 			er="Time in incorrect format"
 			return redirect('/editevent')
