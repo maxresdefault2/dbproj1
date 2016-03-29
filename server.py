@@ -954,24 +954,24 @@ def editevent():
 		if not isinstance(p11, int) and not isinstance(p11, float):
 			p11=p11.encode('ascii', 'ignore')
 		roomno=" "+str(p11)
-		p9=pw[0][9]
-		if not isinstance(p9, int) and not isinstance(p9, float) and p9:
-			p9=p9.encode('ascii', 'ignore')
-		p10=pw[0][10]
-		if not isinstance(p10, int) and not isinstance(p10, float) and p10:
-			p10=p10.encode('ascii', 'ignore')
-		p13=pw[0][13]
-		if not isinstance(p13, int) and not isinstance(p13, float) and p13:
-			p13=p13.encode('ascii', 'ignore')
-		p12=pw[0][12]
-		if not isinstance(p12, int) and not isinstance(p12, float) and p12:
-			p12=p12.encode('ascii', 'ignore')
-		p14=pw[0][14]
-		if not isinstance(p14, int) and not isinstance(p14, float) and p14:
-			p14=p14.encode('ascii', 'ignore')
-		p15=pw[0][15]
-		if not isinstance(p15, int) and not isinstance(p15, float) and p15:
-			p15=p15.encode('ascii', 'ignore')
+	p9=pw[0][9]
+	if not isinstance(p9, int) and not isinstance(p9, float) and p9:
+		p9=p9.encode('ascii', 'ignore')
+	p10=pw[0][10]
+	if not isinstance(p10, int) and not isinstance(p10, float) and p10:
+		p10=p10.encode('ascii', 'ignore')
+	p13=pw[0][13]
+	if not isinstance(p13, int) and not isinstance(p13, float) and p13:
+		p13=p13.encode('ascii', 'ignore')
+	p12=pw[0][12]
+	if not isinstance(p12, int) and not isinstance(p12, float) and p12:
+		p12=p12.encode('ascii', 'ignore')
+	p14=pw[0][14]
+	if not isinstance(p14, int) and not isinstance(p14, float) and p14:
+		p14=p14.encode('ascii', 'ignore')
+	p15=pw[0][15]
+	if not isinstance(p15, int) and not isinstance(p15, float) and p15:
+		p15=p15.encode('ascii', 'ignore')
 	loc=str(p9)+roomno+" "+str(p10)+" "+str(p13)+" "+str(p12)+", "+str(p14)+" "+str(p15)
 	stmt="SELECT tt.type, ti.price FROM Tick_Info ti, Tick_Type tt where ti.eid = %s  and ti.typeid = tt.typeid"
 	cursor=g.conn.execute(stmt, (eid,))
