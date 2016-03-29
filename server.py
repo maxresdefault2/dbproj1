@@ -1423,7 +1423,6 @@ def create():
 	date=request.form['date']
 	qty=request.form['qty']
 	photo=request.form['photo']
-	ntag=request.form['ntag']
 	ad=request.form['adprice']
 	ch=request.form['chprice']
 	stu=request.form['stprice']
@@ -1456,17 +1455,6 @@ def create():
 		except:
 			er="Ticket quantity must be an integer"
 			return redirect('/evcr')
-	if ntag:
-		stmt="SELECT tname from Tags"
-		cursor=g.conn.execute(stmt)
-		t=[]
-		for result in cursor:
-			for thing in result:
-				t.append(thing)
-		for thing in t:
-			if thing.lower()==ntag.lower():
-				er="Created tag already exists"
-				return redirect('/evcr')
 	if state:
 		if len(state)!=2:
 			er="State must have two characters"
