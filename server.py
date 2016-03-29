@@ -1430,19 +1430,19 @@ def create():
 			datetime.datetime.strptime(time, '%H:%M:%S')
 		except ValueError:
 			er="Time in incorrect format"
-			return redirect('/editevent')
+			return redirect('/evcr')
 	if date:
 		try:
 			datetime.datetime.strptime(date, '%Y-%m-%d')
 		except ValueError:
 			er="Date in incorrect format"
-			return redirect('/editevent')
+			return redirect('/evcr')
 	if qty:
 		try:
 			qty=int(qty)
 		except:
 			er="Ticket quantity must be an integer"
-			return redirect('/editevent')
+			return redirect('/evcr')
 		stmt="SELECT SUM(o.qty) FROM Owns_Tickets_Has_For o, Event_Create_Where e WHERE o.eid=e.eid and e.eid=%s"
 		cursor=g.conn.execute(stmt, (eev,))
 		x=[]
@@ -1452,7 +1452,7 @@ def create():
 		sold= x[0]
 		if int(qty)<int(sold):
 			er="Ticket quantity cannot be less than amount sold"
-			return redirect('/editevent')
+			return redirect('/evcr')
 	if ntag:
 		stmt="SELECT tname from Tags"
 		cursor=g.conn.execute(stmt)
@@ -1463,48 +1463,48 @@ def create():
 		for thing in t:
 			if thing.lower()==ntag.lower():
 				er="Created tag already exists"
-				return redirect('/editevent')
+				return redirect('/evcr')
 	if state:
 		if len(state)!=2:
 			er="State must have two characters"
-			return redirect('/editevent')
+			return redirect('/evcr')
 		if not state.isalpha():
 			er="State must use alphabetical characters"
-			return redirect('/editevent')
+			return redirect('/evcr')
 	if zipc:
 		try:
 			zc=int(zipc)
 		except:
 			er="Zipcode must only contain numbers"
-			return redirect('/editevent')
+			return redirect('/evcr')
 		if len(zipc)!=2:
 			er="Zipcode must have 5 numbers"
-			return redirect('/editevent')
+			return redirect('/evcr')
 			
 	if ad:
 		try:
 			ad=float(ad)
 		except:
 			er="Prices must be numbers"
-			return redirect("/editevent")
+			return redirect("/evcr")
 	if ch:
 		try:
 			ch=float(ch)
 		except:
 			er="Prices must be numbers"
-			return redirect("/editevent")
+			return redirect("/evcr")
 	if stu:
 		try:
 			stu=float(stu)
 		except:
 			er="Prices must be numbers"
-			return redirect("/editevent")
+			return redirect("/evcr")
 	if sr:
 		try:
 			sr=float(sr)
 		except:
 			er="Prices must be numbers"
-			return redirect("/editevent")
+			return redirect("/evcr")
 			
 	stmt= "SELECT MAX(eid) From Event_Create_Where"
 	cursor=g.conn.execute(stmt)
