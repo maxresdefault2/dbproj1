@@ -1128,11 +1128,10 @@ def eec():
 	lname=request.form['lname']
 	rname=request.form['rname']
 	bnum=request.form['bnum']
-	state=request.form['st']
+	st=request.form['st']
 	city=request.form['city']
 	state=request.form['state']
 	zipc=request.form['zipc']
-	print state
 	if time:
 		try:
 			datetime.datetime.strptime(time, '%H:%M:%S')
@@ -1172,9 +1171,8 @@ def eec():
 			if thing.lower()==ntag.lower():
 				er="Created tag already exists"
 				return redirect('/editevent')
-	if st:
-		print len(st)
-		if len(st)!=2:
+	if state:
+		if len(state)!=2:
 			er="State must have two characters"
 			return redirect('/editevent')
 	if zipc:
