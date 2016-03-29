@@ -613,6 +613,10 @@ def hhome():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
+	print 'nt'
+	print nt
+	print 'pw'
+	print pw
 	for thing in nt:
 		p=[]
 		tags=""
