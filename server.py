@@ -1717,7 +1717,7 @@ def uticks():
 		stmt="SELECT e.eid, t.tag_id, t.tname FROM Event_Create_Where e, Tags t, Marked m where e.eid=m.eid and t.tag_id=m.tag_id and e.eid=%s"
 		cursor=g.conn.execute(stmt, (eid,))
 		for result in cursor:
-			r0=result[0]
+		r0=result[0]
 		if not isinstance(r0, int) and not isinstance(r0, float) and r0:
 			r0=r0.encode('ascii', 'ignore')
 		r2=result[2]
