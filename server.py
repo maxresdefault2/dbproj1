@@ -1621,7 +1621,7 @@ def create():
 	
 	
 	stmt = "SELECT tag_id from Tags INTERSECT SELECT t.tag_id from Tags t, Marked m where t.tag_id = m.tag_id and m.eid= %s"
-	cursor=g.conn.execute(stmt, (eev,))
+	cursor=g.conn.execute(stmt, (enum,))
 	yw=[]
 	for result in cursor:
 		for thing in result:
@@ -1641,11 +1641,11 @@ def create():
 			continue
 		elif x and thing not in yw:
 			stmt="INSERT INTO Marked VALUES (%s, %s)"
-			cursor=g.conn.execute(stmt, (thing, eev))
+			cursor=g.conn.execute(stmt, (thing, enum))
 			change=True
 		elif not x and thing in yw:
 			stmt="DELETE FROM Marked WHERE tag_id=%s and eid=%s"
-			cursor=g.conn.execute(stmt, (thing, eev))
+			cursor=g.conn.execute(stmt, (thing, enum))
 			change=True
 		elif not x and thing not in yw:
 			continue
