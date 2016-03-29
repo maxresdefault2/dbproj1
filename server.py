@@ -1828,8 +1828,8 @@ def uviewev():
 
 @app.route('/going', methods=['POST'])
 def going():
-	print gev
 	global gev
+	print gev
 	going=request.form.getlist('going')
 	stmt="SELECT * FROM Going where eid=%s and uid=%s"
 	cursor=g.conn.execute(stmt, (gev, uid,))
