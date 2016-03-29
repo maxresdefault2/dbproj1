@@ -1604,6 +1604,8 @@ def create():
 	stmt="INSERT INTO Event_Create_Where VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
 	cursor=g.conn.execute(stmt, (enum, lnum, hid, name, time, date, qty, photo,)) 
 
+	
+	ntnum=0
 	if ntag:
 		stmt="SELECT MAX(tag_id) FROM Tags"
 		cursor=g.conn.execute(stmt)
@@ -1612,13 +1614,17 @@ def create():
 			for xt in thing:
 				t.append(xt)
 		num=int(t[0])+1
+		ntnum=num
 		stmt="INSERT INTO Tags VALUES (%s, %s)"
 		cursor=g.conn.execute(stmt, (num, ntag,))
-		print num
+
+	
+	if ntag:
+		print ntnum
 		print enum
-		print ntag
 		stmt="INSERT INTO Marked VALUES (%s, %s)"
-		cursor=g.conn.execute(stmt, (num, enum))
+		cursor=g.conn.execute(stmt, (ntnum, enum))
+		print 'sure'
 	
 	
 	
