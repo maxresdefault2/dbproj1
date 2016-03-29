@@ -1128,11 +1128,11 @@ def eec():
 	lname=request.form['lname']
 	rname=request.form['rname']
 	bnum=request.form['bnum']
-	st=request.form['st']
+	state=request.form['st']
 	city=request.form['city']
 	state=request.form['state']
 	zipc=request.form['zipc']
-	print st
+	print state
 	if time:
 		try:
 			datetime.datetime.strptime(time, '%H:%M:%S')
