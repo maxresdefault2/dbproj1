@@ -692,6 +692,7 @@ def usc():
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
 		elif not x and thing in yw:
+			print 'delete'
 			thing = int(thing)
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
