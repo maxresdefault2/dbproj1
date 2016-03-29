@@ -211,8 +211,6 @@ def uri():
 	name=request.form['name']
 	password=request.form['password']
 	loc=request.form['loc']
-	print 'loc'
-	print loc
 	if not uid or not name or not password:
 		uid=""
 		er="All required fields must be filled"
@@ -231,7 +229,6 @@ def uri():
 		er="UID taken, please enter a new number"
 		return redirect('/userregister')
 	if loc =="":
-		print 'not loc'
 		stmt="INSERT INTO Reg_User VALUES (%s, %s, %s, null)"
 		g.conn.execute(stmt, (uid, name, password,))
 	else:
@@ -404,10 +401,6 @@ def uhome():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -463,10 +456,6 @@ def usettings():
 	yw=[]
 	for result in cursor:
 		yw.append(result	)
-	print 'yw'
-	print yw
-	print 'xw'
-	print xw
 	return render_template("usersettings.html", name=name, pw=password, loc=loc, seltags=yw, tags=xw, error=error)
 
 
@@ -529,10 +518,6 @@ def es():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -616,7 +601,6 @@ def hhome():
 	rendedit=False
 	er=None
 	eev=0
-	print hid
 	stmt = "SELECT e.ename, h.hname, l.city, l.zip, l.state, l.loc_name, e.edate, e.time, e.photo, e.eid FROM Event_Create_Where e, Host h, Location l where e.lid=l.lid and e.uid=h.uid and e.uid = %s"
 	cursor = g.conn.execute(stmt, (hid,))
 	nt=[]
@@ -640,10 +624,6 @@ def hhome():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -660,7 +640,6 @@ def hhome():
 			p.extend([tags])
 			fin.append(p)
 	pw=sorted(fin, key=operator.itemgetter(7,8))
-	print pw
 
 	return render_template("hosthome.html", lis=pw)
 
@@ -717,16 +696,8 @@ def usc():
 			xw.append(thing)
 			
 	change=False
-	print 'xw'
-	print xw
 	for thing in xw:
-		print 'thing'
-		print thing
 		x=str(thing) in request.form
-		print 'x'
-		print x
-		print 'yw'
-		print yw
 		if x and thing in yw:
 			continue
 		elif x and thing not in yw:
@@ -734,7 +705,6 @@ def usc():
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
 		elif not x and thing in yw:
-			print 'delete'
 			stmt="DELETE FROM Interested WHERE tag_id=%s and uid=%s"
 			cursor=g.conn.execute(stmt, (thing, uid))
 			change=True
@@ -876,10 +846,6 @@ def viewprof():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -925,7 +891,6 @@ def editevent():
 		eid=eev
 	else:
 		eid=request.form['drop']
-		print eid
 		eid=int(eid)
 		eev=eid
 	global er
@@ -1043,8 +1008,6 @@ def editevent():
 	locs=[]
 	for thing in cursor:
 		locs.append(thing)
-	print seltags
-	print tg
 	stmt = "SELECT t.tname, t.tag_id from Tags t, Marked m, Event_Create_Where e where t.tag_id = m.tag_id and m.eid=e.eid and e.eid= %s"
 	cursor=g.conn.execute(stmt, (eid,))
 	seltags=[]
@@ -1501,10 +1464,6 @@ def frevs():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -1571,11 +1530,7 @@ def us():
 	fin=[]
 	if res:
 		user=""
-		print 'res'
-		print res
 		for thing in res:
-			print 'thing2'
-			print thing[2]
 			user=thing[2]
 			fs="Not friends with this user"
 			if uid:
@@ -1612,11 +1567,6 @@ def us():
 			p.extend([inters])
 			fin.append(p)
 			
-			print thing
-			print p
-	for thing in fin:
-		print 'fin'
-		print thing
 	if hid:
 		return render_template("husersearch.html", lis=fin)
 	else:
@@ -1662,8 +1612,6 @@ def uticks():
 		p.extend([typestr])
 		p.extend([str(cost)])
 		nev.append(p)
-	print 'nev'
-	print nev
 	fin=[]
 	for ything in nev:
 		eid=int(ything[0])
@@ -1689,10 +1637,6 @@ def uticks():
 				enames.append(result[0])
 				tagdict[result[0]]=result[2]
 				pw.append(result)
-		print 'nt'
-		print nt
-		print 'pw'
-		print pw
 		for thing in nt:
 			p=[]
 			tags=""
@@ -1709,14 +1653,9 @@ def uticks():
 			p.extend([ything[0]])
 			p.extend([ything[1]])
 			p.extend([ything[2]])
-			print 'p'
-			print p
 			fin.append(p)
-			print 'fin'
-			print fin
 	
 	pw=sorted(fin, key=operator.itemgetter(7,8))
-	print pw
 	return render_template("usertickets.html", lis=pw)
 
 @app.route('/uviewev', methods=['GET', 'POST'])
@@ -1747,10 +1686,6 @@ def uviewev():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -1825,10 +1760,6 @@ def buytick():
 			tagdict[result[0]]=result[2]
 			pw.append(result)
 	fin=[]	
-	print 'nt'
-	print nt
-	print 'pw'
-	print pw
 	for thing in nt:
 		p=[]
 		tags=""
@@ -1880,7 +1811,6 @@ def buytick():
 		p.extend([typestr])
 		p.extend([str(cost)])
 		nev.append(p)
-	print nev
 	
 	stmt="SELECT tt.type, ti.price FROM Tick_Info ti, Tick_Type tt where ti.eid = %s  and ti.typeid = tt.typeid"
 	cursor=g.conn.execute(stmt, (gev,))
