@@ -843,6 +843,9 @@ def viewprof():
 	fs="Not friends with this user"
 	notfriend=True
 	friend=False
+	notsel=True
+	if uid==user:
+		notsel=False
 	if uid:
 		stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 		cursor=g.conn.execute(stmt, (uid, user, user, uid))
@@ -921,10 +924,11 @@ def viewprof():
 		else:
 			inters+=", "+thing
 		i+=1
+	
 	if hid:
 		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
 	else:
-		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend, friend=friend, uid=True)
+		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters, notfriend=notfriend, friend=friend, notsel=notsel, uid=True)
 
 @app.route('/editevent', methods=['GET', 'POST'])
 def editevent():
