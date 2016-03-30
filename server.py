@@ -844,10 +844,9 @@ def viewprof():
 	notfriend=True
 	friend=False
 	notsel=True
-	print uid
-	print user
-	if int(uid)==int(user):
-		notsel=False
+	if uid:
+		if int(uid)==int(user):
+			notsel=False
 	if uid:
 		stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 		cursor=g.conn.execute(stmt, (uid, user, user, uid))
@@ -926,7 +925,6 @@ def viewprof():
 		else:
 			inters+=", "+thing
 		i+=1
-	print notsel
 	
 	if hid:
 		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
