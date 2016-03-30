@@ -843,9 +843,9 @@ def viewprof():
 	fs="Not friends with this user"
 	notfriend=True
 	friend=False
-	notsel=True
+	notsel=False
 	if int(uid)==int(user):
-		notsel=False
+		notsel=True
 	if uid:
 		stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
 		cursor=g.conn.execute(stmt, (uid, user, user, uid))
