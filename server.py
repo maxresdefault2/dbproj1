@@ -844,7 +844,7 @@ def viewprof():
 	notfriend=True
 	friend=False
 	notsel=True
-	if uid==user:
+	if int(uid)==int(user):
 		notsel=False
 	if uid:
 		stmt= "SELECT * from Friend f where f.uid1=%s and f.uid2=%s UNION SELECT * from FRIEND f where f.uid1=%s and f.uid2=%s"
