@@ -35,13 +35,13 @@
 	   {% endfor %}
 	</div>
 	<br>
-	{% if notsel %}
+	{% if notfriend %}
 	<form action="/addfriend" method="post" id="main_form">
 		<input type="submit" value="Add Friend" class = "input_button">
 	</form>
 	<br><br>
 	{% endif %}
-	{% if friend %}
+	{% if friend and notsel %}
 	<form action="/delfriend" method="post" id="main_form">
 		<input type="submit" value="Remove Friend" class = "input_button">
 	</form>
