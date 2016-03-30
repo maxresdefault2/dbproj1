@@ -844,6 +844,8 @@ def viewprof():
 	notfriend=True
 	friend=False
 	notsel=True
+	print uid
+	print user
 	if int(uid)==int(user):
 		notsel=False
 	if uid:
@@ -924,6 +926,7 @@ def viewprof():
 		else:
 			inters+=", "+thing
 		i+=1
+	print notsel
 	
 	if hid:
 		return render_template('userpage.html', lis=uinfo, fs=fs, lis2=pw, inters=inters)
